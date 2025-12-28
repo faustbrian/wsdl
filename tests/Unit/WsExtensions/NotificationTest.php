@@ -15,6 +15,7 @@ use Cline\WsdlBuilder\WsExtensions\Notification\NotificationProducer;
 use Cline\WsdlBuilder\WsExtensions\Notification\Subscribe;
 use Cline\WsdlBuilder\WsExtensions\Notification\Topic;
 use Cline\WsdlBuilder\WsExtensions\Notification\TopicExpression;
+use Illuminate\Support\Facades\Date;
 
 describe('WS-Notification', function (): void {
     describe('TopicDialect', function (): void {
@@ -275,7 +276,7 @@ describe('WS-Notification', function (): void {
                 // Arrange
                 $endpoint = new EndpointReference('http://example.com/notify');
                 $subscribe = new Subscribe($endpoint);
-                $time = new DateTime('+1 hour');
+                $time = Date::now()->addHours(1);
 
                 // Act
                 $subscribe->initialTerminationTime($time);
@@ -305,7 +306,7 @@ describe('WS-Notification', function (): void {
                 $endpoint = new EndpointReference('http://example.com/notify');
                 $subscribe = new Subscribe($endpoint);
                 $filter = new TopicExpression(TopicDialect::Concrete, 'tns:StockTopic');
-                $time = new DateTime('+1 day');
+                $time = Date::now()->addDays(1);
 
                 // Act
                 $subscribe->filter($filter)
@@ -399,7 +400,7 @@ describe('WS-Notification', function (): void {
                 $filter = new TopicExpression(TopicDialect::Simple, 'stock/ticker');
                 $subscribe->filter($filter)
                     ->initialTerminationTime(
-                        new DateTime('+1 week'),
+                        Date::now()->addWeeks(1),
                     )
                     ->addPolicyElement('MessageRate', 10);
 

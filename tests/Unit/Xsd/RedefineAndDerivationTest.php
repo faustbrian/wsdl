@@ -615,7 +615,7 @@ describe('Element substitutionGroup and block attributes', function (): void {
 
         test('accesses substitutionGroup property from Element instance', function (): void {
             // Arrange
-            $element = new Element('test', 'string', false, null, null, 'tns:baseElement', null);
+            $element = new Element('test', 'string', false, null, null, 'tns:baseElement');
 
             // Act & Assert
             expect($element->substitutionGroup)->toBe('tns:baseElement');

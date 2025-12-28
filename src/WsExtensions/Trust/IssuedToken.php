@@ -10,8 +10,10 @@
 namespace Cline\WsdlBuilder\WsExtensions\Trust;
 
 use Cline\WsdlBuilder\WsExtensions\Addressing\EndpointReference;
-use Cline\WsdlBuilder\WsExtensions\Security\Enums\SecurityTokenInclusion;
+use Cline\WsdlBuilder\WsExtensions\Addressing\Metadata;
+use Cline\WsdlBuilder\WsExtensions\Addressing\ReferenceParameters;
 use Cline\WsdlBuilder\WsExtensions\Security\TokenAssertion;
+use Override;
 
 /**
  * Represents a WS-Trust IssuedToken assertion.
@@ -73,25 +75,26 @@ final class IssuedToken extends TokenAssertion
      *
      * @return array<string, mixed>
      */
+    #[Override()]
     public function toArray(): array
     {
         $config = parent::toArray();
 
-        if ($this->issuer !== null) {
+        if ($this->issuer instanceof EndpointReference) {
             $config['issuer'] = [
                 'address' => $this->issuer->getAddress(),
             ];
 
-            if ($this->issuer->getReferenceParameters() !== null) {
+            if ($this->issuer->getReferenceParameters() instanceof ReferenceParameters) {
                 $config['issuer']['referenceParameters'] = $this->issuer->getReferenceParameters();
             }
 
-            if ($this->issuer->getMetadata() !== null) {
+            if ($this->issuer->getMetadata() instanceof Metadata) {
                 $config['issuer']['metadata'] = $this->issuer->getMetadata();
             }
         }
 
-        if ($this->requestSecurityTokenTemplate !== null) {
+        if ($this->requestSecurityTokenTemplate instanceof RequestSecurityToken) {
             $config['requestSecurityTokenTemplate'] = $this->requestSecurityTokenTemplate->toArray();
         }
 

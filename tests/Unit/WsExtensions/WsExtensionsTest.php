@@ -8,7 +8,6 @@
  */
 
 use Cline\WsdlBuilder\Core\Binding;
-use Cline\WsdlBuilder\Core\Service;
 use Cline\WsdlBuilder\Wsdl;
 use Cline\WsdlBuilder\WsExtensions\Addressing\Action;
 use Cline\WsdlBuilder\WsExtensions\Addressing\EndpointReference;
@@ -247,6 +246,7 @@ describe('WS-Policy', function (): void {
                 $all = $policy->all();
                 $exactlyOne = $all->exactlyOne();
                 $exactlyOne->assertion('http://example.com', 'Assertion1');
+
                 $nested = $exactlyOne->all();
                 $nested->assertion('http://example.com', 'Assertion2');
 
@@ -728,7 +728,7 @@ describe('WS-Addressing', function (): void {
                     ->operation('GetUser', 'urn:GetUser');
 
                 // Act & Assert
-                expect(fn () => $binding->faultAction('GetUser', 'InvalidUserFault', 'http://example.com/InvalidUserFault'))
+                expect(fn (): Binding => $binding->faultAction('GetUser', 'InvalidUserFault', 'http://example.com/InvalidUserFault'))
                     ->toThrow(RuntimeException::class, "No action defined for operation 'GetUser'. Call action() first.");
             });
         });

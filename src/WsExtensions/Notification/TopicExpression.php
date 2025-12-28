@@ -18,12 +18,13 @@ use Cline\WsdlBuilder\WsExtensions\Notification\Enums\TopicDialect;
  * using different dialects (Simple, Concrete, Full, or XPath).
  *
  * @author Brian Faust <brian@cline.sh>
+ * @psalm-immutable
  */
-final class TopicExpression
+final readonly class TopicExpression
 {
     public function __construct(
-        private readonly TopicDialect $dialect,
-        private readonly string $value,
+        private TopicDialect $dialect,
+        private string $value,
     ) {}
 
     public function getDialect(): TopicDialect

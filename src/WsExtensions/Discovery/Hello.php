@@ -17,19 +17,20 @@ use Cline\WsdlBuilder\WsExtensions\Addressing\EndpointReference;
  * Sent by a service when it becomes available on the network.
  *
  * @author Brian Faust <brian@cline.sh>
+ * @psalm-immutable
  */
-final class Hello
+final readonly class Hello
 {
     /**
      * @param array<string> $types  Array of QNames representing service types
      * @param array<string> $xAddrs Array of transport addresses
      */
     public function __construct(
-        private readonly EndpointReference $endpointReference,
-        private readonly array $types = [],
-        private readonly ?Scopes $scopes = null,
-        private readonly array $xAddrs = [],
-        private readonly int $metadataVersion = 1,
+        private EndpointReference $endpointReference,
+        private array $types = [],
+        private ?Scopes $scopes = null,
+        private array $xAddrs = [],
+        private int $metadataVersion = 1,
     ) {}
 
     /**

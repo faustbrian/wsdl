@@ -118,11 +118,11 @@ final class TransportBinding
             'includeTimestamp' => $this->includeTimestamp,
         ];
 
-        if ($this->transportToken !== null) {
+        if ($this->transportToken instanceof TransportToken) {
             $config['transportToken'] = $this->transportToken->getConfig();
         }
 
-        if ($this->algorithmSuite !== null) {
+        if ($this->algorithmSuite instanceof AlgorithmSuite) {
             $config['algorithmSuite'] = $this->algorithmSuite->value;
         }
 

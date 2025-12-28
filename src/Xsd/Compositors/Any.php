@@ -12,6 +12,7 @@ namespace Cline\WsdlBuilder\Xsd\Compositors;
 use InvalidArgumentException;
 
 use function in_array;
+use function throw_unless;
 
 /**
  * Represents an XSD any wildcard element.
@@ -49,9 +50,7 @@ final class Any
      */
     public function processContents(string $mode): self
     {
-        if (!in_array($mode, ['strict', 'lax', 'skip'], true)) {
-            throw new InvalidArgumentException('processContents must be one of: strict, lax, skip');
-        }
+        throw_unless(in_array($mode, ['strict', 'lax', 'skip'], true), InvalidArgumentException::class, 'processContents must be one of: strict, lax, skip');
 
         $this->processContents = $mode;
 

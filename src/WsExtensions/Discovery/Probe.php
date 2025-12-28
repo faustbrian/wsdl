@@ -15,15 +15,16 @@ namespace Cline\WsdlBuilder\WsExtensions\Discovery;
  * Used to search for services by type and scope.
  *
  * @author Brian Faust <brian@cline.sh>
+ * @psalm-immutable
  */
-final class Probe
+final readonly class Probe
 {
     /**
      * @param array<string> $types Array of QNames representing service types to search for
      */
     public function __construct(
-        private readonly array $types = [],
-        private readonly ?Scopes $scopes = null,
+        private array $types = [],
+        private ?Scopes $scopes = null,
     ) {}
 
     /**

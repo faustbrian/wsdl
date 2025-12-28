@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+use Carbon\CarbonImmutable;
 use Cline\WsdlBuilder\WsExtensions\Addressing\EndpointReference;
 use Cline\WsdlBuilder\WsExtensions\ResourceFramework\GetResourceProperty;
 use Cline\WsdlBuilder\WsExtensions\ResourceFramework\Resource;
@@ -26,7 +27,7 @@ describe('ResourceFramework', function (): void {
             ->modifiable()
             ->subscribable();
 
-        $terminationTime = new DateTimeImmutable('+1 hour');
+        $terminationTime = CarbonImmutable::now()->addHours(1);
         $resource->resourceLifetime()
             ->terminationTime($terminationTime)
             ->scheduledTermination();
@@ -93,8 +94,8 @@ describe('ResourceFramework', function (): void {
         expect($lifetime->isScheduledTermination())->toBeFalse();
         expect($lifetime->isImmediateTermination())->toBeFalse();
 
-        $terminationTime = new DateTimeImmutable('+2 hours');
-        $currentTime = new DateTimeImmutable();
+        $terminationTime = CarbonImmutable::now()->addHours(2);
+        $currentTime = CarbonImmutable::now();
 
         $lifetime->terminationTime($terminationTime)
             ->currentTime($currentTime)
@@ -175,7 +176,7 @@ describe('ResourceFramework', function (): void {
             ->end()
             ->addQueryExpressionDialect('http://www.w3.org/TR/1999/REC-xpath-19991116');
 
-        $terminationTime = new DateTimeImmutable('+3 hours');
+        $terminationTime = CarbonImmutable::now()->addHours(3);
         $resource->resourceLifetime()
             ->terminationTime($terminationTime)
             ->scheduledTermination();

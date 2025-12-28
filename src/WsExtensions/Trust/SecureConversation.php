@@ -10,8 +10,11 @@
 namespace Cline\WsdlBuilder\WsExtensions\Trust;
 
 use Cline\WsdlBuilder\WsExtensions\Addressing\EndpointReference;
+use Cline\WsdlBuilder\WsExtensions\Addressing\Metadata;
+use Cline\WsdlBuilder\WsExtensions\Addressing\ReferenceParameters;
 use Cline\WsdlBuilder\WsExtensions\Policy\Policy;
 use Cline\WsdlBuilder\WsExtensions\Security\TokenAssertion;
+use Override;
 
 /**
  * Represents a WS-SecureConversation token assertion.
@@ -73,26 +76,27 @@ final class SecureConversation extends TokenAssertion
      *
      * @return array<string, mixed>
      */
+    #[Override()]
     public function toArray(): array
     {
         $config = parent::toArray();
 
-        if ($this->bootstrapPolicy !== null) {
+        if ($this->bootstrapPolicy instanceof Policy) {
             $config['bootstrapPolicy'] = [
                 'id' => $this->bootstrapPolicy->getId(),
             ];
         }
 
-        if ($this->issuer !== null) {
+        if ($this->issuer instanceof EndpointReference) {
             $config['issuer'] = [
                 'address' => $this->issuer->getAddress(),
             ];
 
-            if ($this->issuer->getReferenceParameters() !== null) {
+            if ($this->issuer->getReferenceParameters() instanceof ReferenceParameters) {
                 $config['issuer']['referenceParameters'] = $this->issuer->getReferenceParameters();
             }
 
-            if ($this->issuer->getMetadata() !== null) {
+            if ($this->issuer->getMetadata() instanceof Metadata) {
                 $config['issuer']['metadata'] = $this->issuer->getMetadata();
             }
         }

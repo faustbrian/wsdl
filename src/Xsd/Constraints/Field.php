@@ -13,12 +13,13 @@ namespace Cline\WsdlBuilder\Xsd\Constraints;
  * Represents an XSD field for identity constraints.
  *
  * @author Brian Faust <brian@cline.sh>
+ * @psalm-immutable
  */
-final class Field
+final readonly class Field
 {
     public function __construct(
-        private readonly Key|KeyRef|Unique $parent,
-        private readonly string $xpath,
+        private Key|KeyRef|Unique $parent,
+        private string $xpath,
     ) {}
 
     /**

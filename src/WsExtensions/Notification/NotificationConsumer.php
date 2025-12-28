@@ -18,11 +18,12 @@ use Cline\WsdlBuilder\WsExtensions\Addressing\EndpointReference;
  * The consumer receives Notify operations from the producer.
  *
  * @author Brian Faust <brian@cline.sh>
+ * @psalm-immutable
  */
-final class NotificationConsumer
+final readonly class NotificationConsumer
 {
     public function __construct(
-        private readonly EndpointReference $endpointReference,
+        private EndpointReference $endpointReference,
     ) {}
 
     public function getEndpointReference(): EndpointReference

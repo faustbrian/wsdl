@@ -15,16 +15,17 @@ namespace Cline\WsdlBuilder\WsExtensions\ResourceFramework;
  * Provides a fluent interface for building property retrieval requests.
  *
  * @author Brian Faust <brian@cline.sh>
+ * @psalm-immutable
  */
-final class GetResourceProperty
+final readonly class GetResourceProperty
 {
     /**
      * @param string     $resourceProperty Property name (QName)
      * @param null|mixed $parent           Optional parent object for fluent chaining
      */
     public function __construct(
-        private readonly string $resourceProperty,
-        private readonly mixed $parent = null,
+        private string $resourceProperty,
+        private mixed $parent = null,
     ) {}
 
     public function getResourceProperty(): string

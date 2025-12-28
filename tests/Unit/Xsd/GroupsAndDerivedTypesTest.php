@@ -241,7 +241,7 @@ describe('ElementGroup', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://test.example.com/');
             $group = $wsdl->elementGroup('ConfigGroup');
 
-            expect(fn () => $group->all()->element('setting', XsdType::String, false, 2, 1))
+            expect(fn (): All => $group->all()->element('setting', XsdType::String, false, 2, 1))
                 ->toThrow(InvalidArgumentException::class, 'Elements in <all> can only have minOccurs 0 or 1');
         });
 
@@ -249,7 +249,7 @@ describe('ElementGroup', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://test.example.com/');
             $group = $wsdl->elementGroup('ConfigGroup');
 
-            expect(fn () => $group->all()->element('setting', XsdType::String, false, 0, 5))
+            expect(fn (): All => $group->all()->element('setting', XsdType::String, false, 0, 5))
                 ->toThrow(InvalidArgumentException::class, 'Elements in <all> can only have maxOccurs 1');
         });
     });

@@ -7,10 +7,14 @@
  * file that was distributed with this source code.
  */
 
+use Cline\WsdlBuilder\Core\Binding;
+use Cline\WsdlBuilder\Core\Operation;
+use Cline\WsdlBuilder\Core\PortType;
 use Cline\WsdlBuilder\Enums\BindingUse;
 use Cline\WsdlBuilder\Enums\SoapVersion;
 use Cline\WsdlBuilder\Enums\XsdType;
 use Cline\WsdlBuilder\Wsdl;
+use Cline\WsdlBuilder\WsExtensions\Mime\MimeMultipartRelated;
 use RuntimeException;
 
 describe('WsdlGenerator Coverage Edge Cases', function (): void {
@@ -73,7 +77,7 @@ describe('WsdlGenerator Coverage Edge Cases', function (): void {
         $wsdl->message('HeaderMsg')->part('auth', XsdType::String)->end();
         $binding = $wsdl->binding('TestBinding', 'TestPort');
 
-        expect(fn () => $binding->header('HeaderMsg', 'auth'))
+        expect(fn (): Binding => $binding->header('HeaderMsg', 'auth'))
             ->toThrow(RuntimeException::class, 'No operation exists to add header to');
     });
 
@@ -82,7 +86,7 @@ describe('WsdlGenerator Coverage Edge Cases', function (): void {
         $wsdl->message('FaultMsg')->part('error', XsdType::String)->end();
         $binding = $wsdl->binding('TestBinding', 'TestPort');
 
-        expect(fn () => $binding->headerFault('FaultMsg', 'error', BindingUse::Literal))
+        expect(fn (): Binding => $binding->headerFault('FaultMsg', 'error', BindingUse::Literal))
             ->toThrow(RuntimeException::class, 'No operation exists to add header fault to');
     });
 
@@ -96,7 +100,7 @@ describe('WsdlGenerator Coverage Edge Cases', function (): void {
         // Get the binding again to trigger the "no header" case
         $binding->header('HeaderMsg', 'auth');
 
-        expect(fn () => $wsdl->binding('AnotherBinding', 'TestPort')->operation('TestOp2', 'urn:test2')->headerFault('FaultMsg', 'error', BindingUse::Literal))
+        expect(fn (): Binding => $wsdl->binding('AnotherBinding', 'TestPort')->operation('TestOp2', 'urn:test2')->headerFault('FaultMsg', 'error', BindingUse::Literal))
             ->toThrow(RuntimeException::class, 'No header exists to add fault to');
     });
 
@@ -112,7 +116,7 @@ describe('WsdlGenerator Coverage Edge Cases', function (): void {
         $wsdl = Wsdl::create('TestService', 'http://example.com/test');
         $binding = $wsdl->binding('TestBinding', 'TestPort');
 
-        expect(fn () => $binding->inputMime())
+        expect(fn (): MimeMultipartRelated => $binding->inputMime())
             ->toThrow(RuntimeException::class, 'No operation exists to add MIME to');
     });
 
@@ -120,7 +124,7 @@ describe('WsdlGenerator Coverage Edge Cases', function (): void {
         $wsdl = Wsdl::create('TestService', 'http://example.com/test');
         $binding = $wsdl->binding('TestBinding', 'TestPort');
 
-        expect(fn () => $binding->outputMime())
+        expect(fn (): MimeMultipartRelated => $binding->outputMime())
             ->toThrow(RuntimeException::class, 'No operation exists to add MIME to');
     });
 
@@ -128,7 +132,7 @@ describe('WsdlGenerator Coverage Edge Cases', function (): void {
         $wsdl = Wsdl::create('TestService', 'http://example.com/test');
         $binding = $wsdl->binding('TestBinding', 'TestPort');
 
-        expect(fn () => $binding->httpOperation('GET'))
+        expect(fn (): Binding => $binding->httpOperation('GET'))
             ->toThrow(RuntimeException::class, 'No operation exists to add HTTP operation to');
     });
 
@@ -136,7 +140,7 @@ describe('WsdlGenerator Coverage Edge Cases', function (): void {
         $wsdl = Wsdl::create('TestService', 'http://example.com/test');
         $binding = $wsdl->binding('TestBinding', 'TestPort');
 
-        expect(fn () => $binding->httpUrlEncoded())
+        expect(fn (): Binding => $binding->httpUrlEncoded())
             ->toThrow(RuntimeException::class, 'No operation exists to add HTTP URL-encoded to');
     });
 
@@ -144,7 +148,7 @@ describe('WsdlGenerator Coverage Edge Cases', function (): void {
         $wsdl = Wsdl::create('TestService', 'http://example.com/test');
         $binding = $wsdl->binding('TestBinding', 'TestPort');
 
-        expect(fn () => $binding->httpUrlReplacement())
+        expect(fn (): Binding => $binding->httpUrlReplacement())
             ->toThrow(RuntimeException::class, 'No operation exists to add HTTP URL-replacement to');
     });
 
@@ -176,7 +180,7 @@ describe('WsdlGenerator Coverage Edge Cases', function (): void {
         $portType = $wsdl->portType('TestPort');
         $portType->operation('TestOp', 'InputMsg', 'OutputMsg', 'FaultMsg');
 
-        expect(fn () => $portType->faultAction('TestOp', 'FaultMsg', 'http://example.com/fault'))
+        expect(fn (): PortType => $portType->faultAction('TestOp', 'FaultMsg', 'http://example.com/fault'))
             ->toThrow(RuntimeException::class, "No action defined for operation 'TestOp'. Call action() first.");
     });
 
@@ -216,7 +220,7 @@ describe('WsdlGenerator Coverage Edge Cases', function (): void {
             ->output('response', XsdType::String)
             ->fault('error', XsdType::String);
 
-        expect(fn () => $operation->faultAction('error', 'http://example.com/TestOperation/fault'))
+        expect(fn (): Operation => $operation->faultAction('error', 'http://example.com/TestOperation/fault'))
             ->toThrow(RuntimeException::class, "No action defined for operation 'TestOperation'. Call action() first.");
     });
 
@@ -280,7 +284,7 @@ describe('WsdlGenerator Coverage Edge Cases', function (): void {
 
     test('generates service documentation when service has no children yet', function (): void {
         $wsdl = Wsdl::create('TestService', 'http://example.com/test');
-        $service = $wsdl->service('DocService', 'http://example.com/endpoint');
+        $service = $wsdl->service('DocService');
         $service->documentation('Service docs first');
 
         $xml = $wsdl->build();
@@ -315,5 +319,51 @@ describe('WsdlGenerator Coverage Edge Cases', function (): void {
 
         expect($xml)->toContain('namespace="http://example.com/faults"');
         expect($xml)->toContain('encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"');
+    });
+
+    test('handles portType with documentation when applying addressing', function (): void {
+        $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+
+        // Create messages
+        $wsdl->message('Input')->part('param', XsdType::String)->end();
+        $wsdl->message('Output')->part('result', XsdType::String)->end();
+
+        // Create portType with documentation and operation with addressing
+        $portType = $wsdl->portType('DocumentedPort');
+        $portType->documentation('PortType with docs');
+        $portType->operation('TestOp', 'Input', 'Output');
+        $portType->action('TestOp', 'http://example.com/action');
+
+        $xml = $wsdl->build();
+
+        expect($xml)->toContain('<wsdl:documentation>PortType with docs</wsdl:documentation>');
+        expect($xml)->toContain('http://example.com/action');
+    });
+
+    test('generates policy with security assertions on service', function (): void {
+        $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+
+        $service = $wsdl->service('SecureService');
+        $service->policy('policy1')
+            ->assertion('http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702', 'TransportBinding');
+        $service->port('SecurePort', 'SecureBinding', 'http://example.com/service');
+
+        $xml = $wsdl->build();
+
+        expect($xml)->toContain('xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"');
+        expect($xml)->toContain('<sp:TransportBinding');
+    });
+
+    test('generates policy with references', function (): void {
+        $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+
+        $service = $wsdl->service('PolicyRefService');
+        $service->policy('mainPolicy')
+            ->reference('http://example.com/external-policy');
+        $service->port('ServicePort', 'ServiceBinding', 'http://example.com/service');
+
+        $xml = $wsdl->build();
+
+        expect($xml)->toContain('<wsp:PolicyReference URI="http://example.com/external-policy"');
     });
 });

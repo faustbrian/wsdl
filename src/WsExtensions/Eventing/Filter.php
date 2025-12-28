@@ -16,12 +16,13 @@ namespace Cline\WsdlBuilder\WsExtensions\Eventing;
  * a filter expression in a specific dialect (e.g., XPath).
  *
  * @author Brian Faust <brian@cline.sh>
+ * @psalm-immutable
  */
-final class Filter
+final readonly class Filter
 {
     public function __construct(
-        private readonly string $dialect,
-        private readonly string $content,
+        private string $dialect,
+        private string $content,
     ) {}
 
     public function getDialect(): string

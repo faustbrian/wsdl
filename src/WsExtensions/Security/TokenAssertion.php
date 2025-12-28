@@ -63,7 +63,7 @@ class TokenAssertion
             'tokenType' => $this->tokenType,
         ];
 
-        if ($this->includeToken !== null) {
+        if ($this->includeToken instanceof SecurityTokenInclusion) {
             $config['includeToken'] = $this->includeToken->value;
         }
 

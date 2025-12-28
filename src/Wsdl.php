@@ -13,7 +13,6 @@ use Cline\WsdlBuilder\Contracts\WsdlBuilderInterface;
 use Cline\WsdlBuilder\Core\Binding;
 use Cline\WsdlBuilder\Core\Message;
 use Cline\WsdlBuilder\Core\Operation;
-use Cline\WsdlBuilder\Core\Port;
 use Cline\WsdlBuilder\Core\PortType;
 use Cline\WsdlBuilder\Core\Service;
 use Cline\WsdlBuilder\Documentation\Documentation;
@@ -34,9 +33,6 @@ use Cline\WsdlBuilder\Xsd\Groups\ElementGroup;
 use Cline\WsdlBuilder\Xsd\Types\ComplexType;
 use Cline\WsdlBuilder\Xsd\Types\SimpleType;
 use DOMDocument;
-use DOMElement;
-
-use function sprintf;
 
 /**
  * Fluent WSDL 1.1 builder.

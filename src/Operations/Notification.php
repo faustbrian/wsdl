@@ -82,7 +82,6 @@ final class Notification
             $this->name,
             '', // No input for notification
             $this->name.'Output',
-            null,
         );
 
         // Get or create default binding

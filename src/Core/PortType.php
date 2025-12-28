@@ -14,6 +14,9 @@ use Cline\WsdlBuilder\Wsdl;
 use Cline\WsdlBuilder\WsExtensions\Addressing\Action;
 use RuntimeException;
 
+use function sprintf;
+use function throw_unless;
+
 /**
  * Represents a WSDL port type (interface definition).
  *
@@ -81,11 +84,7 @@ final class PortType
      */
     public function faultAction(string $operationName, string $faultName, string $action): self
     {
-        if (!isset($this->actions[$operationName])) {
-            throw new RuntimeException(
-                "No action defined for operation '{$operationName}'. Call action() first.",
-            );
-        }
+        throw_unless(isset($this->actions[$operationName]), RuntimeException::class, sprintf("No action defined for operation '%s'. Call action() first.", $operationName));
 
         $existingAction = $this->actions[$operationName];
         $faultActions = $existingAction->faultActions ?? [];

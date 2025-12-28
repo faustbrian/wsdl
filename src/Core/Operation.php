@@ -14,6 +14,8 @@ use Cline\WsdlBuilder\Wsdl;
 use Cline\WsdlBuilder\WsExtensions\Addressing\Action;
 use RuntimeException;
 
+use function sprintf;
+
 /**
  * Simplified operation builder for high-level API.
  *
@@ -103,9 +105,9 @@ final class Operation
      */
     public function faultAction(string $faultName, string $action): self
     {
-        if ($this->addressingAction === null) {
+        if (!$this->addressingAction instanceof Action) {
             throw new RuntimeException(
-                "No action defined for operation '{$this->name}'. Call action() first.",
+                sprintf("No action defined for operation '%s'. Call action() first.", $this->name),
             );
         }
 
@@ -182,7 +184,7 @@ final class Operation
         );
 
         // Apply WS-Addressing actions to port type if defined
-        if ($this->addressingAction !== null) {
+        if ($this->addressingAction instanceof Action) {
             $portTypes[$portTypeName]->action(
                 $this->name,
                 $this->addressingAction->inputAction,
@@ -209,7 +211,7 @@ final class Operation
         $bindings[$bindingName]->operation($this->name, $action);
 
         // Apply WS-Addressing actions to binding if defined
-        if ($this->addressingAction !== null) {
+        if ($this->addressingAction instanceof Action) {
             $bindings[$bindingName]->action(
                 $this->name,
                 $this->addressingAction->inputAction,

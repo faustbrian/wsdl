@@ -350,7 +350,7 @@ describe('All Compositor', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://test.example.com/');
 
             // Act & Assert
-            expect(fn () => $wsdl->complexType('TestType')
+            expect(fn (): All => $wsdl->complexType('TestType')
                 ->all()
                 ->element('field', XsdType::String, false, 2, 1))
                 ->toThrow(InvalidArgumentException::class, 'Elements in <all> can only have minOccurs 0 or 1');
@@ -361,7 +361,7 @@ describe('All Compositor', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://test.example.com/');
 
             // Act & Assert
-            expect(fn () => $wsdl->complexType('TestType')
+            expect(fn (): All => $wsdl->complexType('TestType')
                 ->all()
                 ->element('field', XsdType::String, false, 0, 5))
                 ->toThrow(InvalidArgumentException::class, 'Elements in <all> can only have maxOccurs 1');
@@ -372,7 +372,7 @@ describe('All Compositor', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://test.example.com/');
 
             // Act & Assert
-            expect(fn () => $wsdl->complexType('TestType')
+            expect(fn (): All => $wsdl->complexType('TestType')
                 ->all()
                 ->element('field', XsdType::String, false, 0, -1))
                 ->toThrow(InvalidArgumentException::class, 'Elements in <all> can only have maxOccurs 1');
@@ -398,7 +398,7 @@ describe('All Compositor', function (): void {
             // Act
             $all = $wsdl->complexType('TestType')
                 ->all()
-                ->element('field', XsdType::String, false, null, null);
+                ->element('field', XsdType::String, false);
 
             // Assert
             $elements = $all->getElements();
@@ -631,7 +631,7 @@ describe('Any Compositor', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://test.example.com/');
 
             // Act & Assert
-            expect(fn () => $wsdl->complexType('TestType')
+            expect(fn (): Any => $wsdl->complexType('TestType')
                 ->any()
                 ->processContents('invalid'))
                 ->toThrow(InvalidArgumentException::class, 'processContents must be one of: strict, lax, skip');

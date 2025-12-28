@@ -11,7 +11,6 @@ use Cline\WsdlBuilder\Enums\XsdType;
 use Cline\WsdlBuilder\Wsdl;
 use Cline\WsdlBuilder\Xsd\Attributes\AnyAttribute;
 use Cline\WsdlBuilder\Xsd\Attributes\Attribute;
-use Cline\WsdlBuilder\Xsd\Attributes\AttributeGroup;
 
 describe('Attribute', function (): void {
     describe('Happy Paths', function (): void {

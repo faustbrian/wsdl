@@ -16,9 +16,7 @@ use Cline\WsdlBuilder\Core\Service;
 use Cline\WsdlBuilder\Documentation\Documentation;
 use Cline\WsdlBuilder\Imports\SchemaRedefine;
 use Cline\WsdlBuilder\WsExtensions\Http\HttpBinding;
-use Cline\WsdlBuilder\WsExtensions\Mime\MimeContent;
 use Cline\WsdlBuilder\WsExtensions\Mime\MimeMultipartRelated;
-use Cline\WsdlBuilder\WsExtensions\Mime\MimePart;
 use Cline\WsdlBuilder\WsExtensions\Policy\Policy;
 use Cline\WsdlBuilder\WsExtensions\Policy\PolicyAssertion;
 use Cline\WsdlBuilder\WsExtensions\Policy\PolicyOperator;
@@ -30,18 +28,17 @@ use Cline\WsdlBuilder\Xsd\Attributes\AttributeGroup;
 use Cline\WsdlBuilder\Xsd\Compositors\All;
 use Cline\WsdlBuilder\Xsd\Compositors\Any;
 use Cline\WsdlBuilder\Xsd\Compositors\Choice;
-use Cline\WsdlBuilder\Xsd\Constraints\Key;
-use Cline\WsdlBuilder\Xsd\Constraints\KeyRef;
-use Cline\WsdlBuilder\Xsd\Constraints\Unique;
 use Cline\WsdlBuilder\Xsd\DerivedTypes\ListType;
 use Cline\WsdlBuilder\Xsd\DerivedTypes\UnionType;
 use Cline\WsdlBuilder\Xsd\Groups\ElementGroup;
 use Cline\WsdlBuilder\Xsd\SimpleContent;
 use Cline\WsdlBuilder\Xsd\Types\ComplexType;
+use Cline\WsdlBuilder\Xsd\Types\Element;
 use Cline\WsdlBuilder\Xsd\Types\SimpleType;
 use DOMDocument;
 use DOMElement;
 
+use function array_any;
 use function array_map;
 use function ctype_lower;
 use function implode;
@@ -62,13 +59,6 @@ final class WsdlGenerator
     private const string SP_NS = 'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702';
 
     private const string HTTP_BINDING_NS = 'http://schemas.xmlsoap.org/wsdl/http/';
-
-    /**
-     * XOP namespace for MTOM/XOP binary attachments.
-     *
-     * @phpstan-ignore classConstant.unused
-     */
-    private const string XOP_NS = 'http://www.w3.org/2004/08/xop/include';
 
     private const string MIME_NS = 'http://schemas.xmlsoap.org/wsdl/mime/';
 
@@ -230,6 +220,7 @@ final class WsdlGenerator
             if ($import->schemaLocation !== null) {
                 $el->setAttribute('schemaLocation', $import->schemaLocation);
             }
+
             $schema->appendChild($el);
         }
 
@@ -281,7 +272,7 @@ final class WsdlGenerator
 
     private function addDocumentation(DOMElement $parent, ?Documentation $doc): void
     {
-        if ($doc === null) {
+        if (!$doc instanceof Documentation) {
             return;
         }
 
@@ -313,9 +304,9 @@ final class WsdlGenerator
         $choice = $group->getChoice();
         $all = $group->getAll();
 
-        if ($choice !== null) {
+        if ($choice instanceof Choice) {
             $this->addChoice($groupEl, $choice);
-        } elseif ($all !== null) {
+        } elseif ($all instanceof All) {
             $this->addAll($groupEl, $all);
         } elseif ($elements !== []) {
             $sequence = $this->dom->createElementNS(Wsdl::XSD_NS, 'xsd:sequence');
@@ -323,6 +314,7 @@ final class WsdlGenerator
             foreach ($elements as $element) {
                 $this->addElementFromArray($sequence, $element);
             }
+
             $groupEl->appendChild($sequence);
         }
 
@@ -340,7 +332,7 @@ final class WsdlGenerator
 
         $anyAttr = $group->getAnyAttribute();
 
-        if ($anyAttr !== null) {
+        if ($anyAttr instanceof AnyAttribute) {
             $this->addAnyAttribute($groupEl, $anyAttr);
         }
 
@@ -468,7 +460,7 @@ final class WsdlGenerator
         $simpleType->setAttribute('name', $type->getName());
 
         $union = $this->dom->createElementNS(Wsdl::XSD_NS, 'xsd:union');
-        $memberTypes = array_map(fn (string $t): string => $this->prefixType($t), $type->getMemberTypes());
+        $memberTypes = array_map($this->prefixType(...), $type->getMemberTypes());
         $union->setAttribute('memberTypes', implode(' ', $memberTypes));
 
         $simpleType->appendChild($union);
@@ -502,7 +494,7 @@ final class WsdlGenerator
         // Handle simpleContent (simple type with attributes)
         $simpleContent = $type->getSimpleContent();
 
-        if ($simpleContent !== null) {
+        if ($simpleContent instanceof SimpleContent) {
             $this->addSimpleContent($complexType, $simpleContent);
             $schema->appendChild($complexType);
 
@@ -568,7 +560,7 @@ final class WsdlGenerator
         // Add anyAttribute
         $anyAttr = $type->getAnyAttribute();
 
-        if ($anyAttr !== null) {
+        if ($anyAttr instanceof AnyAttribute) {
             $this->addAnyAttribute($sequenceParent, $anyAttr);
         }
 
@@ -609,7 +601,7 @@ final class WsdlGenerator
         $complexType->appendChild($simpleContentEl);
     }
 
-    private function addElement(DOMElement $parent, Xsd\Types\Element $element): void
+    private function addElement(DOMElement $parent, Element $element): void
     {
         $el = $this->dom->createElementNS(Wsdl::XSD_NS, 'xsd:element');
         $el->setAttribute('name', $element->name);
@@ -692,6 +684,7 @@ final class WsdlGenerator
         $el = $this->dom->createElementNS(Wsdl::XSD_NS, 'xsd:anyAttribute');
         $el->setAttribute('namespace', $anyAttr->getNamespace());
         $el->setAttribute('processContents', $anyAttr->getProcessContents());
+
         $parent->appendChild($el);
     }
 
@@ -854,7 +847,7 @@ final class WsdlGenerator
         // Check if HTTP binding is used instead of SOAP
         $httpBinding = $binding->getHttpBinding();
 
-        if ($httpBinding !== null) {
+        if ($httpBinding instanceof HttpBinding) {
             // HTTP binding element
             $httpBindingEl = $this->dom->createElementNS(self::HTTP_BINDING_NS, 'http:binding');
             $httpBindingEl->setAttribute('verb', $httpBinding->verb);
@@ -868,7 +861,7 @@ final class WsdlGenerator
         }
 
         // Render operations differently for HTTP vs SOAP bindings
-        if ($httpBinding !== null) {
+        if ($httpBinding instanceof HttpBinding) {
             // HTTP binding operations
             foreach ($binding->getOperations() as $operation) {
                 $opEl = $this->dom->createElementNS(Wsdl::WSDL_NS, 'wsdl:operation');
@@ -963,6 +956,7 @@ final class WsdlGenerator
                     $soapBody->setAttribute('use', $operation->use->value);
                     $inputEl->appendChild($soapBody);
                 }
+
                 $opEl->appendChild($inputEl);
 
                 $outputEl = $this->dom->createElementNS(Wsdl::WSDL_NS, 'wsdl:output');
@@ -975,6 +969,7 @@ final class WsdlGenerator
                     $soapBody->setAttribute('use', $operation->use->value);
                     $outputEl->appendChild($soapBody);
                 }
+
                 $opEl->appendChild($outputEl);
 
                 $el->appendChild($opEl);
@@ -1141,7 +1136,7 @@ final class WsdlGenerator
      */
     private function addXsdAnnotation(DOMElement $parent, ?Annotation $annotation): void
     {
-        if ($annotation === null) {
+        if (!$annotation instanceof Annotation) {
             return;
         }
 
@@ -1198,13 +1193,7 @@ final class WsdlGenerator
             }
         }
 
-        foreach ($this->wsdl->getServices() as $service) {
-            if ($service->getPolicies() !== [] || $service->getPolicyReferences() !== []) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any($this->wsdl->getServices(), fn ($service): bool => $service->getPolicies() !== [] || $service->getPolicyReferences() !== []);
     }
 
     /**
@@ -1218,13 +1207,7 @@ final class WsdlGenerator
             }
         }
 
-        foreach ($this->wsdl->getPortTypes() as $portType) {
-            if ($portType->isUsingAddressing() || $portType->getActions() !== []) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any($this->wsdl->getPortTypes(), fn ($portType): bool => $portType->isUsingAddressing() || $portType->getActions() !== []);
     }
 
     /**
@@ -1272,14 +1255,7 @@ final class WsdlGenerator
             }
         }
 
-        // Check operators
-        foreach ($policy->getOperators() as $operator) {
-            if ($this->operatorHasSecurityAssertion($operator)) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any($policy->getOperators(), fn (PolicyOperator $operator): bool => $this->operatorHasSecurityAssertion($operator));
     }
 
     /**
@@ -1301,14 +1277,7 @@ final class WsdlGenerator
             }
         }
 
-        // Check nested policies
-        foreach ($operator->getNestedPolicies() as $nested) {
-            if ($this->policyHasSecurityAssertion($nested)) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any($operator->getNestedPolicies(), fn (Policy $nested): bool => $this->policyHasSecurityAssertion($nested));
     }
 
     /**
@@ -1427,7 +1396,11 @@ final class WsdlGenerator
         }
 
         foreach ($portTypeEl->childNodes as $child) {
-            if (!($child instanceof DOMElement) || $child->localName !== 'operation') {
+            if (!$child instanceof DOMElement) {
+                continue;
+            }
+
+            if ($child->localName !== 'operation') {
                 continue;
             }
 
@@ -1441,7 +1414,11 @@ final class WsdlGenerator
 
             // Add action to input
             foreach ($child->childNodes as $opChild) {
-                if (!($opChild instanceof DOMElement) || $opChild->localName !== 'input') {
+                if (!$opChild instanceof DOMElement) {
+                    continue;
+                }
+
+                if ($opChild->localName !== 'input') {
                     continue;
                 }
 
@@ -1453,7 +1430,11 @@ final class WsdlGenerator
             // Add action to output if present
             if ($action->outputAction !== null) {
                 foreach ($child->childNodes as $opChild) {
-                    if (!($opChild instanceof DOMElement) || $opChild->localName !== 'output') {
+                    if (!$opChild instanceof DOMElement) {
+                        continue;
+                    }
+
+                    if ($opChild->localName !== 'output') {
                         continue;
                     }
 
@@ -1470,9 +1451,15 @@ final class WsdlGenerator
 
             foreach ($action->faultActions as $faultName => $faultAction) {
                 foreach ($child->childNodes as $opChild) {
-                    if (!($opChild instanceof DOMElement)
-                        || $opChild->localName !== 'fault'
-                        || $opChild->getAttribute('name') !== $faultName) {
+                    if (!$opChild instanceof DOMElement) {
+                        continue;
+                    }
+
+                    if ($opChild->localName !== 'fault') {
+                        continue;
+                    }
+
+                    if ($opChild->getAttribute('name') !== $faultName) {
                         continue;
                     }
 
@@ -1545,13 +1532,7 @@ final class WsdlGenerator
 
     private function hasHttpBinding(): bool
     {
-        foreach ($this->wsdl->getBindings() as $binding) {
-            if ($binding->getHttpBinding() !== null) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any($this->wsdl->getBindings(), fn ($binding): bool => $binding->getHttpBinding() !== null);
     }
 
     /**

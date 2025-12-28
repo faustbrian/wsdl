@@ -18,7 +18,7 @@ use Cline\WsdlBuilder\Enums\BindingUse;
  */
 final class Header
 {
-    private BindingUse $use;
+    private BindingUse $use = BindingUse::Literal;
 
     private ?string $namespace = null;
 
@@ -32,9 +32,7 @@ final class Header
     public function __construct(
         private readonly string $message,
         private readonly string $part,
-    ) {
-        $this->use = BindingUse::Literal;
-    }
+    ) {}
 
     /**
      * Add a header fault.

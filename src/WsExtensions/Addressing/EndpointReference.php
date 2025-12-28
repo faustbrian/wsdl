@@ -32,7 +32,7 @@ final class EndpointReference
      */
     public function referenceParameters(): ReferenceParameters
     {
-        if ($this->referenceParameters === null) {
+        if (!$this->referenceParameters instanceof ReferenceParameters) {
             $this->referenceParameters = new ReferenceParameters($this);
         }
 
@@ -44,7 +44,7 @@ final class EndpointReference
      */
     public function metadata(): Metadata
     {
-        if ($this->metadata === null) {
+        if (!$this->metadata instanceof Metadata) {
             $this->metadata = new Metadata($this);
         }
 

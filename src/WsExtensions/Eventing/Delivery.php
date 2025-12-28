@@ -19,12 +19,13 @@ use Cline\WsdlBuilder\WsExtensions\Eventing\Enums\DeliveryMode;
  * the delivery mode and the endpoint where events should be sent.
  *
  * @author Brian Faust <brian@cline.sh>
+ * @psalm-immutable
  */
-final class Delivery
+final readonly class Delivery
 {
     public function __construct(
-        private readonly EndpointReference $notifyTo,
-        private readonly DeliveryMode $mode = DeliveryMode::Push,
+        private EndpointReference $notifyTo,
+        private DeliveryMode $mode = DeliveryMode::Push,
     ) {}
 
     public function getNotifyTo(): EndpointReference

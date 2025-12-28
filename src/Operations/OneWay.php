@@ -81,8 +81,7 @@ final class OneWay
         $portTypes[$portTypeName]->operation(
             $this->name,
             $this->name.'Input',
-            '', // No output for one-way
-            null,
+            '',
         );
 
         // Get or create default binding

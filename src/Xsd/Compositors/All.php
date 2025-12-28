@@ -13,6 +13,8 @@ use Cline\WsdlBuilder\Enums\XsdType;
 use Cline\WsdlBuilder\Xsd\Types\Element;
 use InvalidArgumentException;
 
+use function throw_if;
+
 /**
  * Represents an XSD all compositor (unordered elements, each max once).
  * Elements in 'all' can only have minOccurs 0 or 1, maxOccurs 1.
@@ -40,13 +42,9 @@ final class All
         ?int $maxOccurs = null,
     ): self {
         // Validate XSD 'all' constraints
-        if ($minOccurs !== null && $minOccurs > 1) {
-            throw new InvalidArgumentException('Elements in <all> can only have minOccurs 0 or 1');
-        }
+        throw_if($minOccurs !== null && $minOccurs > 1, InvalidArgumentException::class, 'Elements in <all> can only have minOccurs 0 or 1');
 
-        if ($maxOccurs !== null && $maxOccurs !== 1) {
-            throw new InvalidArgumentException('Elements in <all> can only have maxOccurs 1');
-        }
+        throw_if($maxOccurs !== null && $maxOccurs !== 1, InvalidArgumentException::class, 'Elements in <all> can only have maxOccurs 1');
 
         $this->elements[] = new Element(
             $name,

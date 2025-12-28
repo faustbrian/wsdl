@@ -20,7 +20,7 @@ use Cline\WsdlBuilder\Enums\BindingUse;
  */
 final class HeaderFault
 {
-    private BindingUse $use;
+    private BindingUse $use = BindingUse::Literal;
 
     private ?string $namespace = null;
 
@@ -31,9 +31,7 @@ final class HeaderFault
     public function __construct(
         private readonly string $message,
         private readonly string $part,
-    ) {
-        $this->use = BindingUse::Literal;
-    }
+    ) {}
 
     /**
      * Set the binding use (literal or encoded).

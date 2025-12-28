@@ -8,7 +8,6 @@
  */
 
 use Cline\WsdlBuilder\Core\Port;
-use Cline\WsdlBuilder\Core\Service;
 use Cline\WsdlBuilder\Wsdl;
 
 describe('Service', function (): void {

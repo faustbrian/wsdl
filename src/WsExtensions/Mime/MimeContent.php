@@ -13,14 +13,15 @@ namespace Cline\WsdlBuilder\WsExtensions\Mime;
  * Represents a MIME mime:content element for SOAP with Attachments (SwA).
  *
  * @author Brian Faust <brian@cline.sh>
+ * @psalm-immutable
  */
-final class MimeContent
+final readonly class MimeContent
 {
     public const string MIME_NS = 'http://schemas.xmlsoap.org/wsdl/mime/';
 
     public function __construct(
-        private readonly ?string $part = null,
-        private readonly ?string $type = null,
+        private ?string $part = null,
+        private ?string $type = null,
     ) {}
 
     /**

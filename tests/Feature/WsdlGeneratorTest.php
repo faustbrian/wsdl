@@ -9,7 +9,6 @@
 
 use Cline\WsdlBuilder\Enums\BindingStyle;
 use Cline\WsdlBuilder\Enums\BindingUse;
-use Cline\WsdlBuilder\Enums\SoapVersion;
 use Cline\WsdlBuilder\Enums\XsdType;
 use Cline\WsdlBuilder\Wsdl;
 

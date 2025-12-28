@@ -12,9 +12,6 @@ use Cline\WsdlBuilder\Enums\BindingUse;
 use Cline\WsdlBuilder\Enums\SoapVersion;
 use Cline\WsdlBuilder\Enums\XsdType;
 use Cline\WsdlBuilder\Wsdl;
-use Cline\WsdlBuilder\WsExtensions\Policy\Policy;
-use Cline\WsdlBuilder\WsExtensions\Security\Enums\AlgorithmSuite;
-use Cline\WsdlBuilder\WsExtensions\Security\SecurityPolicy;
 
 describe('WS-Extensions Integration', function (): void {
     describe('WS-Policy Integration', function (): void {
@@ -182,6 +179,7 @@ describe('WS-Extensions Integration', function (): void {
                 // Verify policy appears at WSDL level (before bindings)
                 $dom = new DOMDocument();
                 $dom->loadXML($xml);
+
                 $xpath = new DOMXPath($dom);
                 $xpath->registerNamespace('wsdl', 'http://schemas.xmlsoap.org/wsdl/');
                 $xpath->registerNamespace('wsp', 'http://www.w3.org/ns/ws-policy');

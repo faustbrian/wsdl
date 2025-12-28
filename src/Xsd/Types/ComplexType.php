@@ -266,7 +266,7 @@ final class ComplexType
      */
     public function annotation(): Annotation
     {
-        if ($this->annotation === null) {
+        if (!$this->annotation instanceof Annotation) {
             $this->annotation = new Annotation($this);
         }
 

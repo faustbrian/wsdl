@@ -16,6 +16,7 @@ use Cline\WsdlBuilder\WsExtensions\Eventing\Filter;
 use Cline\WsdlBuilder\WsExtensions\Eventing\Subscribe;
 use Cline\WsdlBuilder\WsExtensions\Eventing\Subscription;
 use Cline\WsdlBuilder\WsExtensions\Policy\PolicyOperator;
+use Illuminate\Support\Facades\Date;
 
 describe('WS-Eventing Support', function (): void {
     describe('DeliveryMode', function (): void {
@@ -192,7 +193,7 @@ describe('WS-Eventing Support', function (): void {
                 // Arrange
                 $notifyTo = new EndpointReference('http://subscriber.example.com/notify');
                 $delivery = new Delivery($notifyTo);
-                $expires = new DateTime('2025-12-31T23:59:59Z');
+                $expires = Date::parse('2025-12-31T23:59:59Z');
 
                 // Act
                 $subscribe = new Subscribe($delivery, $expires);

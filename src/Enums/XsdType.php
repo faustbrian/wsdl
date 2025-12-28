@@ -9,8 +9,6 @@
 
 namespace Cline\WsdlBuilder\Enums;
 
-use function mb_substr;
-
 /**
  * XML Schema data types.
  *

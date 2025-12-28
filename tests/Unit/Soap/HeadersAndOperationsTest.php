@@ -157,6 +157,7 @@ describe('Header', function (): void {
             $header = new Header('TestHeader', 'testPart');
 
             $header->required(true);
+
             expect($header->isRequired())->toBeTrue();
 
             $header->required(false);
@@ -268,6 +269,7 @@ describe('HeaderFault', function (): void {
             $fault = new HeaderFault('TestFault', 'testPart');
 
             $fault->required(true);
+
             expect($fault->isRequired())->toBeTrue();
 
             $fault->required(false);

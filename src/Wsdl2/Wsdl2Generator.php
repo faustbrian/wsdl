@@ -30,7 +30,6 @@ use function array_map;
 use function ctype_lower;
 use function implode;
 use function str_contains;
-use function str_starts_with;
 
 /**
  * Generates WSDL 2.0 XML from the builder.
@@ -132,6 +131,7 @@ final class Wsdl2Generator
             if ($import->schemaLocation !== null) {
                 $el->setAttribute('schemaLocation', $import->schemaLocation);
             }
+
             $schema->appendChild($el);
         }
 
@@ -358,7 +358,7 @@ final class Wsdl2Generator
 
     private function addDocumentation(DOMElement $parent, ?Documentation $doc): void
     {
-        if ($doc === null) {
+        if (!$doc instanceof Documentation) {
             return;
         }
 
@@ -390,9 +390,9 @@ final class Wsdl2Generator
         $choice = $group->getChoice();
         $all = $group->getAll();
 
-        if ($choice !== null) {
+        if ($choice instanceof Choice) {
             $this->addChoice($groupEl, $choice);
-        } elseif ($all !== null) {
+        } elseif ($all instanceof All) {
             $this->addAll($groupEl, $all);
         } elseif ($elements !== []) {
             $sequence = $this->dom->createElementNS(Wsdl2::XSD_NS, 'xs:sequence');
@@ -400,6 +400,7 @@ final class Wsdl2Generator
             foreach ($elements as $element) {
                 $this->addElementFromArray($sequence, $element);
             }
+
             $groupEl->appendChild($sequence);
         }
 
@@ -417,7 +418,7 @@ final class Wsdl2Generator
 
         $anyAttr = $group->getAnyAttribute();
 
-        if ($anyAttr !== null) {
+        if ($anyAttr instanceof AnyAttribute) {
             $this->addAnyAttribute($groupEl, $anyAttr);
         }
 
@@ -541,7 +542,7 @@ final class Wsdl2Generator
         $simpleType->setAttribute('name', $type->getName());
 
         $union = $this->dom->createElementNS(Wsdl2::XSD_NS, 'xs:union');
-        $memberTypes = array_map(fn (string $t): string => $this->prefixType($t), $type->getMemberTypes());
+        $memberTypes = array_map($this->prefixType(...), $type->getMemberTypes());
         $union->setAttribute('memberTypes', implode(' ', $memberTypes));
 
         $simpleType->appendChild($union);
@@ -566,7 +567,7 @@ final class Wsdl2Generator
         // Handle simpleContent (simple type with attributes)
         $simpleContent = $type->getSimpleContent();
 
-        if ($simpleContent !== null) {
+        if ($simpleContent instanceof SimpleContent) {
             $this->addSimpleContent($complexType, $simpleContent);
             $schema->appendChild($complexType);
 
@@ -632,7 +633,7 @@ final class Wsdl2Generator
         // Add anyAttribute
         $anyAttr = $type->getAnyAttribute();
 
-        if ($anyAttr !== null) {
+        if ($anyAttr instanceof AnyAttribute) {
             $this->addAnyAttribute($sequenceParent, $anyAttr);
         }
 
@@ -745,6 +746,7 @@ final class Wsdl2Generator
         $el = $this->dom->createElementNS(Wsdl2::XSD_NS, 'xs:anyAttribute');
         $el->setAttribute('namespace', $anyAttr->getNamespace());
         $el->setAttribute('processContents', $anyAttr->getProcessContents());
+
         $parent->appendChild($el);
     }
 

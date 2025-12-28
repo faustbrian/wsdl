@@ -10,6 +10,8 @@
 namespace Cline\WsdlBuilder\WsExtensions\ResourceFramework;
 
 use Cline\WsdlBuilder\WsExtensions\Addressing\EndpointReference;
+use Cline\WsdlBuilder\WsExtensions\Addressing\Metadata;
+use Cline\WsdlBuilder\WsExtensions\Addressing\ReferenceParameters;
 
 /**
  * Represents a WS-Resource (wsrf-r:Resource).
@@ -38,7 +40,7 @@ final class Resource
      */
     public function resourceProperties(): ResourceProperties
     {
-        if ($this->resourceProperties === null) {
+        if (!$this->resourceProperties instanceof ResourceProperties) {
             $this->resourceProperties = new ResourceProperties($this);
         }
 
@@ -50,7 +52,7 @@ final class Resource
      */
     public function resourceLifetime(): ResourceLifetime
     {
-        if ($this->resourceLifetime === null) {
+        if (!$this->resourceLifetime instanceof ResourceLifetime) {
             $this->resourceLifetime = new ResourceLifetime($this);
         }
 
@@ -85,19 +87,19 @@ final class Resource
             ],
         ];
 
-        if ($this->endpointReference->getReferenceParameters() !== null) {
+        if ($this->endpointReference->getReferenceParameters() instanceof ReferenceParameters) {
             $config['endpointReference']['referenceParameters'] = $this->endpointReference->getReferenceParameters();
         }
 
-        if ($this->endpointReference->getMetadata() !== null) {
+        if ($this->endpointReference->getMetadata() instanceof Metadata) {
             $config['endpointReference']['metadata'] = $this->endpointReference->getMetadata();
         }
 
-        if ($this->resourceProperties !== null) {
+        if ($this->resourceProperties instanceof ResourceProperties) {
             $config['resourceProperties'] = $this->resourceProperties->getConfig();
         }
 
-        if ($this->resourceLifetime !== null) {
+        if ($this->resourceLifetime instanceof ResourceLifetime) {
             $config['resourceLifetime'] = $this->resourceLifetime->getConfig();
         }
 

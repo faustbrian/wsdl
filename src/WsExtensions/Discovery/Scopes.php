@@ -17,15 +17,16 @@ use Cline\WsdlBuilder\WsExtensions\Discovery\Enums\ScopeMatchType;
  * Scopes provide a way to organize and filter services in discovery.
  *
  * @author Brian Faust <brian@cline.sh>
+ * @psalm-immutable
  */
-final class Scopes
+final readonly class Scopes
 {
     /**
      * @param array<string> $values Array of scope URIs
      */
     public function __construct(
-        private readonly ScopeMatchType $matchBy = ScopeMatchType::RFC3986,
-        private readonly array $values = [],
+        private ScopeMatchType $matchBy = ScopeMatchType::RFC3986,
+        private array $values = [],
     ) {}
 
     /**

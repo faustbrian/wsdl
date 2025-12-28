@@ -111,11 +111,11 @@ final class RequestSecurityToken
     {
         $config = [];
 
-        if ($this->tokenType !== null) {
+        if ($this->tokenType instanceof TokenType) {
             $config['tokenType'] = $this->tokenType->value;
         }
 
-        if ($this->keyType !== null) {
+        if ($this->keyType instanceof KeyType) {
             $config['keyType'] = $this->keyType->value;
         }
 
@@ -123,7 +123,7 @@ final class RequestSecurityToken
             $config['keySize'] = $this->keySize;
         }
 
-        if ($this->claims !== null) {
+        if ($this->claims instanceof Claims) {
             $config['claims'] = $this->claims->toArray();
         }
 

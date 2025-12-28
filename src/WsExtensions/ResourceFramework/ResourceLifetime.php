@@ -9,7 +9,7 @@
 
 namespace Cline\WsdlBuilder\WsExtensions\ResourceFramework;
 
-use DateTimeImmutable;
+use Carbon\CarbonImmutable;
 use DateTimeInterface;
 
 /**
@@ -36,7 +36,7 @@ final class ResourceLifetime
     public function __construct(
         private readonly mixed $parent = null,
     ) {
-        $this->currentTime = new DateTimeImmutable();
+        $this->currentTime = CarbonImmutable::now();
     }
 
     /**
@@ -112,7 +112,7 @@ final class ResourceLifetime
             'immediateTermination' => $this->immediateTermination,
         ];
 
-        if ($this->terminationTime !== null) {
+        if ($this->terminationTime instanceof DateTimeInterface) {
             $config['terminationTime'] = $this->terminationTime->format(DateTimeInterface::ATOM);
         }
 

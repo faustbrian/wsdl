@@ -9,6 +9,8 @@
 
 namespace Cline\WsdlBuilder\WsExtensions\Notification;
 
+use Cline\WsdlBuilder\WsExtensions\Addressing\EndpointReference;
+
 /**
  * Factory for WS-Notification policy assertions.
  *
@@ -34,7 +36,7 @@ final class NotificationPolicy
     /**
      * Create a NotificationConsumer with an endpoint reference.
      */
-    public static function notificationConsumer(\Cline\WsdlBuilder\WsExtensions\Addressing\EndpointReference $endpoint): NotificationConsumer
+    public static function notificationConsumer(EndpointReference $endpoint): NotificationConsumer
     {
         return new NotificationConsumer($endpoint);
     }

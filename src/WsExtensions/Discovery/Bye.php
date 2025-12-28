@@ -17,11 +17,12 @@ use Cline\WsdlBuilder\WsExtensions\Addressing\EndpointReference;
  * Sent by a service when it is going offline.
  *
  * @author Brian Faust <brian@cline.sh>
+ * @psalm-immutable
  */
-final class Bye
+final readonly class Bye
 {
     public function __construct(
-        private readonly EndpointReference $endpointReference,
+        private EndpointReference $endpointReference,
     ) {}
 
     /**

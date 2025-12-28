@@ -10,6 +10,8 @@
 namespace Cline\WsdlBuilder\WsExtensions\MetadataExchange;
 
 use Cline\WsdlBuilder\WsExtensions\Addressing\EndpointReference;
+use Cline\WsdlBuilder\WsExtensions\Addressing\Metadata;
+use Cline\WsdlBuilder\WsExtensions\Addressing\ReferenceParameters;
 
 /**
  * Represents a WS-MetadataExchange metadata reference.
@@ -70,11 +72,11 @@ final class MetadataReference
             ],
         ];
 
-        if ($this->address->getReferenceParameters() !== null) {
+        if ($this->address->getReferenceParameters() instanceof ReferenceParameters) {
             $result['address']['referenceParameters'] = $this->address->getReferenceParameters();
         }
 
-        if ($this->address->getMetadata() !== null) {
+        if ($this->address->getMetadata() instanceof Metadata) {
             $result['address']['metadata'] = $this->address->getMetadata();
         }
 

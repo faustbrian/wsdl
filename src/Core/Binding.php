@@ -25,6 +25,9 @@ use RuntimeException;
 
 use function array_values;
 use function end;
+use function sprintf;
+use function throw_if;
+use function throw_unless;
 
 /**
  * Represents a WSDL binding.
@@ -39,7 +42,7 @@ final class Binding
 
     private BindingUse $use;
 
-    private string $transport;
+    private string $transport = Wsdl::HTTP_TRANSPORT;
 
     /** @var array<string, BindingOperation> */
     private array $operations = [];
@@ -60,7 +63,6 @@ final class Binding
     ) {
         $this->style = $wsdl->getDefaultStyle();
         $this->use = $wsdl->getDefaultUse();
-        $this->transport = Wsdl::HTTP_TRANSPORT;
     }
 
     /**
@@ -120,13 +122,11 @@ final class Binding
         $operations = array_values($this->operations);
         $lastOperation = end($operations);
 
-        if ($lastOperation === false) {
-            throw new RuntimeException('No operation exists to add header to');
-        }
+        throw_if($lastOperation === false, RuntimeException::class, 'No operation exists to add header to');
 
         $header = new Header($message, $part);
 
-        if ($use !== null) {
+        if ($use instanceof BindingUse) {
             $header->use($use);
         }
 
@@ -151,15 +151,11 @@ final class Binding
         $operations = array_values($this->operations);
         $lastOperation = end($operations);
 
-        if ($lastOperation === false) {
-            throw new RuntimeException('No operation exists to add header fault to');
-        }
+        throw_if($lastOperation === false, RuntimeException::class, 'No operation exists to add header fault to');
 
         $headers = $lastOperation->getHeaders();
 
-        if (empty($headers)) {
-            throw new RuntimeException('No header exists to add fault to');
-        }
+        throw_if(empty($headers), RuntimeException::class, 'No header exists to add fault to');
 
         $lastHeader = end($headers);
         $lastHeader->headerFault($message, $part)->use($use);
@@ -175,9 +171,7 @@ final class Binding
         $operations = array_values($this->operations);
         $lastOperation = end($operations);
 
-        if ($lastOperation === false) {
-            throw new RuntimeException('No operation exists to add MIME to');
-        }
+        throw_if($lastOperation === false, RuntimeException::class, 'No operation exists to add MIME to');
 
         $mime = new MimeMultipartRelated($this);
         $lastOperation->setInputMime($mime);
@@ -193,9 +187,7 @@ final class Binding
         $operations = array_values($this->operations);
         $lastOperation = end($operations);
 
-        if ($lastOperation === false) {
-            throw new RuntimeException('No operation exists to add MIME to');
-        }
+        throw_if($lastOperation === false, RuntimeException::class, 'No operation exists to add MIME to');
 
         $mime = new MimeMultipartRelated($this);
         $lastOperation->setOutputMime($mime);
@@ -211,7 +203,7 @@ final class Binding
         return match ($direction) {
             'input' => $this->inputMime(),
             'output' => $this->outputMime(),
-            default => throw new RuntimeException("Invalid direction '{$direction}', expected 'input' or 'output'"),
+            default => throw new RuntimeException(sprintf("Invalid direction '%s', expected 'input' or 'output'", $direction)),
         };
     }
 
@@ -223,9 +215,7 @@ final class Binding
         $operations = array_values($this->operations);
         $lastOperation = end($operations);
 
-        if ($lastOperation === false) {
-            throw new RuntimeException('No operation exists to add HTTP operation to');
-        }
+        throw_if($lastOperation === false, RuntimeException::class, 'No operation exists to add HTTP operation to');
 
         $httpOp = new HttpOperation($location);
         $lastOperation->setHttpOperation($httpOp);
@@ -241,9 +231,7 @@ final class Binding
         $operations = array_values($this->operations);
         $lastOperation = end($operations);
 
-        if ($lastOperation === false) {
-            throw new RuntimeException('No operation exists to add HTTP URL-encoded to');
-        }
+        throw_if($lastOperation === false, RuntimeException::class, 'No operation exists to add HTTP URL-encoded to');
 
         $lastOperation->setHttpUrlEncoded(HttpUrlEncoded::create());
 
@@ -258,9 +246,7 @@ final class Binding
         $operations = array_values($this->operations);
         $lastOperation = end($operations);
 
-        if ($lastOperation === false) {
-            throw new RuntimeException('No operation exists to add HTTP URL-replacement to');
-        }
+        throw_if($lastOperation === false, RuntimeException::class, 'No operation exists to add HTTP URL-replacement to');
 
         $lastOperation->setHttpUrlReplacement(HttpUrlReplacement::create());
 
@@ -302,11 +288,7 @@ final class Binding
      */
     public function faultAction(string $operationName, string $faultName, string $action): self
     {
-        if (!isset($this->actions[$operationName])) {
-            throw new RuntimeException(
-                "No action defined for operation '{$operationName}'. Call action() first.",
-            );
-        }
+        throw_unless(isset($this->actions[$operationName]), RuntimeException::class, sprintf("No action defined for operation '%s'. Call action() first.", $operationName));
 
         $existingAction = $this->actions[$operationName];
         $faultActions = $existingAction->faultActions ?? [];

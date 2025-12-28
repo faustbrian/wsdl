@@ -18,12 +18,13 @@ use Cline\WsdlBuilder\WsExtensions\Addressing\EndpointReference;
  * returned when a subscription is successfully created.
  *
  * @author Brian Faust <brian@cline.sh>
+ * @psalm-immutable
  */
-final class Subscription
+final readonly class Subscription
 {
     public function __construct(
-        private readonly EndpointReference $subscriptionManager,
-        private readonly string $expires,
+        private EndpointReference $subscriptionManager,
+        private string $expires,
     ) {}
 
     public function getSubscriptionManager(): EndpointReference

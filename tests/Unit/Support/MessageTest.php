@@ -7,7 +7,6 @@
  * file that was distributed with this source code.
  */
 
-use Cline\WsdlBuilder\Core\Message;
 use Cline\WsdlBuilder\Core\MessagePart;
 use Cline\WsdlBuilder\Enums\XsdType;
 use Cline\WsdlBuilder\Wsdl;

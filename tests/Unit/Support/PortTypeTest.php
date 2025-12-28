@@ -7,7 +7,6 @@
  * file that was distributed with this source code.
  */
 
-use Cline\WsdlBuilder\Core\PortType;
 use Cline\WsdlBuilder\Core\PortTypeOperation;
 use Cline\WsdlBuilder\Wsdl;
 

@@ -14,11 +14,12 @@ namespace Cline\WsdlBuilder\WsExtensions\Mime;
  * Specifies that a part should be in XML format.
  *
  * @author Brian Faust <brian@cline.sh>
+ * @psalm-immutable
  */
-final class MimeXml
+final readonly class MimeXml
 {
     public function __construct(
-        private readonly ?string $part = null,
+        private ?string $part = null,
     ) {}
 
     /**
