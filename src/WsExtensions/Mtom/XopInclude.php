@@ -17,6 +17,7 @@ namespace Cline\WsdlBuilder\WsExtensions\Mtom;
  * rather than inline base64-encoded data.
  *
  * @author Brian Faust <brian@cline.sh>
+ * @psalm-immutable
  */
 final readonly class XopInclude
 {

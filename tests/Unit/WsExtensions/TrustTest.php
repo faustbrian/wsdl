@@ -594,7 +594,7 @@ describe('WS-Trust', function (): void {
                 $bootstrapPolicy = new Policy('BootstrapPolicy');
                 $bootstrapPolicy->all()->assertion(
                     'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702',
-                    'TransportBinding'
+                    'TransportBinding',
                 );
 
                 $issuer = new EndpointReference('https://sts.example.com/sc');

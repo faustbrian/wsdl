@@ -20,9 +20,9 @@ namespace Cline\WsdlBuilder\WsExtensions\Addressing;
 final readonly class Action
 {
     /**
-     * @param string $inputAction Input message action URI
-     * @param string|null $outputAction Output message action URI (optional)
-     * @param array<string, string>|null $faultActions Fault name => action URI mapping (optional)
+     * @param string                     $inputAction  Input message action URI
+     * @param null|string                $outputAction Output message action URI (optional)
+     * @param null|array<string, string> $faultActions Fault name => action URI mapping (optional)
      */
     public function __construct(
         public string $inputAction,

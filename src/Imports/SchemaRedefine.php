@@ -9,11 +9,11 @@
 
 namespace Cline\WsdlBuilder\Imports;
 
-use Cline\WsdlBuilder\Xsd\Types\ComplexType;
-use Cline\WsdlBuilder\Xsd\Types\SimpleType;
 use Cline\WsdlBuilder\Wsdl;
 use Cline\WsdlBuilder\Xsd\Attributes\AttributeGroup;
 use Cline\WsdlBuilder\Xsd\Groups\ElementGroup;
+use Cline\WsdlBuilder\Xsd\Types\ComplexType;
+use Cline\WsdlBuilder\Xsd\Types\SimpleType;
 
 /**
  * Represents an XSD schema redefine element for modifying types from another schema.

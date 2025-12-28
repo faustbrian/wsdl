@@ -9,8 +9,10 @@
 
 namespace Cline\WsdlBuilder\Xsd\DerivedTypes;
 
-use Cline\WsdlBuilder\Enums\XsdType;
 use Cline\WsdlBuilder\Contracts\WsdlBuilderInterface;
+use Cline\WsdlBuilder\Enums\XsdType;
+
+use function array_values;
 
 /**
  * Represents an XSD list type (space-separated values).

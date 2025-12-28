@@ -9,12 +9,12 @@
 
 namespace Cline\WsdlBuilder\Xsd\Types;
 
+use Cline\WsdlBuilder\Contracts\WsdlBuilderInterface;
 use Cline\WsdlBuilder\Documentation\Documentation;
 use Cline\WsdlBuilder\Enums\XsdType;
-use Cline\WsdlBuilder\Contracts\WsdlBuilderInterface;
 use Cline\WsdlBuilder\Xsd\Annotations\Annotation;
-use Cline\WsdlBuilder\Xsd\Attributes\Attribute;
 use Cline\WsdlBuilder\Xsd\Attributes\AnyAttribute;
+use Cline\WsdlBuilder\Xsd\Attributes\Attribute;
 use Cline\WsdlBuilder\Xsd\Compositors\All;
 use Cline\WsdlBuilder\Xsd\Compositors\Any;
 use Cline\WsdlBuilder\Xsd\Compositors\Choice;
@@ -48,11 +48,11 @@ final class ComplexType
 
     private bool $abstract = false;
 
-    /** @var array<int, Choice|All|Any> */
+    /** @var array<int, All|Any|Choice> */
     private array $compositors = [];
 
-
     private ?Annotation $annotation = null;
+
     private ?Documentation $documentation = null;
 
     /** @var array<int, Key> */
@@ -356,7 +356,7 @@ final class ComplexType
     }
 
     /**
-     * @return array<int, Choice|All|Any>
+     * @return array<int, All|Any|Choice>
      */
     public function getCompositors(): array
     {

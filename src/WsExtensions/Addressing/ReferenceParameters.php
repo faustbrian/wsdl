@@ -18,9 +18,7 @@ namespace Cline\WsdlBuilder\WsExtensions\Addressing;
  */
 final class ReferenceParameters
 {
-    /**
-     * @var array<int, array{namespace: string, localName: string, value: string}>
-     */
+    /** @var array<int, array{namespace: string, localName: string, value: string}> */
     private array $parameters = [];
 
     public function __construct(

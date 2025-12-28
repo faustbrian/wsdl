@@ -43,7 +43,7 @@ final class NotificationPolicy
      * Create a Topic definition.
      *
      * @param array<int, string> $messageTypes
-     * @param array<int, Topic> $children
+     * @param array<int, Topic>  $children
      */
     public static function topic(string $name, array $messageTypes = [], array $children = []): Topic
     {

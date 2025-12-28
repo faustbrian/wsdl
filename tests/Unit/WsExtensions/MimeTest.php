@@ -126,7 +126,7 @@ describe('MIME', function (): void {
 
             test('end returns parent object', function (): void {
                 // Arrange
-                $parent = new \stdClass();
+                $parent = new stdClass();
                 $part = new MimePart('test', $parent);
 
                 // Act
@@ -227,7 +227,7 @@ describe('MIME', function (): void {
 
             test('end returns parent object', function (): void {
                 // Arrange
-                $parent = new \stdClass();
+                $parent = new stdClass();
                 $multipart = new MimeMultipartRelated($parent);
 
                 // Act
@@ -385,7 +385,7 @@ describe('MIME', function (): void {
                     ->and($xml)->toContain('wsdl:output');
 
                 // Count mime:multipartRelated occurrences (should be 2: one for input, one for output)
-                $count = substr_count($xml, '<mime:multipartRelated');
+                $count = mb_substr_count($xml, '<mime:multipartRelated');
                 expect($count)->toBe(2);
             });
 
@@ -419,7 +419,7 @@ describe('MIME', function (): void {
                 $xml = $generator->generate();
 
                 // Assert
-                $partCount = substr_count($xml, '<mime:part');
+                $partCount = mb_substr_count($xml, '<mime:part');
                 expect($partCount)->toBe(4) // 1 for soap:body + 3 for attachments
                     ->and($xml)->toContain('type="image/jpeg"')
                     ->and($xml)->toContain('type="application/pdf"')

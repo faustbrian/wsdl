@@ -15,6 +15,7 @@ use Cline\WsdlBuilder\WsExtensions\Eventing\EventingPolicy;
 use Cline\WsdlBuilder\WsExtensions\Eventing\Filter;
 use Cline\WsdlBuilder\WsExtensions\Eventing\Subscribe;
 use Cline\WsdlBuilder\WsExtensions\Eventing\Subscription;
+use Cline\WsdlBuilder\WsExtensions\Policy\PolicyOperator;
 
 describe('WS-Eventing Support', function (): void {
     describe('DeliveryMode', function (): void {
@@ -62,7 +63,7 @@ describe('WS-Eventing Support', function (): void {
                 // Arrange & Act
                 $filter = new Filter(
                     'http://www.w3.org/TR/1999/REC-xpath-19991116',
-                    '//event[@type="critical"]'
+                    '//event[@type="critical"]',
                 );
 
                 // Assert
@@ -74,7 +75,7 @@ describe('WS-Eventing Support', function (): void {
                 // Arrange & Act
                 $filter = new Filter(
                     'http://www.w3.org/TR/1999/REC-xpath-19991116',
-                    '/events/event[@severity="high"]'
+                    '/events/event[@severity="high"]',
                 );
 
                 // Assert
@@ -86,7 +87,7 @@ describe('WS-Eventing Support', function (): void {
                 // Arrange & Act
                 $filter = new Filter(
                     'http://example.com/custom-filter',
-                    'priority > 5 AND category = "alert"'
+                    'priority > 5 AND category = "alert"',
                 );
 
                 // Assert
@@ -208,7 +209,7 @@ describe('WS-Eventing Support', function (): void {
                 $endTo = new EndpointReference('http://subscriber.example.com/end-notification');
 
                 // Act
-                $subscribe = (new Subscribe($delivery))->endTo($endTo);
+                $subscribe = new Subscribe($delivery)->endTo($endTo);
 
                 // Assert
                 expect($subscribe->getEndTo())->toBe($endTo)
@@ -221,11 +222,11 @@ describe('WS-Eventing Support', function (): void {
                 $delivery = new Delivery($notifyTo);
                 $filter = new Filter(
                     'http://www.w3.org/TR/1999/REC-xpath-19991116',
-                    '//event[@type="critical"]'
+                    '//event[@type="critical"]',
                 );
 
                 // Act
-                $subscribe = (new Subscribe($delivery))->filter($filter);
+                $subscribe = new Subscribe($delivery)->filter($filter);
 
                 // Assert
                 expect($subscribe->getFilter())->toBe($filter)
@@ -240,11 +241,11 @@ describe('WS-Eventing Support', function (): void {
                 $endTo = new EndpointReference('http://subscriber.example.com/end-notification');
                 $filter = new Filter(
                     'http://www.w3.org/TR/1999/REC-xpath-19991116',
-                    '//event[@priority="high"]'
+                    '//event[@priority="high"]',
                 );
 
                 // Act
-                $subscribe = (new Subscribe($delivery, 'PT2H'))
+                $subscribe = new Subscribe($delivery, 'PT2H')
                     ->endTo($endTo)
                     ->filter($filter);
 
@@ -390,12 +391,12 @@ describe('WS-Eventing Support', function (): void {
                     ->all()
                     ->assertion(
                         EventingPolicy::NAMESPACE_URI,
-                        'wse:EventSource'
+                        'wse:EventSource',
                     );
 
                 // Assert
                 expect($wsdl->getPolicies())->toHaveCount(1)
-                    ->and($policy)->toBeInstanceOf(\Cline\WsdlBuilder\WsExtensions\Policy\PolicyOperator::class);
+                    ->and($policy)->toBeInstanceOf(PolicyOperator::class);
             });
 
             test('adds SubscriptionPolicy to WSDL', function (): void {
@@ -407,12 +408,12 @@ describe('WS-Eventing Support', function (): void {
                     ->all()
                     ->assertion(
                         EventingPolicy::NAMESPACE_URI,
-                        'wse:SubscriptionPolicy'
+                        'wse:SubscriptionPolicy',
                     );
 
                 // Assert
                 expect($wsdl->getPolicies())->toHaveCount(1)
-                    ->and($policy)->toBeInstanceOf(\Cline\WsdlBuilder\WsExtensions\Policy\PolicyOperator::class);
+                    ->and($policy)->toBeInstanceOf(PolicyOperator::class);
             });
 
             test('creates EventSource assertion using factory method', function (): void {
@@ -425,12 +426,12 @@ describe('WS-Eventing Support', function (): void {
                     ->all()
                     ->assertion(
                         $eventSourceAssertion['namespace'],
-                        $eventSourceAssertion['type']
+                        $eventSourceAssertion['type'],
                     );
 
                 // Assert
                 expect($wsdl->getPolicies())->toHaveCount(1)
-                    ->and($policy)->toBeInstanceOf(\Cline\WsdlBuilder\WsExtensions\Policy\PolicyOperator::class);
+                    ->and($policy)->toBeInstanceOf(PolicyOperator::class);
             });
 
             test('creates SubscriptionPolicy assertion using factory method', function (): void {
@@ -445,12 +446,12 @@ describe('WS-Eventing Support', function (): void {
                     ->all()
                     ->assertion(
                         $subscriptionPolicyAssertion['namespace'],
-                        $subscriptionPolicyAssertion['type']
+                        $subscriptionPolicyAssertion['type'],
                     );
 
                 // Assert
                 expect($wsdl->getPolicies())->toHaveCount(1)
-                    ->and($policy)->toBeInstanceOf(\Cline\WsdlBuilder\WsExtensions\Policy\PolicyOperator::class);
+                    ->and($policy)->toBeInstanceOf(PolicyOperator::class);
             });
         });
     });
@@ -466,7 +467,7 @@ describe('WS-Eventing Support', function (): void {
                     ->all()
                     ->assertion(
                         EventingPolicy::NAMESPACE_URI,
-                        'wse:EventSource'
+                        'wse:EventSource',
                     );
 
                 // Add SubscriptionPolicy
@@ -474,7 +475,7 @@ describe('WS-Eventing Support', function (): void {
                     ->all()
                     ->assertion(
                         EventingPolicy::NAMESPACE_URI,
-                        'wse:SubscriptionPolicy'
+                        'wse:SubscriptionPolicy',
                     );
 
                 // Act
@@ -503,11 +504,11 @@ describe('WS-Eventing Support', function (): void {
 
                 $filter = new Filter(
                     'http://www.w3.org/TR/1999/REC-xpath-19991116',
-                    '//alert[@severity="critical" or @severity="high"]'
+                    '//alert[@severity="critical" or @severity="high"]',
                 );
 
                 // Act
-                $subscribe = (new Subscribe($delivery, 'PT24H'))
+                $subscribe = new Subscribe($delivery, 'PT24H')
                     ->endTo($endTo)
                     ->filter($filter);
 

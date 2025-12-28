@@ -7,8 +7,6 @@
  * file that was distributed with this source code.
  */
 
-use Cline\WsdlBuilder\Xsd\Types\ComplexType;
-use Cline\WsdlBuilder\Xsd\Types\SimpleType;
 use Cline\WsdlBuilder\Documentation\Documentation;
 use Cline\WsdlBuilder\Enums\XsdType;
 use Cline\WsdlBuilder\Imports\SchemaImport;
@@ -27,6 +25,8 @@ use Cline\WsdlBuilder\Xsd\Attributes\AttributeGroup;
 use Cline\WsdlBuilder\Xsd\DerivedTypes\ListType;
 use Cline\WsdlBuilder\Xsd\DerivedTypes\UnionType;
 use Cline\WsdlBuilder\Xsd\Groups\ElementGroup;
+use Cline\WsdlBuilder\Xsd\Types\ComplexType;
+use Cline\WsdlBuilder\Xsd\Types\SimpleType;
 
 describe('Wsdl2', function (): void {
     describe('Happy Paths', function (): void {

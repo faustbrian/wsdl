@@ -29,7 +29,9 @@ final class Bye
      */
     public static function create(string $address): self
     {
-        return new self(new EndpointReference($address));
+        return new self(
+            new EndpointReference($address),
+        );
     }
 
     public function getEndpointReference(): EndpointReference

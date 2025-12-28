@@ -21,7 +21,7 @@ use Cline\WsdlBuilder\WsExtensions\Addressing\EndpointReference;
 final class Hello
 {
     /**
-     * @param array<string> $types Array of QNames representing service types
+     * @param array<string> $types  Array of QNames representing service types
      * @param array<string> $xAddrs Array of transport addresses
      */
     public function __construct(

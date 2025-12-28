@@ -8,6 +8,7 @@
  */
 
 use Cline\WsdlBuilder\Wsdl;
+use Cline\WsdlBuilder\WsdlGenerator;
 use Cline\WsdlBuilder\WsExtensions\Http\HttpBinding;
 use Cline\WsdlBuilder\WsExtensions\Http\HttpOperation;
 use Cline\WsdlBuilder\WsExtensions\Http\HttpUrlEncoded;
@@ -119,7 +120,7 @@ describe('HTTP Binding Integration', function (): void {
                 ->operation('GetUser', '')
                 ->end();
 
-            $generator = new \Cline\WsdlBuilder\WsdlGenerator($wsdl);
+            $generator = new WsdlGenerator($wsdl);
             $xml = $generator->generate();
 
             expect($xml)->toContain('xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"')
@@ -149,7 +150,7 @@ describe('HTTP Binding Integration', function (): void {
             $lastOperation = end($operations);
             $lastOperation->setHttpOperation(HttpOperation::create('/users/(userId)'));
 
-            $generator = new \Cline\WsdlBuilder\WsdlGenerator($wsdl);
+            $generator = new WsdlGenerator($wsdl);
             $xml = $generator->generate();
 
             expect($xml)->toContain('http:operation')
@@ -179,7 +180,7 @@ describe('HTTP Binding Integration', function (): void {
             $lastOperation->setHttpOperation(HttpOperation::create('/users'));
             $lastOperation->setHttpUrlEncoded(HttpUrlEncoded::create());
 
-            $generator = new \Cline\WsdlBuilder\WsdlGenerator($wsdl);
+            $generator = new WsdlGenerator($wsdl);
             $xml = $generator->generate();
 
             expect($xml)->toContain('http:urlEncoded');
@@ -208,7 +209,7 @@ describe('HTTP Binding Integration', function (): void {
             $lastOperation->setHttpOperation(HttpOperation::create('/users/(userId)'));
             $lastOperation->setHttpUrlReplacement(HttpUrlReplacement::create());
 
-            $generator = new \Cline\WsdlBuilder\WsdlGenerator($wsdl);
+            $generator = new WsdlGenerator($wsdl);
             $xml = $generator->generate();
 
             expect($xml)->toContain('http:urlReplacement');
@@ -230,7 +231,7 @@ describe('HTTP Binding Integration', function (): void {
                 ->operation('GetUser', '')
                 ->end();
 
-            $generator = new \Cline\WsdlBuilder\WsdlGenerator($wsdl);
+            $generator = new WsdlGenerator($wsdl);
             $xml = $generator->generate();
 
             // Should have HTTP binding, not SOAP binding

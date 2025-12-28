@@ -9,10 +9,10 @@
 
 use Cline\WsdlBuilder\Enums\BindingUse;
 use Cline\WsdlBuilder\Enums\XsdType;
+use Cline\WsdlBuilder\Operations\Notification;
+use Cline\WsdlBuilder\Operations\OneWay;
 use Cline\WsdlBuilder\Soap\Header;
 use Cline\WsdlBuilder\Soap\HeaderFault;
-use Cline\WsdlBuilder\Operations\OneWay;
-use Cline\WsdlBuilder\Operations\Notification;
 use Cline\WsdlBuilder\Wsdl;
 
 describe('Header', function (): void {

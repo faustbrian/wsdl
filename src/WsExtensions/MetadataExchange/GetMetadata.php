@@ -17,12 +17,13 @@ use Cline\WsdlBuilder\WsExtensions\MetadataExchange\Enums\MetadataDialect;
  * Used to request specific types of metadata from a service endpoint.
  *
  * @author Brian Faust <brian@cline.sh>
+ * @psalm-immutable
  */
 final readonly class GetMetadata
 {
     /**
-     * @param MetadataDialect $dialect Type of metadata requested
-     * @param string|null $identifier Optional identifier for specific metadata
+     * @param MetadataDialect $dialect    Type of metadata requested
+     * @param null|string     $identifier Optional identifier for specific metadata
      */
     public function __construct(
         public MetadataDialect $dialect,

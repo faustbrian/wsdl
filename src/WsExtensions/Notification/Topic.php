@@ -19,9 +19,9 @@ namespace Cline\WsdlBuilder\WsExtensions\Notification;
 final class Topic
 {
     /**
-     * @param string $name Topic name
+     * @param string             $name         Topic name
      * @param array<int, string> $messageTypes QNames of message types
-     * @param array<int, Topic> $children Subtopics
+     * @param array<int, self>   $children     Subtopics
      */
     public function __construct(
         private readonly string $name,
@@ -42,7 +42,7 @@ final class Topic
     /**
      * Add a subtopic to this topic.
      */
-    public function addChild(Topic $child): self
+    public function addChild(self $child): self
     {
         $this->children[] = $child;
 
@@ -63,7 +63,7 @@ final class Topic
     }
 
     /**
-     * @return array<int, Topic>
+     * @return array<int, self>
      */
     public function getChildren(): array
     {

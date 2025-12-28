@@ -9,8 +9,11 @@
 
 namespace Cline\WsdlBuilder\Xsd\DerivedTypes;
 
-use Cline\WsdlBuilder\Enums\XsdType;
 use Cline\WsdlBuilder\Contracts\WsdlBuilderInterface;
+use Cline\WsdlBuilder\Enums\XsdType;
+
+use function array_map;
+use function array_values;
 
 /**
  * Represents an XSD union type (value can be one of several types).
@@ -33,7 +36,7 @@ final class UnionType
     public function memberTypes(XsdType|string ...$types): self
     {
         $this->memberTypesArray = array_values(array_map(
-            fn ($type) => $type instanceof XsdType ? $type->value : $type,
+            fn (XsdType|string $type): string => $type instanceof XsdType ? $type->value : $type,
             $types,
         ));
 

@@ -13,14 +13,18 @@ use Cline\WsdlBuilder\Wsdl;
 use Cline\WsdlBuilder\WsExtensions\Addressing\Action;
 use Cline\WsdlBuilder\WsExtensions\Addressing\EndpointReference;
 use Cline\WsdlBuilder\WsExtensions\Addressing\Enums\AddressingVersion;
+use Cline\WsdlBuilder\WsExtensions\Addressing\Metadata;
+use Cline\WsdlBuilder\WsExtensions\Addressing\ReferenceParameters;
 use Cline\WsdlBuilder\WsExtensions\Policy\Policy;
 use Cline\WsdlBuilder\WsExtensions\Policy\PolicyAssertion;
+use Cline\WsdlBuilder\WsExtensions\Policy\PolicyOperator;
 use Cline\WsdlBuilder\WsExtensions\Policy\PolicyReference;
 use Cline\WsdlBuilder\WsExtensions\Security\Enums\AlgorithmSuite;
 use Cline\WsdlBuilder\WsExtensions\Security\Enums\SecurityTokenInclusion;
 use Cline\WsdlBuilder\WsExtensions\Security\SecurityPolicy;
 use Cline\WsdlBuilder\WsExtensions\Security\TokenAssertion;
 use Cline\WsdlBuilder\WsExtensions\Security\TransportBinding;
+use Cline\WsdlBuilder\WsExtensions\Security\TransportToken;
 
 describe('WS-Policy', function (): void {
     describe('Policy', function (): void {
@@ -51,7 +55,7 @@ describe('WS-Policy', function (): void {
                 $operator = $policy->all();
 
                 // Assert
-                expect($operator)->toBeInstanceOf(\Cline\WsdlBuilder\WsExtensions\Policy\PolicyOperator::class)
+                expect($operator)->toBeInstanceOf(PolicyOperator::class)
                     ->and($operator->getType())->toBe('all')
                     ->and($policy->getOperators())->toHaveCount(1);
             });
@@ -64,7 +68,7 @@ describe('WS-Policy', function (): void {
                 $operator = $policy->exactlyOne();
 
                 // Assert
-                expect($operator)->toBeInstanceOf(\Cline\WsdlBuilder\WsExtensions\Policy\PolicyOperator::class)
+                expect($operator)->toBeInstanceOf(PolicyOperator::class)
                     ->and($operator->getType())->toBe('exactlyOne')
                     ->and($policy->getOperators())->toHaveCount(1);
             });
@@ -127,7 +131,7 @@ describe('WS-Policy', function (): void {
 
             test('end returns parent object', function (): void {
                 // Arrange
-                $parent = new \stdClass();
+                $parent = new stdClass();
                 $policy = new Policy('TestPolicy', 'TestPolicyName', $parent);
 
                 // Act
@@ -161,7 +165,7 @@ describe('WS-Policy', function (): void {
                 $nestedOperator = $operator->all();
 
                 // Assert
-                expect($nestedOperator)->toBeInstanceOf(\Cline\WsdlBuilder\WsExtensions\Policy\PolicyOperator::class)
+                expect($nestedOperator)->toBeInstanceOf(PolicyOperator::class)
                     ->and($nestedOperator->getType())->toBe('all')
                     ->and($operator->getNestedOperators())->toHaveCount(1);
             });
@@ -175,7 +179,7 @@ describe('WS-Policy', function (): void {
                 $nestedOperator = $operator->exactlyOne();
 
                 // Assert
-                expect($nestedOperator)->toBeInstanceOf(\Cline\WsdlBuilder\WsExtensions\Policy\PolicyOperator::class)
+                expect($nestedOperator)->toBeInstanceOf(PolicyOperator::class)
                     ->and($nestedOperator->getType())->toBe('exactlyOne')
                     ->and($operator->getNestedOperators())->toHaveCount(1);
             });
@@ -274,7 +278,7 @@ describe('WS-Policy', function (): void {
                 $reference = new PolicyReference(
                     '#MyPolicy',
                     'abc123',
-                    'http://www.w3.org/2001/04/xmlenc#sha256'
+                    'http://www.w3.org/2001/04/xmlenc#sha256',
                 );
 
                 // Assert
@@ -411,7 +415,7 @@ describe('WS-Addressing', function (): void {
                 // Arrange & Act
                 $action = new Action(
                     'http://example.com/GetUser',
-                    'http://example.com/GetUserResponse'
+                    'http://example.com/GetUserResponse',
                 );
 
                 // Assert
@@ -430,7 +434,7 @@ describe('WS-Addressing', function (): void {
                 $action = new Action(
                     'http://example.com/GetUser',
                     'http://example.com/GetUserResponse',
-                    $faultActions
+                    $faultActions,
                 );
 
                 // Assert
@@ -460,7 +464,7 @@ describe('WS-Addressing', function (): void {
                 $params = $epr->referenceParameters();
 
                 // Assert
-                expect($params)->toBeInstanceOf(\Cline\WsdlBuilder\WsExtensions\Addressing\ReferenceParameters::class)
+                expect($params)->toBeInstanceOf(ReferenceParameters::class)
                     ->and($epr->getReferenceParameters())->toBe($params);
             });
 
@@ -484,7 +488,7 @@ describe('WS-Addressing', function (): void {
                 $metadata = $epr->metadata();
 
                 // Assert
-                expect($metadata)->toBeInstanceOf(\Cline\WsdlBuilder\WsExtensions\Addressing\Metadata::class)
+                expect($metadata)->toBeInstanceOf(Metadata::class)
                     ->and($epr->getMetadata())->toBe($metadata);
             });
 
@@ -689,7 +693,7 @@ describe('WS-Addressing', function (): void {
                 $result = $binding->action(
                     'GetUser',
                     'http://example.com/GetUser',
-                    'http://example.com/GetUserResponse'
+                    'http://example.com/GetUserResponse',
                 );
 
                 // Assert
@@ -724,8 +728,8 @@ describe('WS-Addressing', function (): void {
                     ->operation('GetUser', 'urn:GetUser');
 
                 // Act & Assert
-                expect(fn() => $binding->faultAction('GetUser', 'InvalidUserFault', 'http://example.com/InvalidUserFault'))
-                    ->toThrow(\RuntimeException::class, "No action defined for operation 'GetUser'. Call action() first.");
+                expect(fn () => $binding->faultAction('GetUser', 'InvalidUserFault', 'http://example.com/InvalidUserFault'))
+                    ->toThrow(RuntimeException::class, "No action defined for operation 'GetUser'. Call action() first.");
             });
         });
     });
@@ -925,7 +929,7 @@ describe('WS-Security', function (): void {
                 $token = $binding->transportToken();
 
                 // Assert
-                expect($token)->toBeInstanceOf(\Cline\WsdlBuilder\WsExtensions\Security\TransportToken::class)
+                expect($token)->toBeInstanceOf(TransportToken::class)
                     ->and($token->isHttpsToken())->toBeFalse()
                     ->and($token->isClientCertificateRequired())->toBeFalse();
             });
@@ -1016,7 +1020,7 @@ describe('WS-Security', function (): void {
 
             test('creates transport binding with parent', function (): void {
                 // Arrange
-                $parent = new \stdClass();
+                $parent = new stdClass();
 
                 // Act
                 $binding = new TransportBinding($parent);
@@ -1033,7 +1037,7 @@ describe('WS-Security', function (): void {
                 $token = $binding->transportToken();
 
                 // Assert
-                expect($token)->toBeInstanceOf(\Cline\WsdlBuilder\WsExtensions\Security\TransportToken::class)
+                expect($token)->toBeInstanceOf(TransportToken::class)
                     ->and($binding->getTransportToken())->toBe($token);
             });
 
@@ -1129,7 +1133,7 @@ describe('WS-Security', function (): void {
 
             test('end returns parent when parent exists', function (): void {
                 // Arrange
-                $parent = new \stdClass();
+                $parent = new stdClass();
                 $binding = new TransportBinding($parent);
 
                 // Act
@@ -1166,7 +1170,7 @@ describe('WS-Security', function (): void {
 
             test('creates transport binding with parent', function (): void {
                 // Arrange
-                $parent = new \stdClass();
+                $parent = new stdClass();
 
                 // Act
                 $binding = SecurityPolicy::transportBinding($parent);

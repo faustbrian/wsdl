@@ -9,6 +9,8 @@
 
 namespace Cline\WsdlBuilder\WsExtensions\MetadataExchange;
 
+use function array_map;
+
 /**
  * Represents a WS-MetadataExchange Metadata response container.
  *
@@ -53,7 +55,7 @@ final class Metadata
     public function toArray(): array
     {
         return [
-            'metadataSections' => \array_map(
+            'metadataSections' => array_map(
                 static fn (MetadataSection $section): array => $section->toArray(),
                 $this->metadataSections,
             ),

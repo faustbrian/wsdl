@@ -43,7 +43,7 @@ final class EventingPolicy
      * This assertion describes the subscription policies supported
      * by the event source, such as delivery modes and filter dialects.
      *
-     * @param  array<string, mixed>  $policies
+     * @param  array<string, mixed> $policies
      * @return array<string, mixed>
      */
     public static function subscriptionPolicy(array $policies = []): array

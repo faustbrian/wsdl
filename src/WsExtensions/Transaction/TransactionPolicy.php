@@ -29,7 +29,7 @@ final class TransactionPolicy
     /**
      * Create an AtomicTransaction assertion.
      *
-     * @param mixed|null $parent Optional parent object for fluent chaining
+     * @param null|mixed $parent Optional parent object for fluent chaining
      */
     public static function atomicTransaction(mixed $parent = null): AtomicTransaction
     {
@@ -39,7 +39,7 @@ final class TransactionPolicy
     /**
      * Create a BusinessActivity assertion.
      *
-     * @param mixed|null $parent Optional parent object for fluent chaining
+     * @param null|mixed $parent Optional parent object for fluent chaining
      */
     public static function businessActivity(mixed $parent = null): BusinessActivity
     {
@@ -49,7 +49,7 @@ final class TransactionPolicy
     /**
      * Create a TransactionFlow configuration.
      *
-     * @param mixed|null $parent Optional parent object for fluent chaining
+     * @param null|mixed $parent Optional parent object for fluent chaining
      */
     public static function transactionFlow(mixed $parent = null): TransactionFlow
     {
@@ -59,7 +59,7 @@ final class TransactionPolicy
     /**
      * Create a simple AT assertion array.
      *
-     * @param string $version AT version (1.0, 1.1, or 1.2)
+     * @param  string               $version AT version (1.0, 1.1, or 1.2)
      * @return array<string, mixed>
      */
     public static function at(string $version = '1.0'): array
@@ -74,7 +74,7 @@ final class TransactionPolicy
     /**
      * Create a simple BA assertion array.
      *
-     * @param string $version BA version (1.0, 1.1, or 1.2)
+     * @param  string               $version BA version (1.0, 1.1, or 1.2)
      * @return array<string, mixed>
      */
     public static function ba(string $version = '1.0'): array

@@ -218,9 +218,9 @@ describe('Annotation', function (): void {
 
             $complexType = $wsdl->complexType('Person')
                 ->annotation()
-                    ->documentation('Represents a person entity')
-                    ->appInfo('{"table": "persons"}')
-                    ->end()
+                ->documentation('Represents a person entity')
+                ->appInfo('{"table": "persons"}')
+                ->end()
                 ->element('name', 'xsd:string')
                 ->element('age', 'xsd:int');
 
@@ -251,11 +251,11 @@ describe('Annotation', function (): void {
 
             $complexType = $wsdl->complexType('Order')
                 ->annotation()
-                    ->documentation('Order entity for e-commerce', 'en', 'http://example.com/docs/order')
-                    ->documentation('Entidad de pedido para comercio electrónico', 'es')
-                    ->appInfo('{"table": "orders", "version": "2.0"}', 'http://example.com/db')
-                    ->appInfo('<validation><required>customer_id</required></validation>')
-                    ->end()
+                ->documentation('Order entity for e-commerce', 'en', 'http://example.com/docs/order')
+                ->documentation('Entidad de pedido para comercio electrónico', 'es')
+                ->appInfo('{"table": "orders", "version": "2.0"}', 'http://example.com/db')
+                ->appInfo('<validation><required>customer_id</required></validation>')
+                ->end()
                 ->element('orderId', 'xsd:string')
                 ->element('customerId', 'xsd:string')
                 ->element('total', 'xsd:decimal');
@@ -330,7 +330,7 @@ describe('Annotation', function (): void {
             $docs = $annotation->getDocumentations();
 
             expect($docs[0]->content)->toBe($longContent)
-                ->and(strlen($docs[0]->content))->toBeGreaterThan(1000);
+                ->and(mb_strlen($docs[0]->content))->toBeGreaterThan(1_000);
         });
 
         test('handles annotation with special characters in source urls', function (): void {

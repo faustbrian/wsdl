@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-use Cline\WsdlBuilder\Enums\BindingStyle;
-use Cline\WsdlBuilder\Enums\BindingUse;
 use Cline\WsdlBuilder\Core\Binding;
 use Cline\WsdlBuilder\Core\BindingOperation;
+use Cline\WsdlBuilder\Enums\BindingStyle;
+use Cline\WsdlBuilder\Enums\BindingUse;
 use Cline\WsdlBuilder\Wsdl;
 
 describe('Binding', function (): void {

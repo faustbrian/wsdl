@@ -8,8 +8,8 @@
  */
 
 use Cline\WsdlBuilder\Enums\XsdType;
-use Cline\WsdlBuilder\Xsd\Types\SimpleType;
 use Cline\WsdlBuilder\Wsdl;
+use Cline\WsdlBuilder\Xsd\Types\SimpleType;
 
 describe('SimpleType', function (): void {
     describe('Happy Paths', function (): void {

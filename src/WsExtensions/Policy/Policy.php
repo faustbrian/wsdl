@@ -58,11 +58,11 @@ final class Policy
     /**
      * Add a policy assertion.
      *
-     * @param array<string, string>|null $attributes
+     * @param null|array<string, string> $attributes
      */
     public function assertion(string $namespace, string $localName, ?array $attributes = null): self
     {
-        /** @var array<string, string>|null $attributes */
+        /** @var null|array<string, string> $attributes */
         $this->assertions[] = new PolicyAssertion($namespace, $localName, $attributes);
 
         return $this;

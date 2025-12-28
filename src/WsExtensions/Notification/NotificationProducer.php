@@ -25,9 +25,7 @@ final class NotificationProducer
 
     private bool $fixedTopicSet = false;
 
-    /**
-     * @var array<int, TopicDialect>
-     */
+    /** @var array<int, TopicDialect> */
     private array $topicExpressionDialects = [];
 
     /**

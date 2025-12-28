@@ -8,13 +8,13 @@
  */
 
 use Cline\WsdlBuilder\Enums\XsdType;
-use Cline\WsdlBuilder\Xsd\Types\ComplexType;
-use Cline\WsdlBuilder\Xsd\Types\SimpleType;
-use Cline\WsdlBuilder\Xsd\Types\Element;
 use Cline\WsdlBuilder\Imports\SchemaRedefine;
+use Cline\WsdlBuilder\Wsdl;
 use Cline\WsdlBuilder\Xsd\Attributes\AttributeGroup;
 use Cline\WsdlBuilder\Xsd\Groups\ElementGroup;
-use Cline\WsdlBuilder\Wsdl;
+use Cline\WsdlBuilder\Xsd\Types\ComplexType;
+use Cline\WsdlBuilder\Xsd\Types\Element;
+use Cline\WsdlBuilder\Xsd\Types\SimpleType;
 
 describe('SchemaRedefine', function (): void {
     describe('Happy Paths', function (): void {

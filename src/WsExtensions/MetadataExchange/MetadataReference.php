@@ -21,7 +21,7 @@ use Cline\WsdlBuilder\WsExtensions\Addressing\EndpointReference;
 final class MetadataReference
 {
     /**
-     * @param EndpointReference $address The endpoint where metadata can be retrieved
+     * @param EndpointReference    $address             The endpoint where metadata can be retrieved
      * @param array<string, mixed> $referenceProperties Optional reference properties
      */
     public function __construct(
@@ -31,8 +31,6 @@ final class MetadataReference
 
     /**
      * Add a reference property.
-     *
-     * @param mixed $value
      */
     public function addReferenceProperty(string $name, mixed $value): self
     {

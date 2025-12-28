@@ -19,7 +19,7 @@ describe('WsdlImport', function (): void {
             // Arrange & Act
             $import = new WsdlImport(
                 namespace: 'http://example.com/service',
-                location: 'http://example.com/service.wsdl'
+                location: 'http://example.com/service.wsdl',
             );
 
             // Assert
@@ -34,7 +34,7 @@ describe('WsdlImport', function (): void {
             // Act
             $result = $wsdl->import(
                 namespace: 'http://external.example.com/service',
-                location: 'http://external.example.com/service.wsdl'
+                location: 'http://external.example.com/service.wsdl',
             );
 
             // Assert
@@ -85,7 +85,7 @@ describe('SchemaImport', function (): void {
             // Arrange & Act
             $import = new SchemaImport(
                 namespace: 'http://example.com/schemas',
-                schemaLocation: 'http://example.com/schemas/types.xsd'
+                schemaLocation: 'http://example.com/schemas/types.xsd',
             );
 
             // Assert
@@ -109,7 +109,7 @@ describe('SchemaImport', function (): void {
             // Act
             $result = $wsdl->schemaImport(
                 namespace: 'http://schemas.example.com/types',
-                schemaLocation: 'http://schemas.example.com/types.xsd'
+                schemaLocation: 'http://schemas.example.com/types.xsd',
             );
 
             // Assert
@@ -257,7 +257,7 @@ describe('Documentation', function (): void {
             // Arrange & Act
             $doc = new Documentation(
                 content: 'Service documentation',
-                lang: 'en'
+                lang: 'en',
             );
 
             // Assert
@@ -271,7 +271,7 @@ describe('Documentation', function (): void {
             $doc = new Documentation(
                 content: 'Service documentation',
                 lang: 'en',
-                source: 'http://example.com/docs'
+                source: 'http://example.com/docs',
             );
 
             // Assert
@@ -543,14 +543,14 @@ describe('Integration', function (): void {
                 ->schemaImport('http://www.w3.org/2001/XMLSchema')
                 ->schemaInclude('base-types.xsd')
                 ->complexType('User')
-                    ->documentation('User entity')
-                    ->element('id', 'xsd:int')
-                    ->element('name', 'xsd:string')
-                    ->end()
+                ->documentation('User entity')
+                ->element('id', 'xsd:int')
+                ->element('name', 'xsd:string')
+                ->end()
                 ->simpleType('Email')
-                    ->documentation('Email format validation')
-                    ->pattern('.+@.+\..+')
-                    ->end();
+                ->documentation('Email format validation')
+                ->pattern('.+@.+\..+')
+                ->end();
 
             // Assert
             expect($wsdl->getDocumentation()->content)->toBe('Complex service with imports')

@@ -9,11 +9,11 @@
 
 use Cline\WsdlBuilder\Enums\XsdType;
 use Cline\WsdlBuilder\Wsdl;
-use Cline\WsdlBuilder\Xsd\Groups\ElementGroup;
+use Cline\WsdlBuilder\Xsd\Compositors\All;
+use Cline\WsdlBuilder\Xsd\Compositors\Choice;
 use Cline\WsdlBuilder\Xsd\DerivedTypes\ListType;
 use Cline\WsdlBuilder\Xsd\DerivedTypes\UnionType;
-use Cline\WsdlBuilder\Xsd\Compositors\Choice;
-use Cline\WsdlBuilder\Xsd\Compositors\All;
+use Cline\WsdlBuilder\Xsd\Groups\ElementGroup;
 
 describe('ElementGroup', function (): void {
     describe('Happy Paths', function (): void {
@@ -191,9 +191,9 @@ describe('ElementGroup', function (): void {
             $group = $wsdl->elementGroup('OrderGroup')
                 ->element('orderId', XsdType::String)
                 ->choice()
-                    ->element('rush', XsdType::Boolean)
-                    ->element('standard', XsdType::Boolean)
-                    ->end();
+                ->element('rush', XsdType::Boolean)
+                ->element('standard', XsdType::Boolean)
+                ->end();
 
             expect($group)->toBeInstanceOf(ElementGroup::class)
                 ->and($group->getElements())->toHaveCount(1)
@@ -241,7 +241,7 @@ describe('ElementGroup', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://test.example.com/');
             $group = $wsdl->elementGroup('ConfigGroup');
 
-            expect(fn() => $group->all()->element('setting', XsdType::String, false, 2, 1))
+            expect(fn () => $group->all()->element('setting', XsdType::String, false, 2, 1))
                 ->toThrow(InvalidArgumentException::class, 'Elements in <all> can only have minOccurs 0 or 1');
         });
 
@@ -249,7 +249,7 @@ describe('ElementGroup', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://test.example.com/');
             $group = $wsdl->elementGroup('ConfigGroup');
 
-            expect(fn() => $group->all()->element('setting', XsdType::String, false, 0, 5))
+            expect(fn () => $group->all()->element('setting', XsdType::String, false, 0, 5))
                 ->toThrow(InvalidArgumentException::class, 'Elements in <all> can only have maxOccurs 1');
         });
     });
@@ -506,7 +506,7 @@ describe('UnionType', function (): void {
                     XsdType::Boolean,
                     XsdType::Float,
                     XsdType::Double,
-                    'tns:CustomType'
+                    'tns:CustomType',
                 );
 
             expect($union->getMemberTypes())->toHaveCount(6);

@@ -27,7 +27,7 @@ final class TransportBinding
     private ?string $layout = null;
 
     /**
-     * @param mixed|null $parent Optional parent object for fluent chaining
+     * @param null|mixed $parent Optional parent object for fluent chaining
      */
     public function __construct(
         private readonly mixed $parent = null,
@@ -136,7 +136,7 @@ final class TransportBinding
     /**
      * Return to parent or return config array.
      *
-     * @return mixed|array<string, mixed>
+     * @return array<string, mixed>|mixed
      */
     public function end(): mixed
     {

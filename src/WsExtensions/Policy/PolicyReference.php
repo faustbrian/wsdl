@@ -13,6 +13,7 @@ namespace Cline\WsdlBuilder\WsExtensions\Policy;
  * Represents a WS-Policy wsp:PolicyReference element.
  *
  * @author Brian Faust <brian@cline.sh>
+ * @psalm-immutable
  */
 final readonly class PolicyReference
 {

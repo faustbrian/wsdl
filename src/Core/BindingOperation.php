@@ -12,10 +12,10 @@ namespace Cline\WsdlBuilder\Core;
 use Cline\WsdlBuilder\Enums\BindingStyle;
 use Cline\WsdlBuilder\Enums\BindingUse;
 use Cline\WsdlBuilder\Soap\Header;
-use Cline\WsdlBuilder\WsExtensions\Mime\MimeMultipartRelated;
 use Cline\WsdlBuilder\WsExtensions\Http\HttpOperation;
 use Cline\WsdlBuilder\WsExtensions\Http\HttpUrlEncoded;
 use Cline\WsdlBuilder\WsExtensions\Http\HttpUrlReplacement;
+use Cline\WsdlBuilder\WsExtensions\Mime\MimeMultipartRelated;
 
 /**
  * Represents an operation within a binding.

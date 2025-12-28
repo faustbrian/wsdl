@@ -275,7 +275,7 @@ describe('WS-Notification', function (): void {
                 // Arrange
                 $endpoint = new EndpointReference('http://example.com/notify');
                 $subscribe = new Subscribe($endpoint);
-                $time = new \DateTime('+1 hour');
+                $time = new DateTime('+1 hour');
 
                 // Act
                 $subscribe->initialTerminationTime($time);
@@ -305,7 +305,7 @@ describe('WS-Notification', function (): void {
                 $endpoint = new EndpointReference('http://example.com/notify');
                 $subscribe = new Subscribe($endpoint);
                 $filter = new TopicExpression(TopicDialect::Concrete, 'tns:StockTopic');
-                $time = new \DateTime('+1 day');
+                $time = new DateTime('+1 day');
 
                 // Act
                 $subscribe->filter($filter)
@@ -398,7 +398,9 @@ describe('WS-Notification', function (): void {
                 $subscribe = new Subscribe($endpoint);
                 $filter = new TopicExpression(TopicDialect::Simple, 'stock/ticker');
                 $subscribe->filter($filter)
-                    ->initialTerminationTime(new \DateTime('+1 week'))
+                    ->initialTerminationTime(
+                        new DateTime('+1 week'),
+                    )
                     ->addPolicyElement('MessageRate', 10);
 
                 // Assert
@@ -420,10 +422,14 @@ describe('WS-Notification', function (): void {
                 $endpoint2 = new EndpointReference('http://subscriber2.example.com/notify');
 
                 $subscribe1 = new Subscribe($endpoint1);
-                $subscribe1->filter(new TopicExpression(TopicDialect::Simple, 'news/tech'));
+                $subscribe1->filter(
+                    new TopicExpression(TopicDialect::Simple, 'news/tech'),
+                );
 
                 $subscribe2 = new Subscribe($endpoint2);
-                $subscribe2->filter(new TopicExpression(TopicDialect::Simple, 'news/finance'));
+                $subscribe2->filter(
+                    new TopicExpression(TopicDialect::Simple, 'news/finance'),
+                );
 
                 // Assert
                 expect($producer->getTopicExpression()?->getValue())->toBe('tns:NewsTopic')

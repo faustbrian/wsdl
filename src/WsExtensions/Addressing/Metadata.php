@@ -18,9 +18,7 @@ namespace Cline\WsdlBuilder\WsExtensions\Addressing;
  */
 final class Metadata
 {
-    /**
-     * @var array<int, array{namespace: string, localName: string, content: mixed}>
-     */
+    /** @var array<int, array{namespace: string, localName: string, content: mixed}> */
     private array $items = [];
 
     public function __construct(

@@ -325,9 +325,15 @@ describe('WS-MetadataExchange', function (): void {
             test('converts to array with multiple sections', function (): void {
                 // Arrange
                 $metadata = new Metadata();
-                $metadata->addSection(new MetadataSection(MetadataDialect::WSDL->value, '<definitions>...</definitions>'))
-                    ->addSection(new MetadataSection(MetadataDialect::XmlSchema->value, '<schema>...</schema>'))
-                    ->addSection(new MetadataSection(MetadataDialect::Policy->value, ['policy' => 'data']));
+                $metadata->addSection(
+                    new MetadataSection(MetadataDialect::WSDL->value, '<definitions>...</definitions>'),
+                )
+                    ->addSection(
+                        new MetadataSection(MetadataDialect::XmlSchema->value, '<schema>...</schema>'),
+                    )
+                    ->addSection(
+                        new MetadataSection(MetadataDialect::Policy->value, ['policy' => 'data']),
+                    );
 
                 // Act
                 $array = $metadata->toArray();
@@ -615,26 +621,34 @@ describe('WS-MetadataExchange', function (): void {
 
                 // Service responds with metadata
                 $metadata = new Metadata();
-                $metadata->addSection(new MetadataSection(
-                    MetadataDialect::WSDL->value,
-                    '<definitions xmlns="http://schemas.xmlsoap.org/wsdl/">...</definitions>',
-                ))
-                ->addSection(new MetadataSection(
-                    MetadataDialect::XmlSchema->value,
-                    '<schema xmlns="http://www.w3.org/2001/XMLSchema">...</schema>',
-                ))
-                ->addSection(new MetadataSection(
-                    MetadataDialect::Policy->value,
-                    ['type' => 'wsp:Policy'],
-                ));
+                $metadata->addSection(
+                    new MetadataSection(
+                        MetadataDialect::WSDL->value,
+                        '<definitions xmlns="http://schemas.xmlsoap.org/wsdl/">...</definitions>',
+                    ),
+                )
+                    ->addSection(
+                        new MetadataSection(
+                            MetadataDialect::XmlSchema->value,
+                            '<schema xmlns="http://www.w3.org/2001/XMLSchema">...</schema>',
+                        ),
+                    )
+                    ->addSection(
+                        new MetadataSection(
+                            MetadataDialect::Policy->value,
+                            ['type' => 'wsp:Policy'],
+                        ),
+                    );
 
                 // Additional metadata available via reference
                 $mexAddress = new EndpointReference('https://metadata.example.com/extended');
                 $mexReference = new MetadataReference($mexAddress);
-                $metadata->addSection(new MetadataSection(
-                    MetadataDialect::MEX->value,
-                    $mexReference->toArray(),
-                ));
+                $metadata->addSection(
+                    new MetadataSection(
+                        MetadataDialect::MEX->value,
+                        $mexReference->toArray(),
+                    ),
+                );
 
                 // Act
                 $capabilityArray = $capability;

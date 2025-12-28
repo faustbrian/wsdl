@@ -31,8 +31,8 @@ final class ResourceFrameworkPolicy
     /**
      * Create a Resource assertion.
      *
-     * @param string $address Endpoint address
-     * @param mixed|null $parent Optional parent object for fluent chaining
+     * @param string     $address Endpoint address
+     * @param null|mixed $parent  Optional parent object for fluent chaining
      */
     public static function resource(string $address, mixed $parent = null): Resource
     {
@@ -44,7 +44,7 @@ final class ResourceFrameworkPolicy
     /**
      * Create a ResourceProperties assertion.
      *
-     * @param mixed|null $parent Optional parent object for fluent chaining
+     * @param null|mixed $parent Optional parent object for fluent chaining
      */
     public static function resourceProperties(mixed $parent = null): ResourceProperties
     {
@@ -54,7 +54,7 @@ final class ResourceFrameworkPolicy
     /**
      * Create a ResourceLifetime assertion.
      *
-     * @param mixed|null $parent Optional parent object for fluent chaining
+     * @param null|mixed $parent Optional parent object for fluent chaining
      */
     public static function lifetime(mixed $parent = null): ResourceLifetime
     {
@@ -64,8 +64,8 @@ final class ResourceFrameworkPolicy
     /**
      * Create a GetResourceProperty request.
      *
-     * @param string $resourceProperty Property name (QName)
-     * @param mixed|null $parent Optional parent object for fluent chaining
+     * @param string     $resourceProperty Property name (QName)
+     * @param null|mixed $parent           Optional parent object for fluent chaining
      */
     public static function getResourceProperty(string $resourceProperty, mixed $parent = null): GetResourceProperty
     {
@@ -75,7 +75,7 @@ final class ResourceFrameworkPolicy
     /**
      * Create a SetResourceProperties request.
      *
-     * @param mixed|null $parent Optional parent object for fluent chaining
+     * @param null|mixed $parent Optional parent object for fluent chaining
      */
     public static function setResourceProperties(mixed $parent = null): SetResourceProperties
     {

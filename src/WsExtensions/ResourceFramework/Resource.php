@@ -26,7 +26,7 @@ final class Resource
     private ?ResourceLifetime $resourceLifetime = null;
 
     /**
-     * @param mixed|null $parent Optional parent object for fluent chaining
+     * @param null|mixed $parent Optional parent object for fluent chaining
      */
     public function __construct(
         private readonly EndpointReference $endpointReference,
@@ -107,7 +107,7 @@ final class Resource
     /**
      * Return to parent or return config array.
      *
-     * @return mixed|array<string, mixed>
+     * @return array<string, mixed>|mixed
      */
     public function end(): mixed
     {

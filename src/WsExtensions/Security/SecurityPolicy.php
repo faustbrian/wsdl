@@ -23,7 +23,7 @@ final class SecurityPolicy
     /**
      * Create a TransportBinding assertion.
      *
-     * @param mixed|null $parent Optional parent object for fluent chaining
+     * @param null|mixed $parent Optional parent object for fluent chaining
      */
     public static function transportBinding(mixed $parent = null): TransportBinding
     {
@@ -59,7 +59,7 @@ final class SecurityPolicy
     /**
      * Create a UsernameToken assertion.
      *
-     * @param string|null $passwordType PasswordText, PasswordDigest, or null for no password
+     * @param  null|string          $passwordType PasswordText, PasswordDigest, or null for no password
      * @return array<string, mixed>
      */
     public static function usernameToken(?string $passwordType = null): array
@@ -79,7 +79,7 @@ final class SecurityPolicy
     /**
      * Create an X509Token assertion.
      *
-     * @param string|null $tokenType WssX509V3Token10, WssX509Pkcs7Token10, WssX509PkiPathV1Token10, etc.
+     * @param  null|string          $tokenType WssX509V3Token10, WssX509Pkcs7Token10, WssX509PkiPathV1Token10, etc.
      * @return array<string, mixed>
      */
     public static function x509Token(?string $tokenType = null): array
@@ -99,7 +99,7 @@ final class SecurityPolicy
     /**
      * Create a SamlToken assertion.
      *
-     * @param string|null $tokenType WssSamlV11Token10, WssSamlV20Token11, etc.
+     * @param  null|string          $tokenType WssSamlV11Token10, WssSamlV20Token11, etc.
      * @return array<string, mixed>
      */
     public static function samlToken(?string $tokenType = null): array
@@ -119,7 +119,7 @@ final class SecurityPolicy
     /**
      * Create a SignedParts assertion.
      *
-     * @param array<string>|null $parts Array of part names to sign (e.g., ['Body', 'Header'])
+     * @param  null|array<string>   $parts Array of part names to sign (e.g., ['Body', 'Header'])
      * @return array<string, mixed>
      */
     public static function signedParts(?array $parts = null): array
@@ -139,7 +139,7 @@ final class SecurityPolicy
     /**
      * Create an EncryptedParts assertion.
      *
-     * @param array<string>|null $parts Array of part names to encrypt (e.g., ['Body'])
+     * @param  null|array<string>   $parts Array of part names to encrypt (e.g., ['Body'])
      * @return array<string, mixed>
      */
     public static function encryptedParts(?array $parts = null): array
@@ -159,7 +159,7 @@ final class SecurityPolicy
     /**
      * Create a SignedElements assertion.
      *
-     * @param array<string>|null $xpaths Array of XPath expressions for elements to sign
+     * @param  null|array<string>   $xpaths Array of XPath expressions for elements to sign
      * @return array<string, mixed>
      */
     public static function signedElements(?array $xpaths = null): array
@@ -179,7 +179,7 @@ final class SecurityPolicy
     /**
      * Create an EncryptedElements assertion.
      *
-     * @param array<string>|null $xpaths Array of XPath expressions for elements to encrypt
+     * @param  null|array<string>   $xpaths Array of XPath expressions for elements to encrypt
      * @return array<string, mixed>
      */
     public static function encryptedElements(?array $xpaths = null): array

@@ -112,7 +112,7 @@ describe('WS-Transaction', function (): void {
 
             test('end returns parent when parent exists', function (): void {
                 // Arrange
-                $parent = new \stdClass();
+                $parent = new stdClass();
                 $at = new AtomicTransaction($parent);
 
                 // Act
@@ -137,7 +137,7 @@ describe('WS-Transaction', function (): void {
 
             test('supports fluent chaining', function (): void {
                 // Arrange & Act
-                $config = (new AtomicTransaction())
+                $config = new AtomicTransaction()
                     ->version('1.2')
                     ->getConfig();
 
@@ -197,7 +197,7 @@ describe('WS-Transaction', function (): void {
 
             test('end returns parent when parent exists', function (): void {
                 // Arrange
-                $parent = new \stdClass();
+                $parent = new stdClass();
                 $ba = new BusinessActivity($parent);
 
                 // Act
@@ -222,7 +222,7 @@ describe('WS-Transaction', function (): void {
 
             test('supports fluent chaining', function (): void {
                 // Arrange & Act
-                $config = (new BusinessActivity())
+                $config = new BusinessActivity()
                     ->version('1.2')
                     ->getConfig();
 
@@ -428,7 +428,7 @@ describe('WS-Transaction', function (): void {
 
             test('end returns parent when parent exists', function (): void {
                 // Arrange
-                $parent = new \stdClass();
+                $parent = new stdClass();
                 $flow = new TransactionFlow($parent);
 
                 // Act
@@ -454,7 +454,7 @@ describe('WS-Transaction', function (): void {
 
             test('supports fluent chaining', function (): void {
                 // Arrange & Act
-                $config = (new TransactionFlow())
+                $config = new TransactionFlow()
                     ->mandatory()
                     ->atAssertion()
                     ->atAlwaysCapability()
@@ -481,7 +481,7 @@ describe('WS-Transaction', function (): void {
 
             test('creates atomic transaction with parent', function (): void {
                 // Arrange
-                $parent = new \stdClass();
+                $parent = new stdClass();
 
                 // Act
                 $at = TransactionPolicy::atomicTransaction($parent);
@@ -502,7 +502,7 @@ describe('WS-Transaction', function (): void {
 
             test('creates business activity with parent', function (): void {
                 // Arrange
-                $parent = new \stdClass();
+                $parent = new stdClass();
 
                 // Act
                 $ba = TransactionPolicy::businessActivity($parent);
@@ -523,7 +523,7 @@ describe('WS-Transaction', function (): void {
 
             test('creates transaction flow with parent', function (): void {
                 // Arrange
-                $parent = new \stdClass();
+                $parent = new stdClass();
 
                 // Act
                 $flow = TransactionPolicy::transactionFlow($parent);

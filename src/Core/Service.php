@@ -21,6 +21,7 @@ use Cline\WsdlBuilder\WsExtensions\Policy\PolicyAttachment;
 final class Service
 {
     use PolicyAttachment;
+
     /** @var array<string, Port> */
     private array $ports = [];
 

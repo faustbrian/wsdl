@@ -50,7 +50,7 @@ final class TrustPolicy
     /**
      * Create a Claims assertion.
      *
-     * @param string|null $dialectUri Optional dialect URI (defaults to WS-Federation auth claims)
+     * @param null|string $dialectUri Optional dialect URI (defaults to WS-Federation auth claims)
      */
     public static function claims(?string $dialectUri = null): Claims
     {

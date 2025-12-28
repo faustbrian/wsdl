@@ -10,6 +10,7 @@
 namespace Cline\WsdlBuilder\WsExtensions\Notification;
 
 use Cline\WsdlBuilder\WsExtensions\Addressing\EndpointReference;
+use DateTimeInterface;
 
 /**
  * Represents a WS-Notification subscribe request.
@@ -23,11 +24,9 @@ final class Subscribe
 {
     private ?TopicExpression $filter = null;
 
-    private ?\DateTimeInterface $initialTerminationTime = null;
+    private ?DateTimeInterface $initialTerminationTime = null;
 
-    /**
-     * @var array<string, mixed>
-     */
+    /** @var array<string, mixed> */
     private array $subscriptionPolicy = [];
 
     public function __construct(
@@ -47,7 +46,7 @@ final class Subscribe
     /**
      * Set the initial termination time.
      */
-    public function initialTerminationTime(\DateTimeInterface $time): self
+    public function initialTerminationTime(DateTimeInterface $time): self
     {
         $this->initialTerminationTime = $time;
 
@@ -74,7 +73,7 @@ final class Subscribe
         return $this->filter;
     }
 
-    public function getInitialTerminationTime(): ?\DateTimeInterface
+    public function getInitialTerminationTime(): ?DateTimeInterface
     {
         return $this->initialTerminationTime;
     }

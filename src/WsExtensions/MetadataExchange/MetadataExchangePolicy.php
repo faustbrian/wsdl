@@ -55,7 +55,7 @@ final class MetadataExchangePolicy
      *
      * Advertises which metadata dialects the service can provide.
      *
-     * @param array<string> $dialects Array of supported dialect URIs
+     * @param  array<string>        $dialects Array of supported dialect URIs
      * @return array<string, mixed>
      */
     public static function getMetadataRequest(array $dialects = []): array

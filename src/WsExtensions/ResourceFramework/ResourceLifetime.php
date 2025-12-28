@@ -9,6 +9,9 @@
 
 namespace Cline\WsdlBuilder\WsExtensions\ResourceFramework;
 
+use DateTimeImmutable;
+use DateTimeInterface;
+
 /**
  * Represents WS-ResourceLifetime management (wsrf-rl:ResourceLifetime).
  *
@@ -19,27 +22,27 @@ namespace Cline\WsdlBuilder\WsExtensions\ResourceFramework;
  */
 final class ResourceLifetime
 {
-    private ?\DateTimeInterface $terminationTime = null;
+    private ?DateTimeInterface $terminationTime = null;
 
-    private \DateTimeInterface $currentTime;
+    private DateTimeInterface $currentTime;
 
     private bool $scheduledTermination = false;
 
     private bool $immediateTermination = false;
 
     /**
-     * @param mixed|null $parent Optional parent object for fluent chaining
+     * @param null|mixed $parent Optional parent object for fluent chaining
      */
     public function __construct(
         private readonly mixed $parent = null,
     ) {
-        $this->currentTime = new \DateTimeImmutable();
+        $this->currentTime = new DateTimeImmutable();
     }
 
     /**
      * Set the termination time for this resource.
      */
-    public function terminationTime(?\DateTimeInterface $terminationTime): self
+    public function terminationTime(?DateTimeInterface $terminationTime): self
     {
         $this->terminationTime = $terminationTime;
 
@@ -49,7 +52,7 @@ final class ResourceLifetime
     /**
      * Set the current time for this resource.
      */
-    public function currentTime(\DateTimeInterface $currentTime): self
+    public function currentTime(DateTimeInterface $currentTime): self
     {
         $this->currentTime = $currentTime;
 
@@ -76,12 +79,12 @@ final class ResourceLifetime
         return $this;
     }
 
-    public function getTerminationTime(): ?\DateTimeInterface
+    public function getTerminationTime(): ?DateTimeInterface
     {
         return $this->terminationTime;
     }
 
-    public function getCurrentTime(): \DateTimeInterface
+    public function getCurrentTime(): DateTimeInterface
     {
         return $this->currentTime;
     }
@@ -104,13 +107,13 @@ final class ResourceLifetime
     public function getConfig(): array
     {
         $config = [
-            'currentTime' => $this->currentTime->format(\DateTimeInterface::ATOM),
+            'currentTime' => $this->currentTime->format(DateTimeInterface::ATOM),
             'scheduledTermination' => $this->scheduledTermination,
             'immediateTermination' => $this->immediateTermination,
         ];
 
         if ($this->terminationTime !== null) {
-            $config['terminationTime'] = $this->terminationTime->format(\DateTimeInterface::ATOM);
+            $config['terminationTime'] = $this->terminationTime->format(DateTimeInterface::ATOM);
         }
 
         return $config;
@@ -119,7 +122,7 @@ final class ResourceLifetime
     /**
      * Return to parent or return config array.
      *
-     * @return mixed|array<string, mixed>
+     * @return array<string, mixed>|mixed
      */
     public function end(): mixed
     {

@@ -9,10 +9,10 @@
 
 namespace Cline\WsdlBuilder\Xsd\Groups;
 
-use Cline\WsdlBuilder\Enums\XsdType;
 use Cline\WsdlBuilder\Contracts\WsdlBuilderInterface;
-use Cline\WsdlBuilder\Xsd\Compositors\Choice;
+use Cline\WsdlBuilder\Enums\XsdType;
 use Cline\WsdlBuilder\Xsd\Compositors\All;
+use Cline\WsdlBuilder\Xsd\Compositors\Choice;
 
 /**
  * Represents an XSD element group that can be reused across multiple complex types.

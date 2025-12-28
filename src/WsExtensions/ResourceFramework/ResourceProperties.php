@@ -9,6 +9,8 @@
 
 namespace Cline\WsdlBuilder\WsExtensions\ResourceFramework;
 
+use function array_map;
+
 /**
  * Represents a WS-ResourceProperties document (wsrf-rp:ResourceProperties).
  *
@@ -19,18 +21,14 @@ namespace Cline\WsdlBuilder\WsExtensions\ResourceFramework;
  */
 final class ResourceProperties
 {
-    /**
-     * @var array<ResourceProperty>
-     */
+    /** @var array<ResourceProperty> */
     private array $properties = [];
 
-    /**
-     * @var array<string>
-     */
+    /** @var array<string> */
     private array $queryExpressionDialects = [];
 
     /**
-     * @param mixed|null $parent Optional parent object for fluent chaining
+     * @param null|mixed $parent Optional parent object for fluent chaining
      */
     public function __construct(
         private readonly mixed $parent = null,
@@ -86,7 +84,7 @@ final class ResourceProperties
     public function getConfig(): array
     {
         return [
-            'properties' => \array_map(
+            'properties' => array_map(
                 static fn (ResourceProperty $property): array => $property->getConfig(),
                 $this->properties,
             ),
@@ -97,7 +95,7 @@ final class ResourceProperties
     /**
      * Return to parent or return config array.
      *
-     * @return mixed|array<string, mixed>
+     * @return array<string, mixed>|mixed
      */
     public function end(): mixed
     {

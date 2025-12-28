@@ -57,7 +57,7 @@ final class DiscoveryPolicy
      *
      * Services use a discovery proxy for centralized discovery.
      *
-     * @param string|null $proxyAddress Optional discovery proxy endpoint address
+     * @param  null|string          $proxyAddress Optional discovery proxy endpoint address
      * @return array<string, mixed>
      */
     public static function managed(?string $proxyAddress = null): array
@@ -78,7 +78,7 @@ final class DiscoveryPolicy
     /**
      * Create a discovery endpoint assertion.
      *
-     * @param string $address The discovery endpoint address
+     * @param  string               $address The discovery endpoint address
      * @return array<string, mixed>
      */
     public static function discoveryEndpoint(string $address): array
@@ -95,8 +95,8 @@ final class DiscoveryPolicy
      *
      * Controls Hello/Bye message suppression behavior.
      *
-     * @param bool $suppressHello Suppress Hello messages
-     * @param bool $suppressBye Suppress Bye messages
+     * @param  bool                 $suppressHello Suppress Hello messages
+     * @param  bool                 $suppressBye   Suppress Bye messages
      * @return array<string, mixed>
      */
     public static function suppression(bool $suppressHello = false, bool $suppressBye = false): array

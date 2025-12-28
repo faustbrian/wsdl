@@ -14,6 +14,8 @@ use Cline\WsdlBuilder\WsExtensions\Security\Enums\SecurityTokenInclusion;
 /**
  * Base class for WS-SecurityPolicy token assertions.
  *
+ * Extended by IssuedToken in WS-Trust support.
+ *
  * @author Brian Faust <brian@cline.sh>
  */
 class TokenAssertion

@@ -7,17 +7,17 @@
  * file that was distributed with this source code.
  */
 
+use Cline\WsdlBuilder\Core\Binding;
+use Cline\WsdlBuilder\Core\Message;
+use Cline\WsdlBuilder\Core\PortType;
+use Cline\WsdlBuilder\Core\Service;
 use Cline\WsdlBuilder\Enums\BindingStyle;
 use Cline\WsdlBuilder\Enums\BindingUse;
 use Cline\WsdlBuilder\Enums\SoapVersion;
 use Cline\WsdlBuilder\Enums\XsdType;
-use Cline\WsdlBuilder\Core\Binding;
-use Cline\WsdlBuilder\Xsd\Types\ComplexType;
-use Cline\WsdlBuilder\Core\Message;
-use Cline\WsdlBuilder\Core\PortType;
-use Cline\WsdlBuilder\Core\Service;
-use Cline\WsdlBuilder\Xsd\Types\SimpleType;
 use Cline\WsdlBuilder\Wsdl;
+use Cline\WsdlBuilder\Xsd\Types\ComplexType;
+use Cline\WsdlBuilder\Xsd\Types\SimpleType;
 
 describe('Wsdl', function (): void {
     describe('Happy Paths', function (): void {

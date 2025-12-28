@@ -12,10 +12,16 @@ namespace Cline\WsdlBuilder\Core;
 use Cline\WsdlBuilder\Documentation\Documentation;
 use Cline\WsdlBuilder\Enums\BindingStyle;
 use Cline\WsdlBuilder\Enums\BindingUse;
+use Cline\WsdlBuilder\Soap\Header;
 use Cline\WsdlBuilder\Wsdl;
 use Cline\WsdlBuilder\WsExtensions\Addressing\Action;
-use Cline\WsdlBuilder\WsExtensions\Policy\PolicyAttachment;
 use Cline\WsdlBuilder\WsExtensions\Http\HttpBinding;
+use Cline\WsdlBuilder\WsExtensions\Mime\MimeMultipartRelated;
+use Cline\WsdlBuilder\WsExtensions\Policy\PolicyAttachment;
+use RuntimeException;
+
+use function array_values;
+use function end;
 
 /**
  * Represents a WSDL binding.
@@ -112,10 +118,10 @@ final class Binding
         $lastOperation = end($operations);
 
         if ($lastOperation === false) {
-            throw new \RuntimeException('No operation exists to add header to');
+            throw new RuntimeException('No operation exists to add header to');
         }
 
-        $header = new \Cline\WsdlBuilder\Soap\Header($message, $part);
+        $header = new Header($message, $part);
         $lastOperation->addHeader($header);
 
         return $this;
@@ -124,16 +130,16 @@ final class Binding
     /**
      * Add MIME multipart to the input of the last added operation.
      */
-    public function inputMime(): \Cline\WsdlBuilder\WsExtensions\Mime\MimeMultipartRelated
+    public function inputMime(): MimeMultipartRelated
     {
         $operations = array_values($this->operations);
         $lastOperation = end($operations);
 
         if ($lastOperation === false) {
-            throw new \RuntimeException('No operation exists to add MIME to');
+            throw new RuntimeException('No operation exists to add MIME to');
         }
 
-        $mime = new \Cline\WsdlBuilder\WsExtensions\Mime\MimeMultipartRelated($this);
+        $mime = new MimeMultipartRelated($this);
         $lastOperation->setInputMime($mime);
 
         return $mime;
@@ -142,16 +148,16 @@ final class Binding
     /**
      * Add MIME multipart to the output of the last added operation.
      */
-    public function outputMime(): \Cline\WsdlBuilder\WsExtensions\Mime\MimeMultipartRelated
+    public function outputMime(): MimeMultipartRelated
     {
         $operations = array_values($this->operations);
         $lastOperation = end($operations);
 
         if ($lastOperation === false) {
-            throw new \RuntimeException('No operation exists to add MIME to');
+            throw new RuntimeException('No operation exists to add MIME to');
         }
 
-        $mime = new \Cline\WsdlBuilder\WsExtensions\Mime\MimeMultipartRelated($this);
+        $mime = new MimeMultipartRelated($this);
         $lastOperation->setOutputMime($mime);
 
         return $mime;
@@ -193,8 +199,8 @@ final class Binding
     public function faultAction(string $operationName, string $faultName, string $action): self
     {
         if (!isset($this->actions[$operationName])) {
-            throw new \RuntimeException(
-                "No action defined for operation '{$operationName}'. Call action() first."
+            throw new RuntimeException(
+                "No action defined for operation '{$operationName}'. Call action() first.",
             );
         }
 

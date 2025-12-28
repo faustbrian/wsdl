@@ -9,8 +9,8 @@
 
 namespace Cline\WsdlBuilder\Xsd\Attributes;
 
-use Cline\WsdlBuilder\Enums\XsdType;
 use Cline\WsdlBuilder\Contracts\WsdlBuilderInterface;
+use Cline\WsdlBuilder\Enums\XsdType;
 
 /**
  * Represents a reusable XSD attribute group.

@@ -9,11 +9,9 @@
 
 namespace Cline\WsdlBuilder\Wsdl2;
 
-use Cline\WsdlBuilder\Xsd\Types\ComplexType;
-use Cline\WsdlBuilder\Xsd\Types\SimpleType;
 use Cline\WsdlBuilder\Documentation\Documentation;
-use Cline\WsdlBuilder\Xsd\Attributes\Attribute;
 use Cline\WsdlBuilder\Xsd\Attributes\AnyAttribute;
+use Cline\WsdlBuilder\Xsd\Attributes\Attribute;
 use Cline\WsdlBuilder\Xsd\Attributes\AttributeGroup;
 use Cline\WsdlBuilder\Xsd\Compositors\All;
 use Cline\WsdlBuilder\Xsd\Compositors\Any;
@@ -22,9 +20,14 @@ use Cline\WsdlBuilder\Xsd\DerivedTypes\ListType;
 use Cline\WsdlBuilder\Xsd\DerivedTypes\UnionType;
 use Cline\WsdlBuilder\Xsd\Groups\ElementGroup;
 use Cline\WsdlBuilder\Xsd\SimpleContent;
+use Cline\WsdlBuilder\Xsd\Types\ComplexType;
+use Cline\WsdlBuilder\Xsd\Types\Element;
+use Cline\WsdlBuilder\Xsd\Types\SimpleType;
 use DOMDocument;
 use DOMElement;
 
+use function array_map;
+use function implode;
 use function str_starts_with;
 
 /**
@@ -123,6 +126,7 @@ final class Wsdl2Generator
         foreach ($schemaImports as $import) {
             $el = $this->dom->createElementNS(Wsdl2::XSD_NS, 'xs:import');
             $el->setAttribute('namespace', $import->namespace);
+
             if ($import->schemaLocation !== null) {
                 $el->setAttribute('schemaLocation', $import->schemaLocation);
             }
@@ -186,8 +190,9 @@ final class Wsdl2Generator
 
         // Add extends attribute if interface extends another
         $extends = $interface->getExtends();
+
         if ($extends !== []) {
-            $el->setAttribute('extends', implode(' ', array_map(fn($name) => 'tns:'.$name, $extends)));
+            $el->setAttribute('extends', implode(' ', array_map(fn (string $name): string => 'tns:'.$name, $extends)));
         }
 
         // Add interface-level faults
@@ -389,6 +394,7 @@ final class Wsdl2Generator
             $this->addAll($groupEl, $all);
         } elseif ($elements !== []) {
             $sequence = $this->dom->createElementNS(Wsdl2::XSD_NS, 'xs:sequence');
+
             foreach ($elements as $element) {
                 $this->addElementFromArray($sequence, $element);
             }
@@ -408,6 +414,7 @@ final class Wsdl2Generator
         }
 
         $anyAttr = $group->getAnyAttribute();
+
         if ($anyAttr !== null) {
             $this->addAnyAttribute($groupEl, $anyAttr);
         }
@@ -488,7 +495,6 @@ final class Wsdl2Generator
         // If there are restrictions, wrap in restriction
         if ($type->getMinLength() !== null || $type->getMaxLength() !== null
             || $type->getPattern() !== null || $type->getEnumeration() !== []) {
-
             $innerSimple = $this->dom->createElementNS(Wsdl2::XSD_NS, 'xs:simpleType');
             $innerSimple->appendChild($list);
 
@@ -556,9 +562,11 @@ final class Wsdl2Generator
 
         // Handle simpleContent (simple type with attributes)
         $simpleContent = $type->getSimpleContent();
+
         if ($simpleContent !== null) {
             $this->addSimpleContent($complexType, $simpleContent);
             $schema->appendChild($complexType);
+
             return;
         }
 
@@ -620,6 +628,7 @@ final class Wsdl2Generator
 
         // Add anyAttribute
         $anyAttr = $type->getAnyAttribute();
+
         if ($anyAttr !== null) {
             $this->addAnyAttribute($sequenceParent, $anyAttr);
         }
@@ -655,7 +664,7 @@ final class Wsdl2Generator
         $complexType->appendChild($simpleContentEl);
     }
 
-    private function addElement(DOMElement $parent, \Cline\WsdlBuilder\Xsd\Types\Element $element): void
+    private function addElement(DOMElement $parent, Element $element): void
     {
         $el = $this->dom->createElementNS(Wsdl2::XSD_NS, 'xs:element');
         $el->setAttribute('name', $element->name);

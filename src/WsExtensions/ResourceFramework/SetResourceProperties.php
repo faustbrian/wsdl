@@ -19,23 +19,17 @@ namespace Cline\WsdlBuilder\WsExtensions\ResourceFramework;
  */
 final class SetResourceProperties
 {
-    /**
-     * @var array<array<string, mixed>>
-     */
+    /** @var array<array<string, mixed>> */
     private array $insert = [];
 
-    /**
-     * @var array<array<string, mixed>>
-     */
+    /** @var array<array<string, mixed>> */
     private array $update = [];
 
-    /**
-     * @var array<string>
-     */
+    /** @var array<string> */
     private array $delete = [];
 
     /**
-     * @param mixed|null $parent Optional parent object for fluent chaining
+     * @param null|mixed $parent Optional parent object for fluent chaining
      */
     public function __construct(
         private readonly mixed $parent = null,
@@ -44,8 +38,8 @@ final class SetResourceProperties
     /**
      * Add a property to insert.
      *
-     * @param string $name Property name (QName)
-     * @param mixed $value Property value
+     * @param string $name  Property name (QName)
+     * @param mixed  $value Property value
      */
     public function insert(string $name, mixed $value): self
     {
@@ -60,8 +54,8 @@ final class SetResourceProperties
     /**
      * Add a property to update.
      *
-     * @param string $name Property name (QName)
-     * @param mixed $value Property value
+     * @param string $name  Property name (QName)
+     * @param mixed  $value Property value
      */
     public function update(string $name, mixed $value): self
     {
@@ -126,7 +120,7 @@ final class SetResourceProperties
     /**
      * Return to parent or return config array.
      *
-     * @return mixed|array<string, mixed>
+     * @return array<string, mixed>|mixed
      */
     public function end(): mixed
     {

@@ -9,9 +9,9 @@
 
 namespace Cline\WsdlBuilder\Xsd;
 
-use Cline\WsdlBuilder\Xsd\Types\ComplexType;
 use Cline\WsdlBuilder\Enums\XsdType;
 use Cline\WsdlBuilder\Xsd\Attributes\Attribute;
+use Cline\WsdlBuilder\Xsd\Types\ComplexType;
 
 /**
  * Represents an XSD simpleContent element for complex types.
@@ -22,6 +22,7 @@ use Cline\WsdlBuilder\Xsd\Attributes\Attribute;
 final class SimpleContent
 {
     private const string DERIVATION_EXTENSION = 'extension';
+
     private const string DERIVATION_RESTRICTION = 'restriction';
 
     private ?string $base = null;

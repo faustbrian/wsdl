@@ -20,9 +20,7 @@ final class Claims
 {
     public const string DEFAULT_DIALECT_URI = 'http://docs.oasis-open.org/wsfed/authorization/200706/authclaims';
 
-    /**
-     * @var array<string>
-     */
+    /** @var array<string> */
     private array $claimTypes = [];
 
     public function __construct(

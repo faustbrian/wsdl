@@ -9,8 +9,8 @@
 
 namespace Cline\WsdlBuilder\Xsd\Compositors;
 
-use Cline\WsdlBuilder\Xsd\Types\Element;
 use Cline\WsdlBuilder\Enums\XsdType;
+use Cline\WsdlBuilder\Xsd\Types\Element;
 
 /**
  * Represents an XSD choice compositor (one of many elements).

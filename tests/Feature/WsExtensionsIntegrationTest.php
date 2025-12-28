@@ -9,6 +9,7 @@
 
 use Cline\WsdlBuilder\Enums\BindingStyle;
 use Cline\WsdlBuilder\Enums\BindingUse;
+use Cline\WsdlBuilder\Enums\SoapVersion;
 use Cline\WsdlBuilder\Enums\XsdType;
 use Cline\WsdlBuilder\Wsdl;
 use Cline\WsdlBuilder\WsExtensions\Policy\Policy;
@@ -21,7 +22,7 @@ describe('WS-Extensions Integration', function (): void {
             test('builds WSDL with inline policy on binding', function (): void {
                 // Arrange
                 $wsdl = Wsdl::create('SecureService', 'http://example.com/secure')
-                    ->soapVersion(\Cline\WsdlBuilder\Enums\SoapVersion::Soap11)
+                    ->soapVersion(SoapVersion::Soap11)
                     ->defaultStyle(BindingStyle::Document)
                     ->defaultUse(BindingUse::Literal)
 
@@ -301,16 +302,16 @@ describe('WS-Extensions Integration', function (): void {
                     ->all()
                     ->assertion(
                         'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702',
-                        'TransportBinding'
+                        'TransportBinding',
                     )
                     ->assertion(
                         'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702',
-                        'HttpsToken'
+                        'HttpsToken',
                     )
                     ->assertion(
                         'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702',
                         'AlgorithmSuite',
-                        ['algorithm' => 'Basic256']
+                        ['algorithm' => 'Basic256'],
                     )
                     ->end()
                     ->end()
@@ -336,7 +337,7 @@ describe('WS-Extensions Integration', function (): void {
                     ->assertion(
                         'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702',
                         'UsernameToken',
-                        ['passwordType' => 'PasswordText']
+                        ['passwordType' => 'PasswordText'],
                     )
                     ->end()
                     ->end()
@@ -360,11 +361,11 @@ describe('WS-Extensions Integration', function (): void {
                     ->all()
                     ->assertion(
                         'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702',
-                        'SignedParts'
+                        'SignedParts',
                     )
                     ->assertion(
                         'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702',
-                        'EncryptedParts'
+                        'EncryptedParts',
                     )
                     ->end()
                     ->end()
@@ -387,7 +388,7 @@ describe('WS-Extensions Integration', function (): void {
             test('builds complete WSDL with policy, addressing, and security', function (): void {
                 // Arrange
                 $wsdl = Wsdl::create('CompleteSecureService', 'http://example.com/complete')
-                    ->soapVersion(\Cline\WsdlBuilder\Enums\SoapVersion::Soap11)
+                    ->soapVersion(SoapVersion::Soap11)
                     ->defaultStyle(BindingStyle::Document)
                     ->defaultUse(BindingUse::Literal)
 
@@ -442,20 +443,20 @@ describe('WS-Extensions Integration', function (): void {
                     ->all()
                     ->assertion(
                         'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702',
-                        'TransportBinding'
+                        'TransportBinding',
                     )
                     ->assertion(
                         'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702',
-                        'HttpsToken'
+                        'HttpsToken',
                     )
                     ->assertion(
                         'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702',
-                        'SignedParts'
+                        'SignedParts',
                     )
                     ->assertion(
                         'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702',
                         'AlgorithmSuite',
-                        ['algorithm' => 'Basic256Sha256']
+                        ['algorithm' => 'Basic256Sha256'],
                     )
                     ->end()
                     ->end()

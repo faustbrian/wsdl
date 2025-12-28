@@ -12,6 +12,8 @@ use Cline\WsdlBuilder\Wsdl;
 use Cline\WsdlBuilder\WsExtensions\Mtom\Enums\ContentTransferEncoding;
 use Cline\WsdlBuilder\WsExtensions\Mtom\MtomPolicy;
 use Cline\WsdlBuilder\WsExtensions\Mtom\XopInclude;
+use Cline\WsdlBuilder\WsExtensions\Policy\PolicyOperator;
+use Cline\WsdlBuilder\Xsd\Types\ComplexType;
 
 describe('MTOM/XOP Support', function (): void {
     describe('MtomPolicy', function (): void {
@@ -84,7 +86,7 @@ describe('MTOM/XOP Support', function (): void {
                 $xopInclude = new XopInclude('cid:test@example.com');
 
                 // Act & Assert
-                $reflection = new \ReflectionClass($xopInclude);
+                $reflection = new ReflectionClass($xopInclude);
                 expect($reflection->isReadOnly())->toBeTrue();
             });
         });
@@ -175,7 +177,7 @@ describe('MTOM/XOP Support', function (): void {
                     ->element('content', XsdType::SwaRef);
 
                 // Assert
-                expect($complexType)->toBeInstanceOf(\Cline\WsdlBuilder\Xsd\Types\ComplexType::class)
+                expect($complexType)->toBeInstanceOf(ComplexType::class)
                     ->and($wsdl->getComplexTypes())->toHaveCount(1);
             });
         });
@@ -192,12 +194,12 @@ describe('MTOM/XOP Support', function (): void {
                     ->all()
                     ->assertion(
                         MtomPolicy::NAMESPACE_URI,
-                        'wsoma:OptimizedMimeSerialization'
+                        'wsoma:OptimizedMimeSerialization',
                     );
 
                 // Assert
                 expect($wsdl->getPolicies())->toHaveCount(1)
-                    ->and($policy)->toBeInstanceOf(\Cline\WsdlBuilder\WsExtensions\Policy\PolicyOperator::class);
+                    ->and($policy)->toBeInstanceOf(PolicyOperator::class);
             });
 
             test('adds MTOM policy to binding', function (): void {
@@ -210,12 +212,12 @@ describe('MTOM/XOP Support', function (): void {
                     ->all()
                     ->assertion(
                         MtomPolicy::NAMESPACE_URI,
-                        'wsoma:OptimizedMimeSerialization'
+                        'wsoma:OptimizedMimeSerialization',
                     );
 
                 // Assert
                 expect($binding->getPolicies())->toHaveCount(1)
-                    ->and($policy)->toBeInstanceOf(\Cline\WsdlBuilder\WsExtensions\Policy\PolicyOperator::class);
+                    ->and($policy)->toBeInstanceOf(PolicyOperator::class);
             });
 
             test('creates MTOM assertion using factory method', function (): void {
@@ -228,12 +230,12 @@ describe('MTOM/XOP Support', function (): void {
                     ->all()
                     ->assertion(
                         $mtomAssertion['namespace'],
-                        $mtomAssertion['type']
+                        $mtomAssertion['type'],
                     );
 
                 // Assert
                 expect($wsdl->getPolicies())->toHaveCount(1)
-                    ->and($policy)->toBeInstanceOf(\Cline\WsdlBuilder\WsExtensions\Policy\PolicyOperator::class);
+                    ->and($policy)->toBeInstanceOf(PolicyOperator::class);
             });
         });
     });
@@ -249,7 +251,7 @@ describe('MTOM/XOP Support', function (): void {
                     ->all()
                     ->assertion(
                         MtomPolicy::NAMESPACE_URI,
-                        'wsoma:OptimizedMimeSerialization'
+                        'wsoma:OptimizedMimeSerialization',
                     );
 
                 // Define types
@@ -277,7 +279,7 @@ describe('MTOM/XOP Support', function (): void {
                     ->all()
                     ->assertion(
                         MtomPolicy::NAMESPACE_URI,
-                        'wsoma:OptimizedMimeSerialization'
+                        'wsoma:OptimizedMimeSerialization',
                     );
 
                 // Define service
@@ -338,7 +340,7 @@ describe('MTOM/XOP Support', function (): void {
                     ->all()
                     ->assertion(
                         MtomPolicy::NAMESPACE_URI,
-                        'wsoma:OptimizedMimeSerialization'
+                        'wsoma:OptimizedMimeSerialization',
                     );
 
                 // Image type with binary content

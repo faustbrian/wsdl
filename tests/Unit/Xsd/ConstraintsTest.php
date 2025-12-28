@@ -7,13 +7,13 @@
  * file that was distributed with this source code.
  */
 
-use Cline\WsdlBuilder\Xsd\Types\ComplexType;
 use Cline\WsdlBuilder\Wsdl;
 use Cline\WsdlBuilder\Xsd\Constraints\Field;
 use Cline\WsdlBuilder\Xsd\Constraints\Key;
 use Cline\WsdlBuilder\Xsd\Constraints\KeyRef;
 use Cline\WsdlBuilder\Xsd\Constraints\Selector;
 use Cline\WsdlBuilder\Xsd\Constraints\Unique;
+use Cline\WsdlBuilder\Xsd\Types\ComplexType;
 
 describe('XSD Identity Constraints', function (): void {
     describe('Key', function (): void {

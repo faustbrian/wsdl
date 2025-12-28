@@ -13,11 +13,12 @@ namespace Cline\WsdlBuilder\WsExtensions\Policy;
  * Represents a policy assertion element.
  *
  * @author Brian Faust <brian@cline.sh>
+ * @psalm-immutable
  */
 final readonly class PolicyAssertion
 {
     /**
-     * @param array<string, string>|null $attributes
+     * @param null|array<string, string> $attributes
      */
     public function __construct(
         public string $namespace,

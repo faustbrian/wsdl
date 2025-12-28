@@ -8,9 +8,9 @@
  */
 
 use Cline\WsdlBuilder\Enums\XsdType;
+use Cline\WsdlBuilder\Wsdl;
 use Cline\WsdlBuilder\Xsd\Types\ComplexType;
 use Cline\WsdlBuilder\Xsd\Types\Element;
-use Cline\WsdlBuilder\Wsdl;
 
 describe('ComplexType', function (): void {
     describe('Happy Paths', function (): void {

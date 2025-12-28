@@ -12,6 +12,7 @@ namespace Cline\WsdlBuilder\Core;
 use Cline\WsdlBuilder\Enums\XsdType;
 use Cline\WsdlBuilder\Wsdl;
 use Cline\WsdlBuilder\WsExtensions\Addressing\Action;
+use RuntimeException;
 
 /**
  * Simplified operation builder for high-level API.
@@ -103,8 +104,8 @@ final class Operation
     public function faultAction(string $faultName, string $action): self
     {
         if ($this->addressingAction === null) {
-            throw new \RuntimeException(
-                "No action defined for operation '{$this->name}'. Call action() first."
+            throw new RuntimeException(
+                "No action defined for operation '{$this->name}'. Call action() first.",
             );
         }
 

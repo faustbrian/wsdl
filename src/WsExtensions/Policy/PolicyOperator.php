@@ -16,7 +16,7 @@ namespace Cline\WsdlBuilder\WsExtensions\Policy;
  */
 final class PolicyOperator
 {
-    /** @var array<int, PolicyOperator> */
+    /** @var array<int, self> */
     private array $nestedOperators = [];
 
     /** @var array<int, PolicyAssertion> */
@@ -26,7 +26,7 @@ final class PolicyOperator
     private array $nestedPolicies = [];
 
     public function __construct(
-        private readonly Policy|PolicyOperator $parent,
+        private readonly Policy|self $parent,
         private readonly string $type,
     ) {}
 
@@ -55,11 +55,11 @@ final class PolicyOperator
     /**
      * Add a policy assertion.
      *
-     * @param array<string, string>|null $attributes
+     * @param null|array<string, string> $attributes
      */
     public function assertion(string $namespace, string $localName, ?array $attributes = null): self
     {
-        /** @var array<string, string>|null $attributes */
+        /** @var null|array<string, string> $attributes */
         $this->assertions[] = new PolicyAssertion($namespace, $localName, $attributes);
 
         return $this;
@@ -79,7 +79,7 @@ final class PolicyOperator
     /**
      * Return to the parent (Policy or PolicyOperator).
      */
-    public function end(): Policy|PolicyOperator
+    public function end(): Policy|self
     {
         return $this->parent;
     }
@@ -95,7 +95,7 @@ final class PolicyOperator
     /**
      * Get all nested operators.
      *
-     * @return array<int, PolicyOperator>
+     * @return array<int, self>
      */
     public function getNestedOperators(): array
     {

@@ -19,8 +19,8 @@ namespace Cline\WsdlBuilder\WsExtensions\ResourceFramework;
 final class GetResourceProperty
 {
     /**
-     * @param string $resourceProperty Property name (QName)
-     * @param mixed|null $parent Optional parent object for fluent chaining
+     * @param string     $resourceProperty Property name (QName)
+     * @param null|mixed $parent           Optional parent object for fluent chaining
      */
     public function __construct(
         private readonly string $resourceProperty,
@@ -47,7 +47,7 @@ final class GetResourceProperty
     /**
      * Return to parent or return config array.
      *
-     * @return mixed|array<string, mixed>
+     * @return array<string, mixed>|mixed
      */
     public function end(): mixed
     {

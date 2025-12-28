@@ -24,9 +24,9 @@ final class ResourceProperty
     private bool $subscribable = false;
 
     /**
-     * @param string $name Property name (QName)
-     * @param string $type Property type
-     * @param mixed|null $parent Optional parent object for fluent chaining
+     * @param string     $name   Property name (QName)
+     * @param string     $type   Property type
+     * @param null|mixed $parent Optional parent object for fluent chaining
      */
     public function __construct(
         private readonly string $name,
@@ -92,7 +92,7 @@ final class ResourceProperty
     /**
      * Return to parent or return config array.
      *
-     * @return mixed|array<string, mixed>
+     * @return array<string, mixed>|mixed
      */
     public function end(): mixed
     {

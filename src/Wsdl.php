@@ -10,29 +10,29 @@
 namespace Cline\WsdlBuilder;
 
 use Cline\WsdlBuilder\Contracts\WsdlBuilderInterface;
-use Cline\WsdlBuilder\Enums\BindingStyle;
-use Cline\WsdlBuilder\Enums\BindingUse;
-use Cline\WsdlBuilder\Enums\SoapVersion;
 use Cline\WsdlBuilder\Core\Binding;
 use Cline\WsdlBuilder\Core\Message;
 use Cline\WsdlBuilder\Core\Operation;
 use Cline\WsdlBuilder\Core\Port;
 use Cline\WsdlBuilder\Core\PortType;
 use Cline\WsdlBuilder\Core\Service;
-use Cline\WsdlBuilder\Xsd\Types\ComplexType;
-use Cline\WsdlBuilder\Xsd\Types\SimpleType;
-use Cline\WsdlBuilder\Xsd\Attributes\AttributeGroup;
 use Cline\WsdlBuilder\Documentation\Documentation;
+use Cline\WsdlBuilder\Enums\BindingStyle;
+use Cline\WsdlBuilder\Enums\BindingUse;
+use Cline\WsdlBuilder\Enums\SoapVersion;
 use Cline\WsdlBuilder\Imports\SchemaImport;
 use Cline\WsdlBuilder\Imports\SchemaInclude;
 use Cline\WsdlBuilder\Imports\SchemaRedefine;
 use Cline\WsdlBuilder\Imports\WsdlImport;
 use Cline\WsdlBuilder\Operations\Notification;
 use Cline\WsdlBuilder\Operations\OneWay;
+use Cline\WsdlBuilder\WsExtensions\Policy\PolicyAttachment;
+use Cline\WsdlBuilder\Xsd\Attributes\AttributeGroup;
 use Cline\WsdlBuilder\Xsd\DerivedTypes\ListType;
 use Cline\WsdlBuilder\Xsd\DerivedTypes\UnionType;
 use Cline\WsdlBuilder\Xsd\Groups\ElementGroup;
-use Cline\WsdlBuilder\WsExtensions\Policy\PolicyAttachment;
+use Cline\WsdlBuilder\Xsd\Types\ComplexType;
+use Cline\WsdlBuilder\Xsd\Types\SimpleType;
 use DOMDocument;
 use DOMElement;
 
