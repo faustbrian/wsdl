@@ -1404,6 +1404,7 @@ final class WsdlGenerator
             if (!$child instanceof DOMElement) {
                 continue;
             }
+
             // @codeCoverageIgnoreEnd
 
             if ($child->localName !== 'operation') {
@@ -1424,6 +1425,7 @@ final class WsdlGenerator
                 if (!$opChild instanceof DOMElement) {
                     continue;
                 }
+
                 // @codeCoverageIgnoreEnd
 
                 if ($opChild->localName !== 'input') {
@@ -1442,6 +1444,7 @@ final class WsdlGenerator
                     if (!$opChild instanceof DOMElement) {
                         continue;
                     }
+
                     // @codeCoverageIgnoreEnd
 
                     if ($opChild->localName !== 'output') {
@@ -1465,6 +1468,7 @@ final class WsdlGenerator
                     if (!$opChild instanceof DOMElement) {
                         continue;
                     }
+
                     // @codeCoverageIgnoreEnd
 
                     if ($opChild->localName !== 'fault') {

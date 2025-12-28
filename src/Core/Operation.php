@@ -198,6 +198,7 @@ final class Operation
             foreach ($this->addressingAction->faultActions ?? [] as $faultName => $faultActionUri) {
                 $portTypes[$portTypeName]->faultAction($this->name, $faultName, $faultActionUri);
             }
+
             // @codeCoverageIgnoreEnd
         }
 
@@ -227,6 +228,7 @@ final class Operation
             foreach ($this->addressingAction->faultActions ?? [] as $faultName => $faultActionUri) {
                 $bindings[$bindingName]->faultAction($this->name, $faultName, $faultActionUri);
             }
+
             // @codeCoverageIgnoreEnd
         }
 

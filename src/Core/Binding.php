@@ -158,6 +158,9 @@ final class Binding
         throw_if(empty($headers), RuntimeException::class, 'No header exists to add fault to');
 
         $lastHeader = end($headers);
+
+        throw_if($lastHeader === false, RuntimeException::class, 'Failed to retrieve last header');
+
         $lastHeader->headerFault($message, $part)->use($use);
 
         return $this;
