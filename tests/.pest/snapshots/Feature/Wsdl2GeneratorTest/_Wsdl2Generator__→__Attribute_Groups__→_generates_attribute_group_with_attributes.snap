@@ -4,13 +4,8 @@
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/types">
       <xs:attributeGroup name="CommonAttrs">
         <xs:attribute name="id" type="xs:int"/>
+        <xs:attribute name="created" type="xs:dateTime"/>
       </xs:attributeGroup>
-      <xs:complexType name="Person">
-        <xs:sequence>
-          <xs:element name="name" type="xs:string"/>
-        </xs:sequence>
-        <xs:attributeGroup ref="tns:CommonAttrs"/>
-      </xs:complexType>
     </xs:schema>
   </wsdl:types>
 </wsdl:description>

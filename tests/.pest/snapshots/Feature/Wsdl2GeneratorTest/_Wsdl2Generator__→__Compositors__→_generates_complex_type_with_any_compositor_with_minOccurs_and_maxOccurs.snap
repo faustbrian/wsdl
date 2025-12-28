@@ -4,7 +4,7 @@
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/types">
       <xs:complexType name="MultiExtensible">
         <xs:sequence>
-          <xs:element name="knownField" type="xsd:string"/>
+          <xs:element name="knownField" type="xs:string"/>
         </xs:sequence>
         <xs:any namespace="##other" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
       </xs:complexType>

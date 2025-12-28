@@ -3,7 +3,7 @@
   <wsdl:types>
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/types">
       <xs:simpleType name="Username">
-        <xs:restriction base="xsd:string">
+        <xs:restriction base="xs:string">
           <xs:minLength value="3"/>
           <xs:maxLength value="50"/>
         </xs:restriction>

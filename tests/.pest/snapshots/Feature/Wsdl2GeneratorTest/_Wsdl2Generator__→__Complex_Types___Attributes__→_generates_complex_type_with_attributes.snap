@@ -2,14 +2,12 @@
 <wsdl:description xmlns:wsdl="http://www.w3.org/ns/wsdl" xmlns:tns="http://example.com/types" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsoap="http://www.w3.org/ns/wsdl/soap" targetNamespace="http://example.com/types">
   <wsdl:types>
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/types">
-      <xs:attributeGroup name="CommonAttrs">
-        <xs:attribute name="id" type="xs:int"/>
-      </xs:attributeGroup>
-      <xs:complexType name="Person">
+      <xs:complexType name="TypeWithAttrs">
         <xs:sequence>
-          <xs:element name="name" type="xs:string"/>
+          <xs:element name="value" type="xs:string"/>
         </xs:sequence>
-        <xs:attributeGroup ref="tns:CommonAttrs"/>
+        <xs:attribute name="id" type="xs:int"/>
+        <xs:attribute name="status" type="xs:string"/>
       </xs:complexType>
     </xs:schema>
   </wsdl:types>

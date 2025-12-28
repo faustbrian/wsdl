@@ -3,7 +3,7 @@
   <wsdl:types>
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/types">
       <xs:simpleType name="NumberOrString">
-        <xs:union memberTypes="xsd:int xsd:string"/>
+        <xs:union memberTypes="xs:int xs:string"/>
       </xs:simpleType>
     </xs:schema>
   </wsdl:types>

@@ -5,7 +5,7 @@
       <xs:simpleType name="EnumList">
         <xs:restriction>
           <xs:simpleType>
-            <xs:list itemType="xsd:string"/>
+            <xs:list itemType="xs:string"/>
           </xs:simpleType>
           <xs:enumeration value="value1"/>
           <xs:enumeration value="value2"/>

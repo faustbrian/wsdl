@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://example.com/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" name="TestService" targetNamespace="http://example.com/test">
-  <wsdl:portType name="TestPort" wsaw:UsingAddressing="true">
-    <wsdl:operation name="TestOp">
-      <wsdl:input message="tns:InputMsg"/>
-      <wsdl:output message="tns:OutputMsg"/>
-    </wsdl:operation>
-  </wsdl:portType>
-</wsdl:definitions>

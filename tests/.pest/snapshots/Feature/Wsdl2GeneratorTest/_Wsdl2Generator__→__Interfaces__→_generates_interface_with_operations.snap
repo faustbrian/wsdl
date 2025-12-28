@@ -2,8 +2,8 @@
 <wsdl:description xmlns:wsdl="http://www.w3.org/ns/wsdl" xmlns:tns="http://example.com/users" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsoap="http://www.w3.org/ns/wsdl/soap" targetNamespace="http://example.com/users">
   <wsdl:interface name="UserInterface">
     <wsdl:operation name="GetUser" pattern="http://www.w3.org/ns/wsdl/in-out">
-      <wsdl:input element="tns:tns:GetUserRequest"/>
-      <wsdl:output element="tns:tns:GetUserResponse"/>
+      <wsdl:input element="tns:GetUserRequest"/>
+      <wsdl:output element="tns:GetUserResponse"/>
     </wsdl:operation>
   </wsdl:interface>
 </wsdl:description>

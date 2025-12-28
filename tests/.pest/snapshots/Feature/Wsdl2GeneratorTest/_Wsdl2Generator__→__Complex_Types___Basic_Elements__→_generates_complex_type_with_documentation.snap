@@ -5,7 +5,7 @@
       <xs:complexType xmlns:wsdl="http://www.w3.org/ns/wsdl" name="DocumentedType">
         <wsdl:documentation xmlns:wsdl="http://www.w3.org/ns/wsdl" xml:lang="en">A well-documented complex type</wsdl:documentation>
         <xs:sequence>
-          <xs:element name="value" type="xsd:string"/>
+          <xs:element name="value" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
     </xs:schema>

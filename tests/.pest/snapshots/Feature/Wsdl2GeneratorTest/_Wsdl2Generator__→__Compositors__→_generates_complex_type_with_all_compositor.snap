@@ -4,8 +4,8 @@
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/types">
       <xs:complexType name="UnorderedFields">
         <xs:all>
-          <xs:element name="field1" type="xsd:string"/>
-          <xs:element name="field2" type="xsd:int"/>
+          <xs:element name="field1" type="xs:string"/>
+          <xs:element name="field2" type="xs:int"/>
         </xs:all>
       </xs:complexType>
     </xs:schema>

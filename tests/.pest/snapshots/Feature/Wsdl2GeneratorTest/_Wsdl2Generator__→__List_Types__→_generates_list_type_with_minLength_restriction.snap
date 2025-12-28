@@ -5,7 +5,7 @@
       <xs:simpleType name="NonEmptyList">
         <xs:restriction>
           <xs:simpleType>
-            <xs:list itemType="xsd:string"/>
+            <xs:list itemType="xs:string"/>
           </xs:simpleType>
           <xs:minLength value="1"/>
         </xs:restriction>

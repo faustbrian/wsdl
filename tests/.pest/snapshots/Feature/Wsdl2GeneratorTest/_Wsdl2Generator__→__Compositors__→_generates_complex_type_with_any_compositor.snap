@@ -4,9 +4,9 @@
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/types">
       <xs:complexType name="Extensible">
         <xs:sequence>
-          <xs:element name="knownField" type="xsd:string"/>
+          <xs:element name="knownField" type="xs:string"/>
         </xs:sequence>
-        <xs:any namespace="##any" processContents="strict"/>
+        <xs:any namespace="##any" processContents="lax"/>
       </xs:complexType>
     </xs:schema>
   </wsdl:types>

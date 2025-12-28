@@ -4,18 +4,18 @@
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/groups">
       <xs:group name="AddressFields">
         <xs:sequence>
-          <xs:element name="street" type="xsd:string"/>
-          <xs:element name="city" type="xsd:string"/>
-          <xs:element name="country" type="xsd:string"/>
+          <xs:element name="street" type="xs:string"/>
+          <xs:element name="city" type="xs:string"/>
+          <xs:element name="country" type="xs:string"/>
         </xs:sequence>
       </xs:group>
       <xs:attributeGroup name="AuditAttributes">
-        <xs:attribute name="createdAt" type="xsd:dateTime"/>
-        <xs:attribute name="updatedAt" type="xsd:dateTime"/>
+        <xs:attribute name="createdAt" type="xs:dateTime"/>
+        <xs:attribute name="updatedAt" type="xs:dateTime"/>
       </xs:attributeGroup>
       <xs:complexType name="Contact">
         <xs:sequence>
-          <xs:element name="name" type="xsd:string"/>
+          <xs:element name="name" type="xs:string"/>
           <xs:group ref="tns:AddressFields"/>
         </xs:sequence>
         <xs:attributeGroup ref="tns:AuditAttributes"/>

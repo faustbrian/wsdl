@@ -5,7 +5,7 @@
       <xs:simpleType name="PatternList">
         <xs:restriction>
           <xs:simpleType>
-            <xs:list itemType="xsd:string"/>
+            <xs:list itemType="xs:string"/>
           </xs:simpleType>
           <xs:pattern value="[A-Z]+"/>
         </xs:restriction>

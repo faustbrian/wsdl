@@ -4,8 +4,8 @@
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/types">
       <xs:complexType name="MultiPayment">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="method1" type="xsd:string"/>
-          <xs:element name="method2" type="xsd:string"/>
+          <xs:element name="method1" type="xs:string"/>
+          <xs:element name="method2" type="xs:string"/>
         </xs:choice>
       </xs:complexType>
     </xs:schema>

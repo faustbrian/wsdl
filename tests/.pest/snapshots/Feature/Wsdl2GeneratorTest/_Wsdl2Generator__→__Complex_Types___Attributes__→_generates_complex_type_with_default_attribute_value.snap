@@ -4,9 +4,9 @@
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/types">
       <xs:complexType name="DefaultAttr">
         <xs:sequence>
-          <xs:element name="value" type="xsd:string"/>
+          <xs:element name="value" type="xs:string"/>
         </xs:sequence>
-        <xs:attribute name="status" type="xsd:string" default="active"/>
+        <xs:attribute name="status" type="xs:string" default="active"/>
       </xs:complexType>
     </xs:schema>
   </wsdl:types>

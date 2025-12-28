@@ -3,7 +3,7 @@
   <wsdl:types>
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/types">
       <xs:simpleType name="Status">
-        <xs:restriction base="xsd:string">
+        <xs:restriction base="xs:string">
           <xs:enumeration value="active"/>
           <xs:enumeration value="inactive"/>
           <xs:enumeration value="pending"/>

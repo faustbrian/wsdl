@@ -4,7 +4,7 @@
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/types">
       <xs:simpleType xmlns:wsdl="http://www.w3.org/ns/wsdl" name="Email">
         <wsdl:documentation xmlns:wsdl="http://www.w3.org/ns/wsdl" xml:lang="en">Valid email address format</wsdl:documentation>
-        <xs:restriction base="xsd:string">
+        <xs:restriction base="xs:string">
           <xs:pattern value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"/>
         </xs:restriction>
       </xs:simpleType>

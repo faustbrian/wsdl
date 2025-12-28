@@ -4,13 +4,13 @@
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/types">
       <xs:group name="ContactGroup">
         <xs:sequence>
-          <xs:element name="email" type="xsd:string"/>
-          <xs:element name="phone" type="xsd:string"/>
+          <xs:element name="email" type="xs:string"/>
+          <xs:element name="phone" type="xs:string"/>
         </xs:sequence>
       </xs:group>
       <xs:complexType name="Person">
         <xs:sequence>
-          <xs:element name="name" type="xsd:string"/>
+          <xs:element name="name" type="xs:string"/>
           <xs:group ref="tns:ContactGroup"/>
         </xs:sequence>
       </xs:complexType>

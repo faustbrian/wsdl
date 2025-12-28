@@ -430,7 +430,7 @@ final class Wsdl2Generator
         $this->addDocumentation($simpleType, $type->getDocumentation());
 
         $restriction = $this->dom->createElementNS(Wsdl2::XSD_NS, 'xs:restriction');
-        $restriction->setAttribute('base', $type->getBase());
+        $restriction->setAttribute('base', $this->prefixType($type->getBase()));
 
         if ($type->getMinLength() !== null) {
             $el = $this->dom->createElementNS(Wsdl2::XSD_NS, 'xs:minLength');
@@ -490,7 +490,7 @@ final class Wsdl2Generator
         $simpleType->setAttribute('name', $type->getName());
 
         $list = $this->dom->createElementNS(Wsdl2::XSD_NS, 'xs:list');
-        $list->setAttribute('itemType', $type->getItemType());
+        $list->setAttribute('itemType', $this->prefixType($type->getItemType()));
 
         // If there are restrictions, wrap in restriction
         if ($type->getMinLength() !== null || $type->getMaxLength() !== null
@@ -539,7 +539,8 @@ final class Wsdl2Generator
         $simpleType->setAttribute('name', $type->getName());
 
         $union = $this->dom->createElementNS(Wsdl2::XSD_NS, 'xs:union');
-        $union->setAttribute('memberTypes', implode(' ', $type->getMemberTypes()));
+        $memberTypes = array_map(fn($t) => $this->prefixType($t), $type->getMemberTypes());
+        $union->setAttribute('memberTypes', implode(' ', $memberTypes));
 
         $simpleType->appendChild($union);
         $schema->appendChild($simpleType);
@@ -647,10 +648,13 @@ final class Wsdl2Generator
             $derivationEl = $this->dom->createElementNS(Wsdl2::XSD_NS, 'xs:'.$derivationType);
 
             // Determine if base is a built-in XSD type or custom type
-            if (str_starts_with($base, 'xs:')) {
-                $derivationEl->setAttribute('base', $base);
+            // If base doesn't contain ':', it's unprefixed and needs a namespace
+            if (!str_contains($base, ':')) {
+                // Check if it's a built-in XSD type (lowercase first letter typically)
+                // For now, if it starts with lowercase, assume XSD type, else custom type
+                $derivationEl->setAttribute('base', ctype_lower($base[0]) ? $this->prefixType($base) : 'tns:'.$base);
             } else {
-                $derivationEl->setAttribute('base', 'tns:'.$base);
+                $derivationEl->setAttribute('base', $base);
             }
 
             // Add attributes
@@ -668,7 +672,7 @@ final class Wsdl2Generator
     {
         $el = $this->dom->createElementNS(Wsdl2::XSD_NS, 'xs:element');
         $el->setAttribute('name', $element->name);
-        $el->setAttribute('type', $element->type);
+        $el->setAttribute('type', $this->prefixType($element->type));
 
         if ($element->nullable) {
             $el->setAttribute('nillable', 'true');
@@ -692,7 +696,7 @@ final class Wsdl2Generator
     {
         $el = $this->dom->createElementNS(Wsdl2::XSD_NS, 'xs:element');
         $el->setAttribute('name', $element['name']);
-        $el->setAttribute('type', $element['type']);
+        $el->setAttribute('type', $this->prefixType($element['type']));
 
         if ($element['nullable']) {
             $el->setAttribute('nillable', 'true');
@@ -713,7 +717,7 @@ final class Wsdl2Generator
     {
         $el = $this->dom->createElementNS(Wsdl2::XSD_NS, 'xs:attribute');
         $el->setAttribute('name', $attr->getName());
-        $el->setAttribute('type', $attr->getType());
+        $el->setAttribute('type', $this->prefixType($attr->getType()));
 
         if ($attr->getUse() !== null) {
             $el->setAttribute('use', $attr->getUse());
@@ -787,5 +791,18 @@ final class Wsdl2Generator
         }
 
         $parent->appendChild($anyEl);
+    }
+
+    /**
+     * Add xs: prefix to type if it doesn't already have a namespace prefix.
+     */
+    private function prefixType(string $type): string
+    {
+        // If already has a prefix (contains :) or is empty, return as-is
+        if (str_contains($type, ':') || $type === '') {
+            return $type;
+        }
+
+        return 'xs:' . $type;
     }
 }

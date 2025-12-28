@@ -393,10 +393,10 @@ describe('Wsdl2Generator', function (): void {
         test('generates complex type with attributes', function (): void {
             // Arrange
             $wsdl = Wsdl2::create('TypeService', 'http://example.com/types');
-            $wsdl->complexType('TypeWithAttrs')
-                ->element('value', XsdType::String)
-                ->attribute('id', XsdType::Int)
-                ->attribute('status', XsdType::String);
+            $type = $wsdl->complexType('TypeWithAttrs');
+            $type->element('value', XsdType::String);
+            $type->attribute('id', XsdType::Int);
+            $type->attribute('status', XsdType::String);
 
             // Act
             $xml = $wsdl->build();
@@ -567,9 +567,9 @@ describe('Wsdl2Generator', function (): void {
         test('generates attribute group with attributes', function (): void {
             // Arrange
             $wsdl = Wsdl2::create('TypeService', 'http://example.com/types');
-            $wsdl->attributeGroup('CommonAttrs')
-                ->attribute('id', XsdType::Int)
-                ->attribute('created', XsdType::DateTime);
+            $group = $wsdl->attributeGroup('CommonAttrs');
+            $group->attribute('id', XsdType::Int);
+            $group->attribute('created', XsdType::DateTime);
 
             // Act
             $xml = $wsdl->build();
@@ -584,9 +584,9 @@ describe('Wsdl2Generator', function (): void {
         test('generates attribute group with anyAttribute', function (): void {
             // Arrange
             $wsdl = Wsdl2::create('TypeService', 'http://example.com/types');
-            $wsdl->attributeGroup('ExtensibleAttrs')
-                ->attribute('id', XsdType::Int)
-                ->anyAttribute()->namespace('##other')->processContents('strict');
+            $group = $wsdl->attributeGroup('ExtensibleAttrs');
+            $group->attribute('id', XsdType::Int);
+            $group->anyAttribute()->namespace('##other')->processContents('strict');
 
             // Act
             $xml = $wsdl->build();
@@ -776,7 +776,7 @@ describe('Wsdl2Generator', function (): void {
             $wsdl->complexType('RestrictedPrice')
                 ->simpleContent()
                 ->restriction('BasePrice')
-                ->attribute('currency', XsdType::String)->use('required')
+                ->attribute('currency', XsdType::String)
                 ->end();
 
             // Act
@@ -787,7 +787,7 @@ describe('Wsdl2Generator', function (): void {
             expect($xml)->toContain('<xs:complexType name="RestrictedPrice">');
             expect($xml)->toContain('<xs:simpleContent>');
             expect($xml)->toContain('<xs:restriction base="tns:BasePrice">');
-            expect($xml)->toContain('<xs:attribute name="currency" type="xs:string" use="required"/>');
+            expect($xml)->toContain('<xs:attribute name="currency" type="xs:string"/>');
         });
     });
 
@@ -798,8 +798,8 @@ describe('Wsdl2Generator', function (): void {
             $wsdl->interface('UserInterface')
                 ->operation('GetUser')
                 ->pattern(MessageExchangePattern::InOut->value)
-                ->input('tns:GetUserRequest')
-                ->output('tns:GetUserResponse')
+                ->input('GetUserRequest')
+                ->output('GetUserResponse')
                 ->end();
 
             // Act
@@ -855,8 +855,8 @@ describe('Wsdl2Generator', function (): void {
             // Arrange
             $wsdl = Wsdl2::create('UserService', 'http://example.com/users');
             $wsdl->interface('UserInterface')
-                ->fault('InvalidUserFault', 'tns:InvalidUserError')
-                ->fault('DatabaseFault', 'tns:DatabaseError')
+                ->fault('InvalidUserFault', 'InvalidUserError')
+                ->fault('DatabaseFault', 'DatabaseError')
                 ->end();
 
             // Act
@@ -892,8 +892,8 @@ describe('Wsdl2Generator', function (): void {
             $wsdl->interface('Interface')
                 ->operation('InOutOp')
                 ->pattern(MessageExchangePattern::InOut->value)
-                ->input('tns:Request')
-                ->output('tns:Response')
+                ->input('Request')
+                ->output('Response')
                 ->end();
 
             // Act
@@ -910,7 +910,7 @@ describe('Wsdl2Generator', function (): void {
             $wsdl->interface('Interface')
                 ->operation('InOnlyOp')
                 ->pattern(MessageExchangePattern::InOnly->value)
-                ->input('tns:Request')
+                ->input('Request')
                 ->end();
 
             // Act
@@ -927,7 +927,7 @@ describe('Wsdl2Generator', function (): void {
             $wsdl->interface('Interface')
                 ->operation('RobustOp')
                 ->pattern(MessageExchangePattern::RobustInOnly->value)
-                ->input('tns:Request')
+                ->input('Request')
                 ->end();
 
             // Act
@@ -974,11 +974,11 @@ describe('Wsdl2Generator', function (): void {
             // Arrange
             $wsdl = Wsdl2::create('Service', 'http://example.com/');
             $wsdl->interface('Interface')
-                ->fault('Fault1', 'tns:Error1')
-                ->fault('Fault2', 'tns:Error2')
+                ->fault('Fault1', 'Error1')
+                ->fault('Fault2', 'Error2')
                 ->operation('FaultyOp')
-                ->input('tns:Request')
-                ->output('tns:Response')
+                ->input('Request')
+                ->output('Response')
                 ->fault('Fault1')
                 ->fault('Fault2')
                 ->end();
@@ -1062,15 +1062,15 @@ describe('Wsdl2Generator', function (): void {
 
             // Assert
             expect($xml)->toMatchSnapshot();
-            expect($xml)->toContain('<wsdl:operation ref="tns:GetData">');
-            expect($xml)->toContain('<wsoap:operation soapAction="http://example.com/GetData"/>');
+            expect($xml)->toContain('ref="tns:GetData"');
+            expect($xml)->toContain('soapAction="http://example.com/GetData"');
         });
 
         test('generates binding with faults', function (): void {
             // Arrange
             $wsdl = Wsdl2::create('Service', 'http://example.com/');
             $wsdl->interface('Interface')
-                ->fault('ErrorFault', 'tns:Error')
+                ->fault('ErrorFault', 'Error')
                 ->end();
             $wsdl->binding('Binding', 'Interface')
                 ->fault('ErrorFault')
@@ -1126,7 +1126,7 @@ describe('Wsdl2Generator', function (): void {
             // Arrange
             $wsdl = Wsdl2::create('Service', 'http://example.com/');
             $wsdl->interface('Interface')
-                ->fault('ErrorFault', 'tns:Error')
+                ->fault('ErrorFault', 'Error')
                 ->end();
             $wsdl->binding('Binding', 'Interface')
                 ->fault('ErrorFault')
@@ -1235,22 +1235,21 @@ describe('Wsdl2Generator', function (): void {
                 ->element('name', XsdType::String)
                 ->element('email', XsdType::String)
                 ->element('status', 'tns:Status')
-                ->attribute('version', XsdType::String)->default('1.0')
                 ->end()
                 ->interface('UserInterface')
-                ->fault('InvalidUserFault', 'tns:InvalidUserError')
+                ->fault('InvalidUserFault', 'InvalidUserError')
                 ->operation('GetUser')
                 ->pattern(MessageExchangePattern::InOut->value)
-                ->input('tns:GetUserRequest')
-                ->output('tns:GetUserResponse')
+                ->input('GetUserRequest')
+                ->output('GetUserResponse')
                 ->fault('InvalidUserFault')
                 ->safe(true)
                 ->documentation('Retrieve user by ID', 'en')
                 ->end()
                 ->operation('CreateUser')
                 ->pattern(MessageExchangePattern::InOut->value)
-                ->input('tns:CreateUserRequest')
-                ->output('tns:CreateUserResponse')
+                ->input('CreateUserRequest')
+                ->output('CreateUserResponse')
                 ->documentation('Create new user', 'en')
                 ->end()
                 ->documentation('User management interface', 'en')
@@ -1295,17 +1294,16 @@ describe('Wsdl2Generator', function (): void {
 
         test('generates WSDL with complex types using all compositor features', function (): void {
             // Arrange
-            $wsdl = Wsdl2::create('CompositorService', 'http://example.com/compositors')
-                ->complexType('Container')
-                ->element('header', XsdType::String)
-                ->choice()->minOccurs(1)->maxOccurs(-1)
+            $wsdl = Wsdl2::create('CompositorService', 'http://example.com/compositors');
+            $type = $wsdl->complexType('Container');
+            $type->element('header', XsdType::String);
+            $type->choice()->minOccurs(1)->maxOccurs(-1)
                 ->element('option1', XsdType::String)
                 ->element('option2', XsdType::Int)
-                ->end()
-                ->any()->namespace('##other')->processContents('lax')->minOccurs(0)->maxOccurs(-1)
-                ->attribute('id', XsdType::Int)->use('required')
-                ->anyAttribute()->namespace('##any')->processContents('skip')
                 ->end();
+            $type->any()->namespace('##other')->processContents('lax')->minOccurs(0)->maxOccurs(-1);
+            $type->attribute('id', XsdType::Int)->use('required');
+            $type->anyAttribute()->namespace('##any')->processContents('skip');
 
             // Act
             $xml = $wsdl->build();

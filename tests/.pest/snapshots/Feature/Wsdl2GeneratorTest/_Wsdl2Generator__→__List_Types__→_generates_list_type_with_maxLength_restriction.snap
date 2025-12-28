@@ -5,7 +5,7 @@
       <xs:simpleType name="BoundedList">
         <xs:restriction>
           <xs:simpleType>
-            <xs:list itemType="xsd:string"/>
+            <xs:list itemType="xs:string"/>
           </xs:simpleType>
           <xs:maxLength value="10"/>
         </xs:restriction>

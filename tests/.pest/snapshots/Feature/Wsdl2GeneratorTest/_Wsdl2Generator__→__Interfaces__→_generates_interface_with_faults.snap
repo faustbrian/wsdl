@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:description xmlns:wsdl="http://www.w3.org/ns/wsdl" xmlns:tns="http://example.com/users" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsoap="http://www.w3.org/ns/wsdl/soap" targetNamespace="http://example.com/users">
   <wsdl:interface name="UserInterface">
-    <wsdl:fault name="InvalidUserFault" element="tns:tns:InvalidUserError"/>
-    <wsdl:fault name="DatabaseFault" element="tns:tns:DatabaseError"/>
+    <wsdl:fault name="InvalidUserFault" element="tns:InvalidUserError"/>
+    <wsdl:fault name="DatabaseFault" element="tns:DatabaseError"/>
   </wsdl:interface>
 </wsdl:description>

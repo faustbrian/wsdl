@@ -5,7 +5,7 @@
       <xs:include schemaLocation="types.xsd"/>
       <xs:complexType name="Test">
         <xs:sequence>
-          <xs:element name="value" type="xsd:string"/>
+          <xs:element name="value" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
     </xs:schema>

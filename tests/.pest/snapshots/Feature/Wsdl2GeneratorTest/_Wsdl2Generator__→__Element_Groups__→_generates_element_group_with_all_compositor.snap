@@ -4,8 +4,8 @@
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/types">
       <xs:group name="UnorderedGroup">
         <xs:all>
-          <xs:element name="field1" type="xsd:string"/>
-          <xs:element name="field2" type="xsd:string"/>
+          <xs:element name="field1" type="xs:string"/>
+          <xs:element name="field2" type="xs:string"/>
         </xs:all>
       </xs:group>
     </xs:schema>

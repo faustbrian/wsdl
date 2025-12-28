@@ -3,7 +3,7 @@
   <wsdl:types>
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/types">
       <xs:simpleType name="Age">
-        <xs:restriction base="xsd:int">
+        <xs:restriction base="xs:int">
           <xs:minInclusive value="0"/>
           <xs:maxInclusive value="150"/>
         </xs:restriction>

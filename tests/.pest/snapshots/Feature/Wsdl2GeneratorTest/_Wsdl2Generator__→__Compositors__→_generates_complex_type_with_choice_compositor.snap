@@ -4,8 +4,8 @@
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/types">
       <xs:complexType name="Payment">
         <xs:choice>
-          <xs:element name="creditCard" type="xsd:string"/>
-          <xs:element name="bankTransfer" type="xsd:string"/>
+          <xs:element name="creditCard" type="xs:string"/>
+          <xs:element name="bankTransfer" type="xs:string"/>
         </xs:choice>
       </xs:complexType>
     </xs:schema>

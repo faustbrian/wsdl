@@ -4,9 +4,9 @@
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/types">
       <xs:complexType name="FixedAttr">
         <xs:sequence>
-          <xs:element name="value" type="xsd:string"/>
+          <xs:element name="value" type="xs:string"/>
         </xs:sequence>
-        <xs:attribute name="version" type="xsd:string" fixed="1.0"/>
+        <xs:attribute name="version" type="xs:string" fixed="1.0"/>
       </xs:complexType>
     </xs:schema>
   </wsdl:types>
