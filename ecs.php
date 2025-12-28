@@ -9,6 +9,7 @@
 
 use Cline\CodingStandard\EasyCodingStandard\Factory;
 use PhpCsFixer\Fixer\ClassNotation\FinalClassFixer;
+use PhpCsFixer\Fixer\Comment\CommentToPhpdocFixer;
 
 return Factory::create(
     paths: [__DIR__.'/src', __DIR__.'/tests'],
@@ -16,5 +17,6 @@ return Factory::create(
         FinalClassFixer::class => [
             __DIR__.'/src/WsExtensions/Security/TokenAssertion.php',
         ],
+        CommentToPhpdocFixer::class => null,
     ],
 );
