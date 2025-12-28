@@ -156,6 +156,7 @@ final class Binding
         }
 
         $headers = $lastOperation->getHeaders();
+
         if (empty($headers)) {
             throw new RuntimeException('No header exists to add fault to');
         }

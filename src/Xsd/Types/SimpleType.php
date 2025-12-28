@@ -14,6 +14,7 @@ use Cline\WsdlBuilder\Documentation\Documentation;
 use Cline\WsdlBuilder\Enums\XsdType;
 
 use function array_values;
+use function preg_replace;
 
 /**
  * Represents an XSD simple type with restrictions.

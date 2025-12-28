@@ -13,6 +13,7 @@ use Cline\WsdlBuilder\Contracts\WsdlBuilderInterface;
 use Cline\WsdlBuilder\Enums\XsdType;
 
 use function array_values;
+use function preg_replace;
 
 /**
  * Represents an XSD list type (space-separated values).

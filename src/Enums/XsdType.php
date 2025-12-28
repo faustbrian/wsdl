@@ -75,7 +75,7 @@ enum XsdType: string
      */
     public function forWsdl1(): string
     {
-        return $this->value === 'swaRef' ? $this->value : 'xsd:' . $this->value;
+        return $this->value === 'swaRef' ? $this->value : 'xsd:'.$this->value;
     }
 
     /**
@@ -83,6 +83,6 @@ enum XsdType: string
      */
     public function forWsdl2(): string
     {
-        return $this->value === 'swaRef' ? $this->value : 'xs:' . $this->value;
+        return $this->value === 'swaRef' ? $this->value : 'xs:'.$this->value;
     }
 }

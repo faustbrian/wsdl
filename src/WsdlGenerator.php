@@ -42,7 +42,10 @@ use Cline\WsdlBuilder\Xsd\Types\SimpleType;
 use DOMDocument;
 use DOMElement;
 
+use function array_map;
+use function ctype_lower;
 use function implode;
+use function str_contains;
 use function str_starts_with;
 
 /**
@@ -465,7 +468,7 @@ final class WsdlGenerator
         $simpleType->setAttribute('name', $type->getName());
 
         $union = $this->dom->createElementNS(Wsdl::XSD_NS, 'xsd:union');
-        $memberTypes = array_map(fn($t) => $this->prefixType($t), $type->getMemberTypes());
+        $memberTypes = array_map(fn (string $t): string => $this->prefixType($t), $type->getMemberTypes());
         $union->setAttribute('memberTypes', implode(' ', $memberTypes));
 
         $simpleType->appendChild($union);
@@ -1561,6 +1564,6 @@ final class WsdlGenerator
             return $type;
         }
 
-        return 'xsd:' . $type;
+        return 'xsd:'.$type;
     }
 }

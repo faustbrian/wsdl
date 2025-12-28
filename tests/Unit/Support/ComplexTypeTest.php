@@ -9,6 +9,7 @@
 
 use Cline\WsdlBuilder\Enums\XsdType;
 use Cline\WsdlBuilder\Wsdl;
+use Cline\WsdlBuilder\Xsd\SimpleContent;
 use Cline\WsdlBuilder\Xsd\Types\ComplexType;
 use Cline\WsdlBuilder\Xsd\Types\Element;
 
@@ -132,7 +133,7 @@ describe('ComplexType', function (): void {
 
             $simpleContent = $type->simpleContent();
 
-            expect($simpleContent)->toBeInstanceOf(\Cline\WsdlBuilder\Xsd\SimpleContent::class)
+            expect($simpleContent)->toBeInstanceOf(SimpleContent::class)
                 ->and($type->getSimpleContent())->toBe($simpleContent);
         });
 

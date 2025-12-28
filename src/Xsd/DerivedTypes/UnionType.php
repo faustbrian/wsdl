@@ -14,6 +14,7 @@ use Cline\WsdlBuilder\Enums\XsdType;
 
 use function array_map;
 use function array_values;
+use function preg_replace;
 
 /**
  * Represents an XSD union type (value can be one of several types).
