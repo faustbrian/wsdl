@@ -268,4 +268,52 @@ describe('WsdlGenerator Coverage Edge Cases', function (): void {
         expect($xml)->toContain('<wsdl:operation name="OpWithoutAction">');
         expect($xml)->toContain('http://example.com/OpWithAction');
     });
+
+    test('generates WSDL-level documentation at root', function (): void {
+        $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+        $wsdl->documentation('Root WSDL documentation');
+
+        $xml = $wsdl->build();
+
+        expect($xml)->toContain('<wsdl:documentation>Root WSDL documentation</wsdl:documentation>');
+    });
+
+    test('generates service documentation when service has no children yet', function (): void {
+        $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+        $service = $wsdl->service('DocService', 'http://example.com/endpoint');
+        $service->documentation('Service docs first');
+
+        $xml = $wsdl->build();
+
+        expect($xml)->toContain('<wsdl:service name="DocService">');
+        expect($xml)->toContain('<wsdl:documentation>Service docs first</wsdl:documentation>');
+    });
+
+    test('generates header fault with namespace and encodingStyle attributes', function (): void {
+        $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+
+        // Setup messages
+        $wsdl->message('HeaderMsg')->part('auth', XsdType::String)->end();
+        $wsdl->message('FaultMsg')->part('error', XsdType::String)->end();
+
+        // Create binding with operation and header
+        $binding = $wsdl->binding('TestBinding', 'TestPort');
+        $binding->operation('TestOp', 'urn:test');
+        $binding->header('HeaderMsg', 'auth');
+
+        // Access the header directly to add fault with custom attributes
+        $operations = $binding->getOperations();
+        $operation = end($operations);
+        $headers = $operation->getHeaders();
+        $header = end($headers);
+
+        $header->headerFault('FaultMsg', 'error')
+            ->namespace('http://example.com/faults')
+            ->encodingStyle('http://schemas.xmlsoap.org/soap/encoding/');
+
+        $xml = $wsdl->build();
+
+        expect($xml)->toContain('namespace="http://example.com/faults"');
+        expect($xml)->toContain('encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"');
+    });
 });
