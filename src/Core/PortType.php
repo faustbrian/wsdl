@@ -39,7 +39,7 @@ final class PortType
     /**
      * Add an operation to this port type.
      */
-    public function operation(string $name, string $input, string $output, ?string $fault = null): self
+    public function operation(string $name, ?string $input, ?string $output, ?string $fault = null): self
     {
         $this->operations[$name] = new PortTypeOperation($name, $input, $output, $fault);
 

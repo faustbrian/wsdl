@@ -3,7 +3,7 @@
   <wsdl:types>
     <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/test">
       <xsd:complexType name="PaymentType">
-        <xsd:choice>
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
           <xsd:element name="creditCard" type="xsd:string"/>
           <xsd:element name="bankAccount" type="xsd:string"/>
         </xsd:choice>

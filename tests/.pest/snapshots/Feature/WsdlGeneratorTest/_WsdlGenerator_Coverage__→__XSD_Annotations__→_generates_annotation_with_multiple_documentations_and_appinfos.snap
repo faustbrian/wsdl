@@ -2,13 +2,14 @@
 <wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://example.com/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="TestService" targetNamespace="http://example.com/test">
   <wsdl:types>
     <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/test">
-      <xsd:redefine schemaLocation="base-types.xsd">
-        <xsd:group name="CommonElements">
-          <xsd:sequence>
-            <xsd:element name="timestamp" type="dateTime"/>
-          </xsd:sequence>
-        </xsd:group>
-      </xsd:redefine>
+      <xsd:complexType name="AnnotatedType">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">English description</xsd:documentation>
+          <xsd:documentation xml:lang="fr">Description française</xsd:documentation>
+          <xsd:appinfo>Metadata 1</xsd:appinfo>
+          <xsd:appinfo>Metadata 2</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:complexType>
     </xsd:schema>
   </wsdl:types>
 </wsdl:definitions>

@@ -16,6 +16,9 @@ use Cline\WsdlBuilder\Soap\Header;
 use Cline\WsdlBuilder\Wsdl;
 use Cline\WsdlBuilder\WsExtensions\Addressing\Action;
 use Cline\WsdlBuilder\WsExtensions\Http\HttpBinding;
+use Cline\WsdlBuilder\WsExtensions\Http\HttpOperation;
+use Cline\WsdlBuilder\WsExtensions\Http\HttpUrlEncoded;
+use Cline\WsdlBuilder\WsExtensions\Http\HttpUrlReplacement;
 use Cline\WsdlBuilder\WsExtensions\Mime\MimeMultipartRelated;
 use Cline\WsdlBuilder\WsExtensions\Policy\PolicyAttachment;
 use RuntimeException;
@@ -112,7 +115,7 @@ final class Binding
     /**
      * Add a SOAP header to the last added operation.
      */
-    public function header(string $message, string $part): self
+    public function header(string $message, string $part, ?BindingUse $use = null, ?string $namespace = null, ?string $encodingStyle = null): self
     {
         $operations = array_values($this->operations);
         $lastOperation = end($operations);
@@ -122,7 +125,43 @@ final class Binding
         }
 
         $header = new Header($message, $part);
+
+        if ($use !== null) {
+            $header->use($use);
+        }
+
+        if ($namespace !== null) {
+            $header->namespace($namespace);
+        }
+
+        if ($encodingStyle !== null) {
+            $header->encodingStyle($encodingStyle);
+        }
+
         $lastOperation->addHeader($header);
+
+        return $this;
+    }
+
+    /**
+     * Add a header fault to the last added header in the last operation.
+     */
+    public function headerFault(string $message, string $part, BindingUse $use): self
+    {
+        $operations = array_values($this->operations);
+        $lastOperation = end($operations);
+
+        if ($lastOperation === false) {
+            throw new RuntimeException('No operation exists to add header fault to');
+        }
+
+        $headers = $lastOperation->getHeaders();
+        if (empty($headers)) {
+            throw new RuntimeException('No header exists to add fault to');
+        }
+
+        $lastHeader = end($headers);
+        $lastHeader->headerFault($message, $part)->use($use);
 
         return $this;
     }
@@ -161,6 +200,70 @@ final class Binding
         $lastOperation->setOutputMime($mime);
 
         return $mime;
+    }
+
+    /**
+     * Add MIME multipart to input or output of the last added operation.
+     */
+    public function mimeMultipart(string $direction): MimeMultipartRelated
+    {
+        return match ($direction) {
+            'input' => $this->inputMime(),
+            'output' => $this->outputMime(),
+            default => throw new RuntimeException("Invalid direction '{$direction}', expected 'input' or 'output'"),
+        };
+    }
+
+    /**
+     * Set HTTP operation location for the last added operation.
+     */
+    public function httpOperation(string $location): self
+    {
+        $operations = array_values($this->operations);
+        $lastOperation = end($operations);
+
+        if ($lastOperation === false) {
+            throw new RuntimeException('No operation exists to add HTTP operation to');
+        }
+
+        $httpOp = new HttpOperation($location);
+        $lastOperation->setHttpOperation($httpOp);
+
+        return $this;
+    }
+
+    /**
+     * Set HTTP URL-encoded input format for the last added operation.
+     */
+    public function httpUrlEncoded(): self
+    {
+        $operations = array_values($this->operations);
+        $lastOperation = end($operations);
+
+        if ($lastOperation === false) {
+            throw new RuntimeException('No operation exists to add HTTP URL-encoded to');
+        }
+
+        $lastOperation->setHttpUrlEncoded(HttpUrlEncoded::create());
+
+        return $this;
+    }
+
+    /**
+     * Set HTTP URL-replacement input format for the last added operation.
+     */
+    public function httpUrlReplacement(): self
+    {
+        $operations = array_values($this->operations);
+        $lastOperation = end($operations);
+
+        if ($lastOperation === false) {
+            throw new RuntimeException('No operation exists to add HTTP URL-replacement to');
+        }
+
+        $lastOperation->setHttpUrlReplacement(HttpUrlReplacement::create());
+
+        return $this;
     }
 
     /**

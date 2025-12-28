@@ -44,6 +44,42 @@ final class MimeMultipartRelated
     }
 
     /**
+     * Add a new MIME part with content in one call.
+     */
+    public function mimePart(string $part, string $contentType): self
+    {
+        $mimePart = new MimePart(null, $this);
+        $mimePart->content($part, $contentType);
+        $this->parts[] = $mimePart;
+
+        return $this;
+    }
+
+    /**
+     * Add a named MIME part with content.
+     */
+    public function mimePartNamed(string $name, string $part, string $contentType): self
+    {
+        $mimePart = new MimePart($name, $this);
+        $mimePart->content($part, $contentType);
+        $this->parts[] = $mimePart;
+
+        return $this;
+    }
+
+    /**
+     * Add a MIME part that references the SOAP body.
+     */
+    public function soapBodyPart(): self
+    {
+        $mimePart = new MimePart(null, $this);
+        $mimePart->soapBody();
+        $this->parts[] = $mimePart;
+
+        return $this;
+    }
+
+    /**
      * Add an existing MimePart instance.
      */
     public function addPart(MimePart $part): self

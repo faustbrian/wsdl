@@ -356,7 +356,7 @@ final class WsdlGenerator
         $this->addDocumentation($simpleType, $type->getDocumentation());
 
         $restriction = $this->dom->createElementNS(Wsdl::XSD_NS, 'xsd:restriction');
-        $restriction->setAttribute('base', $type->getBase());
+        $restriction->setAttribute('base', $this->prefixType($type->getBase()));
 
         if ($type->getMinLength() !== null) {
             $el = $this->dom->createElementNS(Wsdl::XSD_NS, 'xsd:minLength');
@@ -416,7 +416,7 @@ final class WsdlGenerator
         $simpleType->setAttribute('name', $type->getName());
 
         $list = $this->dom->createElementNS(Wsdl::XSD_NS, 'xsd:list');
-        $list->setAttribute('itemType', $type->getItemType());
+        $list->setAttribute('itemType', $this->prefixType($type->getItemType()));
 
         // If there are restrictions, wrap in restriction
         if ($type->getMinLength() !== null || $type->getMaxLength() !== null
@@ -465,7 +465,8 @@ final class WsdlGenerator
         $simpleType->setAttribute('name', $type->getName());
 
         $union = $this->dom->createElementNS(Wsdl::XSD_NS, 'xsd:union');
-        $union->setAttribute('memberTypes', implode(' ', $type->getMemberTypes()));
+        $memberTypes = array_map(fn($t) => $this->prefixType($t), $type->getMemberTypes());
+        $union->setAttribute('memberTypes', implode(' ', $memberTypes));
 
         $simpleType->appendChild($union);
         $schema->appendChild($simpleType);
@@ -585,10 +586,13 @@ final class WsdlGenerator
             $derivationEl = $this->dom->createElementNS(Wsdl::XSD_NS, 'xsd:'.$derivationType);
 
             // Determine if base is a built-in XSD type or custom type
-            if (str_starts_with($base, 'xsd:')) {
-                $derivationEl->setAttribute('base', $base);
+            // If base doesn't contain ':', it's unprefixed and needs a namespace
+            if (!str_contains($base, ':')) {
+                // Check if it's a built-in XSD type (lowercase first letter typically)
+                // For now, if it starts with lowercase, assume XSD type, else custom type
+                $derivationEl->setAttribute('base', ctype_lower($base[0]) ? $this->prefixType($base) : 'tns:'.$base);
             } else {
-                $derivationEl->setAttribute('base', 'tns:'.$base);
+                $derivationEl->setAttribute('base', $base);
             }
 
             // Add attributes
@@ -606,7 +610,7 @@ final class WsdlGenerator
     {
         $el = $this->dom->createElementNS(Wsdl::XSD_NS, 'xsd:element');
         $el->setAttribute('name', $element->name);
-        $el->setAttribute('type', $element->type);
+        $el->setAttribute('type', $this->prefixType($element->type));
 
         if ($element->nullable) {
             $el->setAttribute('nillable', 'true');
@@ -659,7 +663,7 @@ final class WsdlGenerator
     {
         $el = $this->dom->createElementNS(Wsdl::XSD_NS, 'xsd:attribute');
         $el->setAttribute('name', $attr->getName());
-        $el->setAttribute('type', $attr->getType());
+        $el->setAttribute('type', $this->prefixType($attr->getType()));
 
         if ($attr->getUse() !== null) {
             $el->setAttribute('use', $attr->getUse());
@@ -757,7 +761,7 @@ final class WsdlGenerator
             if (str_starts_with($part->type, 'tns:')) {
                 $partEl->setAttribute('element', $part->type);
             } else {
-                $partEl->setAttribute('type', $part->type);
+                $partEl->setAttribute('type', $this->prefixType($part->type));
             }
 
             $el->appendChild($partEl);
@@ -990,6 +994,16 @@ final class WsdlGenerator
         $el->setAttribute('name', $service->getName());
 
         $this->addDocumentation($el, $service->getDocumentation());
+
+        // Add inline policies
+        foreach ($service->getPolicies() as $policy) {
+            $this->addPolicy($el, $policy);
+        }
+
+        // Add policy references
+        foreach ($service->getPolicyReferences() as $reference) {
+            $this->addPolicyReference($el, $reference);
+        }
 
         foreach ($service->getPorts() as $port) {
             $portEl = $this->dom->createElementNS(Wsdl::WSDL_NS, 'wsdl:port');
@@ -1535,5 +1549,18 @@ final class WsdlGenerator
         }
 
         return false;
+    }
+
+    /**
+     * Add xsd: prefix to type if it doesn't already have a namespace prefix.
+     */
+    private function prefixType(string $type): string
+    {
+        // If already has a prefix (contains :) or is empty, return as-is
+        if (str_contains($type, ':') || $type === '') {
+            return $type;
+        }
+
+        return 'xsd:' . $type;
     }
 }

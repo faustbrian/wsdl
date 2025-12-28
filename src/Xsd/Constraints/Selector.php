@@ -22,6 +22,16 @@ final class Selector
     ) {}
 
     /**
+     * Add a field to the parent constraint and return this selector for chaining.
+     */
+    public function field(string $xpath): self
+    {
+        $this->parent->field($xpath);
+
+        return $this;
+    }
+
+    /**
      * Return to the parent constraint.
      */
     public function end(): Key|KeyRef|Unique

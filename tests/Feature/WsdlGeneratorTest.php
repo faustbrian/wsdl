@@ -303,12 +303,9 @@ describe('WsdlGenerator Coverage', function (): void {
 
     describe('Element Variations', function (): void {
         test('generates element with substitutionGroup', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('TestType')
-                ->element('item', XsdType::String)
-                ->substitutionGroup('tns:baseItem')
-                ->end()
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $wsdl->complexType('TestType')
+                ->element('item', XsdType::String, false, null, null, 'tns:baseItem');
 
             $xml = $wsdl->build();
 
@@ -317,12 +314,9 @@ describe('WsdlGenerator Coverage', function (): void {
         });
 
         test('generates element with block attribute', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('TestType')
-                ->element('item', XsdType::String)
-                ->block('substitution')
-                ->end()
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $wsdl->complexType('TestType')
+                ->element('item', XsdType::String, false, null, null, null, 'substitution');
 
             $xml = $wsdl->build();
 
@@ -333,10 +327,9 @@ describe('WsdlGenerator Coverage', function (): void {
 
     describe('Attributes', function (): void {
         test('generates attribute with use required', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('TestType')
-                ->attribute('id', XsdType::String, 'required')
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $type = $wsdl->complexType('TestType');
+            $type->attribute('id', XsdType::String)->use('required');
 
             $xml = $wsdl->build();
 
@@ -345,10 +338,9 @@ describe('WsdlGenerator Coverage', function (): void {
         });
 
         test('generates attribute with use optional', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('TestType')
-                ->attribute('version', XsdType::String, 'optional')
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $type = $wsdl->complexType('TestType');
+            $type->attribute('version', XsdType::String)->use('optional');
 
             $xml = $wsdl->build();
 
@@ -357,10 +349,9 @@ describe('WsdlGenerator Coverage', function (): void {
         });
 
         test('generates attribute with use prohibited', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('TestType')
-                ->attribute('deprecated', XsdType::String, 'prohibited')
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $type = $wsdl->complexType('TestType');
+            $type->attribute('deprecated', XsdType::String)->use('prohibited');
 
             $xml = $wsdl->build();
 
@@ -369,12 +360,9 @@ describe('WsdlGenerator Coverage', function (): void {
         });
 
         test('generates attribute with default value', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('TestType')
-                ->attribute('status', XsdType::String)
-                ->default('active')
-                ->end()
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $type = $wsdl->complexType('TestType');
+            $type->attribute('status', XsdType::String)->default('active');
 
             $xml = $wsdl->build();
 
@@ -383,12 +371,9 @@ describe('WsdlGenerator Coverage', function (): void {
         });
 
         test('generates attribute with fixed value', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('TestType')
-                ->attribute('version', XsdType::String)
-                ->fixed('1.0')
-                ->end()
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $type = $wsdl->complexType('TestType');
+            $type->attribute('version', XsdType::String)->fixed('1.0');
 
             $xml = $wsdl->build();
 
@@ -397,12 +382,9 @@ describe('WsdlGenerator Coverage', function (): void {
         });
 
         test('generates attribute with form qualified', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('TestType')
-                ->attribute('xmlns', XsdType::String)
-                ->form('qualified')
-                ->end()
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $type = $wsdl->complexType('TestType');
+            $type->attribute('xmlns', XsdType::String)->form('qualified');
 
             $xml = $wsdl->build();
 
@@ -411,12 +393,9 @@ describe('WsdlGenerator Coverage', function (): void {
         });
 
         test('generates attribute with form unqualified', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('TestType')
-                ->attribute('local', XsdType::String)
-                ->form('unqualified')
-                ->end()
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $type = $wsdl->complexType('TestType');
+            $type->attribute('local', XsdType::String)->form('unqualified');
 
             $xml = $wsdl->build();
 
@@ -427,10 +406,9 @@ describe('WsdlGenerator Coverage', function (): void {
 
     describe('AnyAttribute', function (): void {
         test('generates anyAttribute with namespace', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('TestType')
-                ->anyAttribute('##any', 'lax')
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $type = $wsdl->complexType('TestType');
+            $type->anyAttribute()->namespace('##any')->processContents('lax');
 
             $xml = $wsdl->build();
 
@@ -441,10 +419,9 @@ describe('WsdlGenerator Coverage', function (): void {
         });
 
         test('generates anyAttribute with strict processing', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('TestType')
-                ->anyAttribute('##other', 'strict')
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $type = $wsdl->complexType('TestType');
+            $type->anyAttribute()->namespace('##other')->processContents('strict');
 
             $xml = $wsdl->build();
 
@@ -453,10 +430,9 @@ describe('WsdlGenerator Coverage', function (): void {
         });
 
         test('generates anyAttribute with skip processing', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('TestType')
-                ->anyAttribute('##targetNamespace', 'skip')
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $type = $wsdl->complexType('TestType');
+            $type->anyAttribute()->namespace('##targetNamespace')->processContents('skip');
 
             $xml = $wsdl->build();
 
@@ -467,13 +443,11 @@ describe('WsdlGenerator Coverage', function (): void {
 
     describe('Group References', function (): void {
         test('generates group reference in complex type', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->elementGroup('CommonElements')
-                ->element('timestamp', XsdType::DateTime)
-                ->end()
-                ->complexType('TestType')
-                ->groupRef('CommonElements')
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $wsdl->elementGroup('CommonElements')
+                ->element('timestamp', XsdType::DateTime);
+            $wsdl->complexType('TestType')
+                ->group('CommonElements');
 
             $xml = $wsdl->build();
 
@@ -482,13 +456,11 @@ describe('WsdlGenerator Coverage', function (): void {
         });
 
         test('generates attribute group reference in complex type', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->attributeGroup('CommonAttributes')
-                ->attribute('version', XsdType::String)
-                ->end()
-                ->complexType('TestType')
-                ->attributeGroupRef('CommonAttributes')
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $attrGroup = $wsdl->attributeGroup('CommonAttributes');
+            $attrGroup->attribute('version', XsdType::String);
+            $wsdl->complexType('TestType')
+                ->attributeGroup('CommonAttributes');
 
             $xml = $wsdl->build();
 
@@ -499,15 +471,12 @@ describe('WsdlGenerator Coverage', function (): void {
 
     describe('Identity Constraints', function (): void {
         test('generates key constraint with selector and field', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('UsersType')
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $wsdl->complexType('UsersType')
                 ->element('user', 'tns:UserType', false, 0, -1)
-                ->end()
                 ->key('userKey')
                 ->selector('.//user')
-                ->field('@id')
-                ->end()
-                ->end();
+                ->field('@id');
 
             $xml = $wsdl->build();
 
@@ -518,15 +487,13 @@ describe('WsdlGenerator Coverage', function (): void {
         });
 
         test('generates keyref constraint', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('OrdersType')
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $wsdl->complexType('OrdersType')
                 ->element('order', 'tns:OrderType', false, 0, -1)
-                ->end()
-                ->keyRef('orderUserRef', 'userKey')
+                ->keyRef('orderUserRef')
+                ->refer('userKey')
                 ->selector('.//order')
-                ->field('@userId')
-                ->end()
-                ->end();
+                ->field('@userId');
 
             $xml = $wsdl->build();
 
@@ -538,15 +505,12 @@ describe('WsdlGenerator Coverage', function (): void {
         });
 
         test('generates unique constraint', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('EmailsType')
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $wsdl->complexType('EmailsType')
                 ->element('email', XsdType::String, false, 0, -1)
-                ->end()
                 ->unique('emailUnique')
                 ->selector('.//email')
-                ->field('.')
-                ->end()
-                ->end();
+                ->field('.');
 
             $xml = $wsdl->build();
 
@@ -561,7 +525,9 @@ describe('WsdlGenerator Coverage', function (): void {
         test('generates choice compositor with minOccurs and maxOccurs', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://example.com/test')
                 ->complexType('PaymentType')
-                ->choice(0, -1)
+                ->choice()
+                ->minOccurs(0)
+                ->maxOccurs(-1)
                 ->element('creditCard', XsdType::String)
                 ->element('bankAccount', XsdType::String)
                 ->end()
@@ -594,7 +560,12 @@ describe('WsdlGenerator Coverage', function (): void {
         test('generates any wildcard with namespace and processContents', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://example.com/test')
                 ->complexType('ExtensibleType')
-                ->any('##other', 'lax', 0, -1)
+                ->any()
+                ->namespace('##other')
+                ->processContents('lax')
+                ->minOccurs(0)
+                ->maxOccurs(-1)
+                ->end()
                 ->end();
 
             $xml = $wsdl->build();
@@ -610,13 +581,9 @@ describe('WsdlGenerator Coverage', function (): void {
 
     describe('XSD Annotations', function (): void {
         test('generates annotation with documentation', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('AnnotatedType')
-                ->annotation()
-                ->documentation('This is a user type')
-                ->end()
-                ->end()
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $type = $wsdl->complexType('AnnotatedType');
+            $type->annotation()->documentation('This is a user type');
 
             $xml = $wsdl->build();
 
@@ -627,13 +594,9 @@ describe('WsdlGenerator Coverage', function (): void {
         });
 
         test('generates annotation with documentation with lang', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('AnnotatedType')
-                ->annotation()
-                ->documentation('This is a user type', 'en')
-                ->end()
-                ->end()
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $type = $wsdl->complexType('AnnotatedType');
+            $type->annotation()->documentation('This is a user type', 'en');
 
             $xml = $wsdl->build();
 
@@ -642,13 +605,9 @@ describe('WsdlGenerator Coverage', function (): void {
         });
 
         test('generates annotation with documentation with source', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('AnnotatedType')
-                ->annotation()
-                ->documentation('User documentation', null, 'http://example.com/docs')
-                ->end()
-                ->end()
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $type = $wsdl->complexType('AnnotatedType');
+            $type->annotation()->documentation('User documentation', null, 'http://example.com/docs');
 
             $xml = $wsdl->build();
 
@@ -657,13 +616,9 @@ describe('WsdlGenerator Coverage', function (): void {
         });
 
         test('generates annotation with appinfo', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('AnnotatedType')
-                ->annotation()
-                ->appInfo('Application specific info')
-                ->end()
-                ->end()
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $type = $wsdl->complexType('AnnotatedType');
+            $type->annotation()->appInfo('Application specific info');
 
             $xml = $wsdl->build();
 
@@ -673,13 +628,9 @@ describe('WsdlGenerator Coverage', function (): void {
         });
 
         test('generates annotation with appinfo with source', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('AnnotatedType')
-                ->annotation()
-                ->appInfo('Custom metadata', 'http://example.com/metadata')
-                ->end()
-                ->end()
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $type = $wsdl->complexType('AnnotatedType');
+            $type->annotation()->appInfo('Custom metadata', 'http://example.com/metadata');
 
             $xml = $wsdl->build();
 
@@ -689,16 +640,13 @@ describe('WsdlGenerator Coverage', function (): void {
         });
 
         test('generates annotation with multiple documentations and appinfos', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->complexType('AnnotatedType')
-                ->annotation()
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $type = $wsdl->complexType('AnnotatedType');
+            $type->annotation()
                 ->documentation('English description', 'en')
                 ->documentation('Description française', 'fr')
                 ->appInfo('Metadata 1')
-                ->appInfo('Metadata 2')
-                ->end()
-                ->end()
-                ->end();
+                ->appInfo('Metadata 2');
 
             $xml = $wsdl->build();
 
@@ -868,7 +816,7 @@ describe('WsdlGenerator Coverage', function (): void {
                 ->part('event', XsdType::String)
                 ->end()
                 ->portType('TestPort')
-                ->operation('Notify', 'NotificationMessage')
+                ->operation('Notify', 'NotificationMessage', null)
                 ->end();
 
             $xml = $wsdl->build();
@@ -897,7 +845,6 @@ describe('WsdlGenerator Coverage', function (): void {
         test('generates operation with fault', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://example.com/test')
                 ->message('InputMessage')->end()
-                ->message('OutputMessage')->end()
                 ->message('FaultMessage')
                 ->part('error', XsdType::String)
                 ->end()
@@ -967,7 +914,6 @@ describe('WsdlGenerator Coverage', function (): void {
                 ->binding('TestBinding', 'TestPort')
                 ->operation('SecureOp', 'urn:test')
                 ->header('HeaderMessage', 'authentication', BindingUse::Literal)
-                ->end()
                 ->end();
 
             $xml = $wsdl->build();
@@ -987,7 +933,6 @@ describe('WsdlGenerator Coverage', function (): void {
                 ->binding('TestBinding', 'TestPort')
                 ->operation('SecureOp', 'urn:test')
                 ->header('HeaderMessage', 'auth', BindingUse::Literal, 'http://example.com/auth')
-                ->end()
                 ->end();
 
             $xml = $wsdl->build();
@@ -1004,7 +949,6 @@ describe('WsdlGenerator Coverage', function (): void {
                 ->binding('TestBinding', 'TestPort')
                 ->operation('SecureOp', 'urn:test')
                 ->header('HeaderMessage', 'auth', BindingUse::Encoded, null, 'http://schemas.xmlsoap.org/soap/encoding/')
-                ->end()
                 ->end();
 
             $xml = $wsdl->build();
@@ -1025,8 +969,6 @@ describe('WsdlGenerator Coverage', function (): void {
                 ->operation('SecureOp', 'urn:test')
                 ->header('HeaderMessage', 'auth', BindingUse::Literal)
                 ->headerFault('HeaderFaultMessage', 'authError', BindingUse::Literal)
-                ->end()
-                ->end()
                 ->end();
 
             $xml = $wsdl->build();
@@ -1045,7 +987,6 @@ describe('WsdlGenerator Coverage', function (): void {
                 ->httpBinding('GET')
                 ->operation('GetData', 'urn:getData')
                 ->httpOperation('/data')
-                ->end()
                 ->end();
 
             $xml = $wsdl->build();
@@ -1063,7 +1004,6 @@ describe('WsdlGenerator Coverage', function (): void {
                 ->httpBinding('POST')
                 ->operation('PostData', 'urn:postData')
                 ->httpOperation('/data')
-                ->end()
                 ->end();
 
             $xml = $wsdl->build();
@@ -1079,7 +1019,6 @@ describe('WsdlGenerator Coverage', function (): void {
                 ->operation('PostForm', 'urn:postForm')
                 ->httpOperation('/form')
                 ->httpUrlEncoded()
-                ->end()
                 ->end();
 
             $xml = $wsdl->build();
@@ -1095,7 +1034,6 @@ describe('WsdlGenerator Coverage', function (): void {
                 ->operation('GetResource', 'urn:getResource')
                 ->httpOperation('/resource/(id)')
                 ->httpUrlReplacement()
-                ->end()
                 ->end();
 
             $xml = $wsdl->build();
@@ -1114,14 +1052,13 @@ describe('WsdlGenerator Coverage', function (): void {
                 ->mimePart('file', 'application/octet-stream')
                 ->mimePart('metadata', 'application/json')
                 ->end()
-                ->end()
                 ->end();
 
             $xml = $wsdl->build();
 
             expect($xml)->toMatchSnapshot();
-            expect($xml)->toContain('<mime:multipartRelated>');
-            expect($xml)->toContain('<mime:part');
+            expect($xml)->toContain('<mime:multipartRelated xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/">');
+            expect($xml)->toContain('<mime:part>');
             expect($xml)->toContain('type="application/octet-stream"');
             expect($xml)->toContain('type="application/json"');
         });
@@ -1132,7 +1069,6 @@ describe('WsdlGenerator Coverage', function (): void {
                 ->operation('Download', 'urn:download')
                 ->mimeMultipart('output')
                 ->mimePart('file', 'application/pdf')
-                ->end()
                 ->end()
                 ->end();
 
@@ -1150,7 +1086,6 @@ describe('WsdlGenerator Coverage', function (): void {
                 ->soapBodyPart()
                 ->mimePart('attachment', 'application/octet-stream')
                 ->end()
-                ->end()
                 ->end();
 
             $xml = $wsdl->build();
@@ -1166,7 +1101,6 @@ describe('WsdlGenerator Coverage', function (): void {
                 ->operation('NamedUpload', 'urn:upload')
                 ->mimeMultipart('input')
                 ->mimePartNamed('document', 'content', 'application/xml')
-                ->end()
                 ->end()
                 ->end();
 
@@ -1212,14 +1146,13 @@ describe('WsdlGenerator Coverage', function (): void {
                 ->message('OutputMsg')->end()
                 ->portType('TestPort')
                 ->operation('TestOp', 'InputMsg', 'OutputMsg')
-                ->action('http://example.com/TestAction')
-                ->end()
+                ->action('TestOp', 'http://example.com/TestAction')
                 ->end();
 
             $xml = $wsdl->build();
 
             expect($xml)->toMatchSnapshot();
-            expect($xml)->toContain('<wsaw:Action>http://example.com/TestAction</wsaw:Action>');
+            expect($xml)->toContain('<wsaw:Action xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl">http://example.com/TestAction</wsaw:Action>');
         });
 
         test('generates WS-Addressing action on operation output', function (): void {
@@ -1228,8 +1161,7 @@ describe('WsdlGenerator Coverage', function (): void {
                 ->message('OutputMsg')->end()
                 ->portType('TestPort')
                 ->operation('TestOp', 'InputMsg', 'OutputMsg')
-                ->action('http://example.com/Input', 'http://example.com/Output')
-                ->end()
+                ->action('TestOp', 'http://example.com/Input', 'http://example.com/Output')
                 ->end();
 
             $xml = $wsdl->build();
@@ -1245,9 +1177,8 @@ describe('WsdlGenerator Coverage', function (): void {
                 ->message('FaultMsg')->end()
                 ->portType('TestPort')
                 ->operation('TestOp', 'InputMsg', 'OutputMsg', 'FaultMsg')
-                ->action('http://example.com/Input', 'http://example.com/Output')
-                ->faultAction('FaultMsg', 'http://example.com/Fault')
-                ->end()
+                ->action('TestOp', 'http://example.com/Input', 'http://example.com/Output')
+                ->faultAction('TestOp', 'FaultMsg', 'http://example.com/Fault')
                 ->end();
 
             $xml = $wsdl->build();
@@ -1261,8 +1192,7 @@ describe('WsdlGenerator Coverage', function (): void {
         test('generates WS-Policy at WSDL level', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://example.com/test')
                 ->policy('MyPolicy')
-                ->assertion('sp:TransportBinding', 'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702')
-                ->end()
+                ->assertion('http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702', 'TransportBinding')
                 ->end()
                 ->complexType('TestType')
                 ->element('id', XsdType::Int)
@@ -1279,8 +1209,7 @@ describe('WsdlGenerator Coverage', function (): void {
         test('generates WS-Policy with Name attribute', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://example.com/test')
                 ->policy('PolicyId', 'PolicyName')
-                ->assertion('wsp:Test', 'http://www.w3.org/ns/ws-policy')
-                ->end()
+                ->assertion('http://www.w3.org/ns/ws-policy', 'Test')
                 ->end()
                 ->complexType('TestType')
                 ->element('id', XsdType::Int)
@@ -1296,7 +1225,7 @@ describe('WsdlGenerator Coverage', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://example.com/test')
                 ->binding('SecureBinding', 'TestPort')
                 ->policy('BindingPolicy')
-                ->assertion('sp:TransportBinding', 'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702')
+                ->assertion('http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702', 'TransportBinding')
                 ->end()
                 ->end()
                 ->operation('TestOp', 'urn:test')
@@ -1341,9 +1270,8 @@ describe('WsdlGenerator Coverage', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://example.com/test')
                 ->policy('ComplexPolicy')
                 ->all()
-                ->assertion('wsp:Test1', 'http://www.w3.org/ns/ws-policy')
-                ->assertion('wsp:Test2', 'http://www.w3.org/ns/ws-policy')
-                ->end()
+                ->assertion('http://www.w3.org/ns/ws-policy', 'Test1')
+                ->assertion('http://www.w3.org/ns/ws-policy', 'Test2')
                 ->end()
                 ->end()
                 ->complexType('TestType')
@@ -1360,9 +1288,8 @@ describe('WsdlGenerator Coverage', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://example.com/test')
                 ->policy('ChoicePolicy')
                 ->exactlyOne()
-                ->assertion('wsp:Option1', 'http://www.w3.org/ns/ws-policy')
-                ->assertion('wsp:Option2', 'http://www.w3.org/ns/ws-policy')
-                ->end()
+                ->assertion('http://www.w3.org/ns/ws-policy', 'Option1')
+                ->assertion('http://www.w3.org/ns/ws-policy', 'Option2')
                 ->end()
                 ->end()
                 ->complexType('TestType')
@@ -1380,12 +1307,11 @@ describe('WsdlGenerator Coverage', function (): void {
                 ->policy('NestedPolicy')
                 ->exactlyOne()
                 ->all()
-                ->assertion('wsp:Assertion1', 'http://www.w3.org/ns/ws-policy')
-                ->assertion('wsp:Assertion2', 'http://www.w3.org/ns/ws-policy')
+                ->assertion('http://www.w3.org/ns/ws-policy', 'Assertion1')
+                ->assertion('http://www.w3.org/ns/ws-policy', 'Assertion2')
                 ->end()
                 ->all()
-                ->assertion('wsp:Assertion3', 'http://www.w3.org/ns/ws-policy')
-                ->end()
+                ->assertion('http://www.w3.org/ns/ws-policy', 'Assertion3')
                 ->end()
                 ->end()
                 ->end()
@@ -1403,10 +1329,9 @@ describe('WsdlGenerator Coverage', function (): void {
         test('generates WS-Policy assertion with attributes', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://example.com/test')
                 ->policy('AttrPolicy')
-                ->assertion('sp:HttpsToken', 'http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702', [
+                ->assertion('http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702', 'HttpsToken', [
                     'RequireClientCertificate' => 'true',
                 ])
-                ->end()
                 ->end()
                 ->complexType('TestType')
                 ->element('id', XsdType::Int)
@@ -1422,9 +1347,8 @@ describe('WsdlGenerator Coverage', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://example.com/test')
                 ->policy('OuterPolicy')
                 ->all()
-                ->nestedPolicy()
-                ->assertion('wsp:Test', 'http://www.w3.org/ns/ws-policy')
-                ->end()
+                ->policy()
+                ->assertion('http://www.w3.org/ns/ws-policy', 'Test')
                 ->end()
                 ->end()
                 ->end()
@@ -1463,8 +1387,7 @@ describe('WsdlGenerator Coverage', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://example.com/test')
                 ->service('SecureService')
                 ->policy('ServicePolicy')
-                ->assertion('wsp:Test', 'http://www.w3.org/ns/ws-policy')
-                ->end()
+                ->assertion('http://www.w3.org/ns/ws-policy', 'Test')
                 ->end()
                 ->port('TestPort', 'TestBinding', 'http://example.com/soap')
                 ->end();
@@ -1485,7 +1408,7 @@ describe('WsdlGenerator Coverage', function (): void {
             $xml = $wsdl->build();
 
             expect($xml)->toMatchSnapshot();
-            expect($xml)->toContain('<wsp:PolicyReference URI="#GlobalPolicy"');
+            expect($xml)->toContain('<wsp:PolicyReference xmlns:wsp="http://www.w3.org/ns/ws-policy" URI="#GlobalPolicy"/>');
         });
     });
 
@@ -1524,11 +1447,10 @@ describe('WsdlGenerator Coverage', function (): void {
 
     describe('Attribute Groups', function (): void {
         test('generates attribute group with anyAttribute', function (): void {
-            $wsdl = Wsdl::create('TestService', 'http://example.com/test')
-                ->attributeGroup('ExtensibleAttributes')
-                ->attribute('id', XsdType::String)
-                ->anyAttribute('##other', 'lax')
-                ->end();
+            $wsdl = Wsdl::create('TestService', 'http://example.com/test');
+            $group = $wsdl->attributeGroup('ExtensibleAttributes');
+            $group->attribute('id', XsdType::String);
+            $group->anyAttribute()->namespace('##other')->processContents('lax');
 
             $xml = $wsdl->build();
 

@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://example.com/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="TestService" targetNamespace="http://example.com/test">
-  <wsdl:message name="InputMessage"/>
-  <wsdl:message name="FaultMessage">
-    <wsdl:part name="error" type="xsd:string"/>
+  <wsdl:message name="EventMessage">
+    <wsdl:part name="event" type="xsd:string"/>
   </wsdl:message>
   <wsdl:portType name="TestPort">
-    <wsdl:operation name="RiskyOperation">
-      <wsdl:input message="tns:InputMessage"/>
-      <wsdl:output message="tns:OutputMessage"/>
-      <wsdl:fault name="FaultMessage" message="tns:FaultMessage"/>
+    <wsdl:operation name="OnEvent">
+      <wsdl:output message="tns:EventMessage"/>
     </wsdl:operation>
   </wsdl:portType>
 </wsdl:definitions>

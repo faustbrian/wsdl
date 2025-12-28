@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://example.com/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" name="TestService" targetNamespace="http://example.com/test">
+  <wsdl:message name="InputMsg"/>
+  <wsdl:message name="OutputMsg"/>
+  <wsdl:message name="FaultMsg"/>
+  <wsdl:portType name="TestPort">
+    <wsdl:operation name="TestOp">
+      <wsdl:input message="tns:InputMsg">
+        <wsaw:Action xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl">http://example.com/Input</wsaw:Action>
+      </wsdl:input>
+      <wsdl:output message="tns:OutputMsg">
+        <wsaw:Action xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl">http://example.com/Output</wsaw:Action>
+      </wsdl:output>
+      <wsdl:fault name="FaultMsg" message="tns:FaultMsg">
+        <wsaw:Action xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl">http://example.com/Fault</wsaw:Action>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>
