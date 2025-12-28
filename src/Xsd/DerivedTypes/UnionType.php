@@ -36,7 +36,9 @@ final class UnionType
     public function memberTypes(XsdType|string ...$types): self
     {
         $this->memberTypesArray = array_values(array_map(
-            fn (XsdType|string $type): string => $type instanceof XsdType ? $type->value : $type,
+            fn (XsdType|string $type): string => $type instanceof XsdType
+                ? $type->value
+                : preg_replace('/^(?:xsd|xs):/', '', $type),
             $types,
         ));
 

@@ -22,7 +22,7 @@ use function array_values;
  */
 final class SimpleType
 {
-    private string $base = 'xsd:string';
+    private string $base = 'string';
 
     private ?int $minLength = null;
 
@@ -55,7 +55,12 @@ final class SimpleType
      */
     public function base(XsdType|string $type): self
     {
-        $this->base = $type instanceof XsdType ? $type->value : $type;
+        if ($type instanceof XsdType) {
+            $this->base = $type->value;
+        } else {
+            // Strip xsd: or xs: prefix if present
+            $this->base = preg_replace('/^(?:xsd|xs):/', '', $type);
+        }
 
         return $this;
     }

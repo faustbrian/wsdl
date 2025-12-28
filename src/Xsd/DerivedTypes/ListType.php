@@ -21,7 +21,7 @@ use function array_values;
  */
 final class ListType
 {
-    private string $itemTypeValue = 'xsd:string';
+    private string $itemTypeValue = 'string';
 
     private ?int $minLength = null;
 
@@ -42,7 +42,12 @@ final class ListType
      */
     public function itemType(XsdType|string $type): self
     {
-        $this->itemTypeValue = $type instanceof XsdType ? $type->value : $type;
+        if ($type instanceof XsdType) {
+            $this->itemTypeValue = $type->value;
+        } else {
+            // Strip xsd: or xs: prefix if present
+            $this->itemTypeValue = preg_replace('/^(?:xsd|xs):/', '', $type);
+        }
 
         return $this;
     }
