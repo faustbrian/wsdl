@@ -60,7 +60,7 @@ final class SimpleType
             $this->base = $type->value;
         } else {
             // Strip xsd: or xs: prefix if present
-            $this->base = preg_replace('/^(?:xsd|xs):/', '', $type);
+            $this->base = preg_replace('/^(?:xsd|xs):/', '', $type) ?? $type;
         }
 
         return $this;

@@ -47,7 +47,7 @@ final class ListType
             $this->itemTypeValue = $type->value;
         } else {
             // Strip xsd: or xs: prefix if present
-            $this->itemTypeValue = preg_replace('/^(?:xsd|xs):/', '', $type);
+            $this->itemTypeValue = preg_replace('/^(?:xsd|xs):/', '', $type) ?? $type;
         }
 
         return $this;
