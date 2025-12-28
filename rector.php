@@ -16,5 +16,6 @@ return Factory::create(
     skip: [
         RemoveUnreachableStatementRector::class => [__DIR__.'/tests'],
         NewlineBetweenClassLikeStmtsRector::class,
+        __DIR__.'/tests/Feature/Wsdl2GeneratorTest.php',
     ],
 );
