@@ -12,7 +12,7 @@ use Cline\WsdlBuilder\Wsdl2\Wsdl2;
 
 describe('Wsdl2Generator Coverage Edge Cases', function (): void {
     test('generates documentation as first child when parent has existing children', function (): void {
-        $wsdl = Wsdl2::create('http://example.com/test');
+        $wsdl = Wsdl2::create('TestService', 'http://example.com/test');
         $interface = $wsdl->interface('TestInterface');
         $interface->operation('TestOp')
             ->pattern('http://www.w3.org/ns/wsdl/in-out')
@@ -22,11 +22,11 @@ describe('Wsdl2Generator Coverage Edge Cases', function (): void {
 
         $xml = $wsdl->build();
 
-        expect($xml)->toContain('<documentation>Interface documentation</documentation>');
+        expect($xml)->toContain('<wsdl:documentation>Interface documentation</wsdl:documentation>');
     });
 
     test('generates simple content extension with prefixed custom base', function (): void {
-        $wsdl = Wsdl2::create('http://example.com/test');
+        $wsdl = Wsdl2::create('TestService', 'http://example.com/test');
         $wsdl->complexType('CustomType')
             ->simpleContent()
             ->extension('tns:CustomBaseType')
@@ -38,7 +38,7 @@ describe('Wsdl2Generator Coverage Edge Cases', function (): void {
     });
 
     test('generates element group with nullable and occurrence constraints', function (): void {
-        $wsdl = Wsdl2::create('http://example.com/test');
+        $wsdl = Wsdl2::create('TestService', 'http://example.com/test');
         $wsdl->elementGroup('OptionalFields')
             ->element('name', XsdType::String, true, 0, 1)
             ->element('tags', XsdType::String, false, 1, -1);
