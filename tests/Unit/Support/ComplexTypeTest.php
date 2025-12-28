@@ -112,6 +112,53 @@ describe('ComplexType', function (): void {
                 ->and($type->getExtends())->toBe('BaseType')
                 ->and($type->getElements())->toHaveCount(2);
         });
+
+        test('adds element group reference', function (): void {
+            $wsdl = Wsdl::create('TestService', 'http://test.example.com/');
+            $type = $wsdl->complexType('PersonType')
+                ->group('tns:AddressGroup')
+                ->group('tns:ContactGroup');
+
+            $groupRefs = $type->getGroupRefs();
+
+            expect($groupRefs)->toHaveCount(2)
+                ->and($groupRefs[0])->toBe('tns:AddressGroup')
+                ->and($groupRefs[1])->toBe('tns:ContactGroup');
+        });
+
+        test('creates simple content for complex type', function (): void {
+            $wsdl = Wsdl::create('TestService', 'http://test.example.com/');
+            $type = $wsdl->complexType('AnnotatedString');
+
+            $simpleContent = $type->simpleContent();
+
+            expect($simpleContent)->toBeInstanceOf(\Cline\WsdlBuilder\Xsd\SimpleContent::class)
+                ->and($type->getSimpleContent())->toBe($simpleContent);
+        });
+
+        test('enables mixed content with default true', function (): void {
+            $wsdl = Wsdl::create('TestService', 'http://test.example.com/');
+            $type = $wsdl->complexType('MixedContentType')
+                ->mixed();
+
+            expect($type->isMixed())->toBeTrue();
+        });
+
+        test('enables mixed content with explicit true', function (): void {
+            $wsdl = Wsdl::create('TestService', 'http://test.example.com/');
+            $type = $wsdl->complexType('MixedContentType')
+                ->mixed(true);
+
+            expect($type->isMixed())->toBeTrue();
+        });
+
+        test('disables mixed content with explicit false', function (): void {
+            $wsdl = Wsdl::create('TestService', 'http://test.example.com/');
+            $type = $wsdl->complexType('MixedContentType')
+                ->mixed(false);
+
+            expect($type->isMixed())->toBeFalse();
+        });
     });
 
     describe('Element Properties', function (): void {

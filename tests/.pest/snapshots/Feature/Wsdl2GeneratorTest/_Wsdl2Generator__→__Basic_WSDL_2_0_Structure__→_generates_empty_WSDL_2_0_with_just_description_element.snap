@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:description xmlns:wsdl="http://www.w3.org/ns/wsdl" xmlns:tns="http://example.com/empty" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsoap="http://www.w3.org/ns/wsdl/soap" targetNamespace="http://example.com/empty"/>

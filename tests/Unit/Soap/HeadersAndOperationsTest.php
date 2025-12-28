@@ -82,9 +82,63 @@ describe('Header', function (): void {
                 ->and($header->getEncodingStyle())->toBe('http://schemas.xmlsoap.org/soap/encoding/')
                 ->and($header->isRequired())->toBeTrue();
         });
+
+        test('converts header to array with all fields set', function (): void {
+            $header = new Header('AuthHeader', 'credentials');
+            $header
+                ->use(BindingUse::Encoded)
+                ->namespace('http://test.example.com/auth')
+                ->encodingStyle('http://schemas.xmlsoap.org/soap/encoding/')
+                ->required(true);
+
+            $array = $header->toArray();
+
+            expect($array)->toBe([
+                'message' => 'AuthHeader',
+                'part' => 'credentials',
+                'use' => 'encoded',
+                'encodingStyle' => 'http://schemas.xmlsoap.org/soap/encoding/',
+                'namespace' => 'http://test.example.com/auth',
+                'required' => true,
+            ]);
+        });
+
+        test('converts header to array with minimal fields', function (): void {
+            $header = new Header('SimpleHeader', 'simplePart');
+
+            $array = $header->toArray();
+
+            expect($array)->toBe([
+                'message' => 'SimpleHeader',
+                'part' => 'simplePart',
+                'use' => 'literal',
+                'encodingStyle' => null,
+                'namespace' => null,
+                'required' => false,
+            ]);
+        });
     });
 
     describe('Edge Cases', function (): void {
+        test('converts header to array with literal use enum value', function (): void {
+            $header = new Header('TestHeader', 'testPart');
+
+            $array = $header->toArray();
+
+            expect($array['use'])->toBe('literal')
+                ->and($array['use'])->toBeString();
+        });
+
+        test('converts header to array with encoded use enum value', function (): void {
+            $header = new Header('TestHeader', 'testPart');
+            $header->use(BindingUse::Encoded);
+
+            $array = $header->toArray();
+
+            expect($array['use'])->toBe('encoded')
+                ->and($array['use'])->toBeString();
+        });
+
         test('handles empty string namespace', function (): void {
             $header = new Header('TestHeader', 'testPart');
             $header->namespace('');

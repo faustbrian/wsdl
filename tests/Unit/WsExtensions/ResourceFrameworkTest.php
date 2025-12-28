@@ -257,4 +257,68 @@ describe('ResourceFramework', function (): void {
         expect(ResourceFrameworkPolicy::NAMESPACE_WSRF_RP)->toBe('http://docs.oasis-open.org/wsrf/rp-2');
         expect(ResourceFrameworkPolicy::NAMESPACE_WSRF_RL)->toBe('http://docs.oasis-open.org/wsrf/rl-2');
     });
+
+    test('GetResourceProperty end() without parent returns config', function (): void {
+        $getProperty = new GetResourceProperty('wsrf-rp:CurrentTime');
+
+        $result = $getProperty->end();
+
+        expect($result)->toBeArray();
+        expect($result)->toBe(['resourceProperty' => 'wsrf-rp:CurrentTime']);
+    });
+
+    test('Resource end() without parent returns config', function (): void {
+        $endpointReference = new EndpointReference('http://example.com/resource');
+        $resource = new Resource($endpointReference);
+
+        $result = $resource->end();
+
+        expect($result)->toBeArray();
+        expect($result)->toHaveKey('endpointReference');
+        expect($result['endpointReference']['address'])->toBe('http://example.com/resource');
+    });
+
+    test('Resource with reference parameters', function (): void {
+        $endpointReference = new EndpointReference('http://example.com/resource');
+        $endpointReference->referenceParameters();
+
+        $resource = new Resource($endpointReference);
+
+        $config = $resource->getConfig();
+        expect($config['endpointReference'])->toHaveKey('referenceParameters');
+    });
+
+    test('ResourceLifetime end() without parent returns config', function (): void {
+        $lifetime = new ResourceLifetime();
+        $lifetime->scheduledTermination();
+
+        $result = $lifetime->end();
+
+        expect($result)->toBeArray();
+        expect($result)->toHaveKey('currentTime');
+        expect($result)->toHaveKey('scheduledTermination');
+        expect($result['scheduledTermination'])->toBeTrue();
+    });
+
+    test('ResourceProperties end() without parent returns config', function (): void {
+        $properties = new ResourceProperties();
+        $properties->addProperty('test', 'xsd:string');
+
+        $result = $properties->end();
+
+        expect($result)->toBeArray();
+        expect($result)->toHaveKey('properties');
+        expect($result['properties'])->toHaveCount(1);
+    });
+
+    test('SetResourceProperties end() without parent returns config', function (): void {
+        $setProperties = new SetResourceProperties();
+        $setProperties->insert('name', 'value');
+
+        $result = $setProperties->end();
+
+        expect($result)->toBeArray();
+        expect($result)->toHaveKey('insert');
+        expect($result['insert'])->toHaveCount(1);
+    });
 });

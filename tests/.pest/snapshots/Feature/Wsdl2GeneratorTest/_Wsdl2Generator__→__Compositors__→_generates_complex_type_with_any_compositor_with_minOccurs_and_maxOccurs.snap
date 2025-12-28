@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:description xmlns:wsdl="http://www.w3.org/ns/wsdl" xmlns:tns="http://example.com/types" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsoap="http://www.w3.org/ns/wsdl/soap" targetNamespace="http://example.com/types">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/types">
+      <xs:complexType name="MultiExtensible">
+        <xs:sequence>
+          <xs:element name="knownField" type="xsd:string"/>
+        </xs:sequence>
+        <xs:any namespace="##other" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+</wsdl:description>

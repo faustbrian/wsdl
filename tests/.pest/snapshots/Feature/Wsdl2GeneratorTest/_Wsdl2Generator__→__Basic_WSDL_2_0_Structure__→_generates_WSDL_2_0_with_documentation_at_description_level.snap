@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:description xmlns:wsdl="http://www.w3.org/ns/wsdl" xmlns:tns="http://example.com/documented" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsoap="http://www.w3.org/ns/wsdl/soap" targetNamespace="http://example.com/documented">
+  <wsdl:documentation xml:lang="en" source="http://example.com/docs">This is a comprehensive service documentation</wsdl:documentation>
+</wsdl:description>

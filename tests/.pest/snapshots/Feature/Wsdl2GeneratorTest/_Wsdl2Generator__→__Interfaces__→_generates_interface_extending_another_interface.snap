@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:description xmlns:wsdl="http://www.w3.org/ns/wsdl" xmlns:tns="http://example.com/users" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsoap="http://www.w3.org/ns/wsdl/soap" targetNamespace="http://example.com/users">
+  <wsdl:interface name="BaseInterface">
+    <wsdl:operation name="GetBase"/>
+  </wsdl:interface>
+  <wsdl:interface name="ExtendedInterface" extends="tns:BaseInterface">
+    <wsdl:operation name="GetExtended"/>
+  </wsdl:interface>
+</wsdl:description>

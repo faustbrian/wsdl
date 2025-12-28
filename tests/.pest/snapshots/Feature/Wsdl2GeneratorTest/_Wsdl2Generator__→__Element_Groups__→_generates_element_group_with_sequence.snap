@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:description xmlns:wsdl="http://www.w3.org/ns/wsdl" xmlns:tns="http://example.com/types" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsoap="http://www.w3.org/ns/wsdl/soap" targetNamespace="http://example.com/types">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/types">
+      <xs:group name="AddressGroup">
+        <xs:sequence>
+          <xs:element name="street" type="xsd:string"/>
+          <xs:element name="city" type="xsd:string"/>
+          <xs:element name="zip" type="xsd:string"/>
+        </xs:sequence>
+      </xs:group>
+    </xs:schema>
+  </wsdl:types>
+</wsdl:description>

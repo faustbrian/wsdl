@@ -511,6 +511,21 @@ describe('WS-Trust', function (): void {
                     ->and($array)->toHaveKey('bootstrapPolicy')
                     ->and($array)->toHaveKey('issuer');
             });
+
+            test('converts to array with issuer having reference parameters', function (): void {
+                // Arrange
+                $token = new SecureConversation();
+                $issuer = new EndpointReference('https://sts.example.com/sc');
+                $issuer->referenceParameters()->parameter('http://example.com', 'SessionId', 'session456');
+
+                $token->issuer($issuer);
+
+                // Act
+                $array = $token->toArray();
+
+                // Assert
+                expect($array['issuer'])->toHaveKey('referenceParameters');
+            });
         });
     });
 

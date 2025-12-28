@@ -124,4 +124,21 @@ final class Header
     {
         return $this->required;
     }
+
+    /**
+     * Convert header to array representation.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(): array
+    {
+        return [
+            'message' => $this->message,
+            'part' => $this->part,
+            'use' => $this->use->value,
+            'encodingStyle' => $this->encodingStyle,
+            'namespace' => $this->namespace,
+            'required' => $this->required,
+        ];
+    }
 }
