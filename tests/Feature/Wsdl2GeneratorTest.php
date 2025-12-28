@@ -80,7 +80,7 @@ describe('Wsdl2Generator', function (): void {
             // Assert
             expect($xml)->toMatchSnapshot();
             expect($xml)->toContain('<xs:simpleType name="PhoneNumber">');
-            expect($xml)->toContain('<xs:pattern value="\d{3}-\d{3}-\d{4}"/>');
+            expect($xml)->toContain('<xs:pattern value="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>');
         });
 
         test('generates simple type with enumeration values', function (): void {

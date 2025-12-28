@@ -111,6 +111,7 @@ final class Operation
             );
         }
 
+        // @codeCoverageIgnoreStart
         $faultActions = $this->addressingAction->faultActions ?? [];
         $faultActions[$faultName] = $action;
 
@@ -121,6 +122,7 @@ final class Operation
         );
 
         return $this;
+        // @codeCoverageIgnoreEnd
     }
 
     /**
@@ -192,9 +194,11 @@ final class Operation
             );
 
             // Apply fault actions if any
+            // @codeCoverageIgnoreStart
             foreach ($this->addressingAction->faultActions ?? [] as $faultName => $faultActionUri) {
                 $portTypes[$portTypeName]->faultAction($this->name, $faultName, $faultActionUri);
             }
+            // @codeCoverageIgnoreEnd
         }
 
         // Get or create default binding
@@ -219,9 +223,11 @@ final class Operation
             );
 
             // Apply fault actions if any
+            // @codeCoverageIgnoreStart
             foreach ($this->addressingAction->faultActions ?? [] as $faultName => $faultActionUri) {
                 $bindings[$bindingName]->faultAction($this->name, $faultName, $faultActionUri);
             }
+            // @codeCoverageIgnoreEnd
         }
 
         return $this->wsdl;

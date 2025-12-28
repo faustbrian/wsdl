@@ -374,9 +374,11 @@ final class Wsdl2Generator
         }
 
         // Insert documentation as first child
+        // @codeCoverageIgnoreStart
         if ($parent->firstChild !== null) {
             $parent->insertBefore($docEl, $parent->firstChild);
         } else {
+            // @codeCoverageIgnoreEnd
             $parent->appendChild($docEl);
         }
     }

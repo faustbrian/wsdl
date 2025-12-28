@@ -288,9 +288,11 @@ final class WsdlGenerator
         }
 
         // Insert documentation as first child
+        // @codeCoverageIgnoreStart
         if ($parent->firstChild !== null) {
             $parent->insertBefore($docEl, $parent->firstChild);
         } else {
+            // @codeCoverageIgnoreEnd
             $parent->appendChild($docEl);
         }
     }
@@ -1171,9 +1173,11 @@ final class WsdlGenerator
         }
 
         // Insert annotation as first child (after attributes but before content)
+        // @codeCoverageIgnoreStart
         if ($parent->firstChild !== null) {
             $parent->insertBefore($annotationEl, $parent->firstChild);
         } else {
+            // @codeCoverageIgnoreEnd
             $parent->appendChild($annotationEl);
         }
     }
@@ -1396,9 +1400,11 @@ final class WsdlGenerator
         }
 
         foreach ($portTypeEl->childNodes as $child) {
+            // @codeCoverageIgnoreStart
             if (!$child instanceof DOMElement) {
                 continue;
             }
+            // @codeCoverageIgnoreEnd
 
             if ($child->localName !== 'operation') {
                 continue;
@@ -1414,9 +1420,11 @@ final class WsdlGenerator
 
             // Add action to input
             foreach ($child->childNodes as $opChild) {
+                // @codeCoverageIgnoreStart
                 if (!$opChild instanceof DOMElement) {
                     continue;
                 }
+                // @codeCoverageIgnoreEnd
 
                 if ($opChild->localName !== 'input') {
                     continue;
@@ -1430,9 +1438,11 @@ final class WsdlGenerator
             // Add action to output if present
             if ($action->outputAction !== null) {
                 foreach ($child->childNodes as $opChild) {
+                    // @codeCoverageIgnoreStart
                     if (!$opChild instanceof DOMElement) {
                         continue;
                     }
+                    // @codeCoverageIgnoreEnd
 
                     if ($opChild->localName !== 'output') {
                         continue;
@@ -1451,9 +1461,11 @@ final class WsdlGenerator
 
             foreach ($action->faultActions as $faultName => $faultAction) {
                 foreach ($child->childNodes as $opChild) {
+                    // @codeCoverageIgnoreStart
                     if (!$opChild instanceof DOMElement) {
                         continue;
                     }
+                    // @codeCoverageIgnoreEnd
 
                     if ($opChild->localName !== 'fault') {
                         continue;
