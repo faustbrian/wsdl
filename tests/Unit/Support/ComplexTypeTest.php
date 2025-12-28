@@ -31,9 +31,9 @@ describe('ComplexType', function (): void {
 
             expect($elements)->toHaveCount(2)
                 ->and($elements[0]->name)->toBe('id')
-                ->and($elements[0]->type)->toBe('xsd:int')
+                ->and($elements[0]->type)->toBe('int')
                 ->and($elements[1]->name)->toBe('name')
-                ->and($elements[1]->type)->toBe('xsd:string');
+                ->and($elements[1]->type)->toBe('string');
         });
 
         test('adds elements with string type', function (): void {
@@ -163,10 +163,10 @@ describe('ComplexType', function (): void {
 
     describe('Element Properties', function (): void {
         test('element is readonly', function (): void {
-            $element = new Element('test', 'xsd:string', true, 0, 1);
+            $element = new Element('test', 'string', true, 0, 1);
 
             expect($element->name)->toBe('test')
-                ->and($element->type)->toBe('xsd:string')
+                ->and($element->type)->toBe('string')
                 ->and($element->nullable)->toBeTrue()
                 ->and($element->minOccurs)->toBe(0)
                 ->and($element->maxOccurs)->toBe(1);

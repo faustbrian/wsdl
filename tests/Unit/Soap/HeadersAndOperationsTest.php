@@ -315,7 +315,7 @@ describe('OneWay', function (): void {
             expect($result)->toBe($oneWay)
                 ->and($oneWay->getInputs())->toHaveCount(1)
                 ->and($oneWay->getInputs()[0]['name'])->toBe('message')
-                ->and($oneWay->getInputs()[0]['type'])->toBe('xsd:string');
+                ->and($oneWay->getInputs()[0]['type'])->toBe('string');
         });
 
         test('adds input parameter with custom type string', function (): void {
@@ -510,7 +510,7 @@ describe('Notification', function (): void {
             expect($result)->toBe($notification)
                 ->and($notification->getOutputs())->toHaveCount(1)
                 ->and($notification->getOutputs()[0]['name'])->toBe('alertMessage')
-                ->and($notification->getOutputs()[0]['type'])->toBe('xsd:string');
+                ->and($notification->getOutputs()[0]['type'])->toBe('string');
         });
 
         test('adds output parameter with custom type string', function (): void {

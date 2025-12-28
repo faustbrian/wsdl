@@ -24,7 +24,7 @@ describe('SimpleType', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://test.example.com/');
             $type = $wsdl->simpleType('CustomString');
 
-            expect($type->getBase())->toBe('xsd:string');
+            expect($type->getBase())->toBe('string');
         });
 
         test('sets base type with XsdType enum', function (): void {
@@ -32,7 +32,7 @@ describe('SimpleType', function (): void {
             $type = $wsdl->simpleType('PositiveNumber')
                 ->base(XsdType::Int);
 
-            expect($type->getBase())->toBe('xsd:int');
+            expect($type->getBase())->toBe('int');
         });
 
         test('sets base type with string', function (): void {
@@ -40,7 +40,7 @@ describe('SimpleType', function (): void {
             $type = $wsdl->simpleType('CustomType')
                 ->base('xsd:decimal');
 
-            expect($type->getBase())->toBe('xsd:decimal');
+            expect($type->getBase())->toBe('decimal');
         });
 
         test('sets minLength restriction', function (): void {
@@ -137,7 +137,7 @@ describe('SimpleType', function (): void {
 
             expect($type)
                 ->toBeInstanceOf(SimpleType::class)
-                ->and($type->getBase())->toBe('xsd:string')
+                ->and($type->getBase())->toBe('string')
                 ->and($type->getMinLength())->toBe(1)
                 ->and($type->getMaxLength())->toBe(100)
                 ->and($type->getPattern())->toBe('[A-Z][a-z]+');

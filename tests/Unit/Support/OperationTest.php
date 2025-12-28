@@ -30,9 +30,9 @@ describe('Operation (High-level API)', function (): void {
 
             expect($inputs)->toHaveCount(2)
                 ->and($inputs[0]['name'])->toBe('userId')
-                ->and($inputs[0]['type'])->toBe('xsd:int')
+                ->and($inputs[0]['type'])->toBe('int')
                 ->and($inputs[1]['name'])->toBe('includeDetails')
-                ->and($inputs[1]['type'])->toBe('xsd:boolean');
+                ->and($inputs[1]['type'])->toBe('boolean');
         });
 
         test('adds output parameters', function (): void {
@@ -47,7 +47,7 @@ describe('Operation (High-level API)', function (): void {
                 ->and($outputs[0]['name'])->toBe('user')
                 ->and($outputs[0]['type'])->toBe('tns:UserType')
                 ->and($outputs[1]['name'])->toBe('success')
-                ->and($outputs[1]['type'])->toBe('xsd:boolean');
+                ->and($outputs[1]['type'])->toBe('boolean');
         });
 
         test('adds fault parameters', function (): void {

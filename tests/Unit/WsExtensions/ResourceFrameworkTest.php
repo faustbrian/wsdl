@@ -22,7 +22,7 @@ describe('ResourceFramework', function (): void {
         $resource = new Resource($endpointReference);
 
         $resource->resourceProperties()
-            ->addProperty('status', 'xsd:string')
+            ->addProperty('status', 'string')
             ->modifiable()
             ->subscribable();
 
@@ -47,7 +47,7 @@ describe('ResourceFramework', function (): void {
     test('ResourceProperties document', function (): void {
         $properties = new ResourceProperties();
 
-        $properties->addProperty('name', 'xsd:string');
+        $properties->addProperty('name', 'string');
         $properties->addProperty('count', 'xsd:int')
             ->modifiable();
         $properties->addQueryExpressionDialect('http://www.w3.org/TR/1999/REC-xpath-19991116');
@@ -59,17 +59,17 @@ describe('ResourceFramework', function (): void {
         $config = $properties->getConfig();
         expect($config['properties'])->toHaveCount(2);
         expect($config['properties'][0]['name'])->toBe('name');
-        expect($config['properties'][0]['type'])->toBe('xsd:string');
+        expect($config['properties'][0]['type'])->toBe('string');
         expect($config['properties'][1]['name'])->toBe('count');
         expect($config['properties'][1]['modifiable'])->toBeTrue();
         expect($config['queryExpressionDialects'])->toHaveCount(1);
     });
 
     test('ResourceProperty modifiable and subscribable', function (): void {
-        $property = new ResourceProperty('status', 'xsd:string');
+        $property = new ResourceProperty('status', 'string');
 
         expect($property->getName())->toBe('status');
-        expect($property->getType())->toBe('xsd:string');
+        expect($property->getType())->toBe('string');
         expect($property->isModifiable())->toBeFalse();
         expect($property->isSubscribable())->toBeFalse();
 
@@ -80,7 +80,7 @@ describe('ResourceFramework', function (): void {
 
         $config = $property->getConfig();
         expect($config['name'])->toBe('status');
-        expect($config['type'])->toBe('xsd:string');
+        expect($config['type'])->toBe('string');
         expect($config['modifiable'])->toBeTrue();
         expect($config['subscribable'])->toBeTrue();
     });
@@ -166,7 +166,7 @@ describe('ResourceFramework', function (): void {
         $resource = ResourceFrameworkPolicy::resource('http://example.com/stateful-service');
 
         $resource->resourceProperties()
-            ->addProperty('serviceStatus', 'xsd:string')
+            ->addProperty('serviceStatus', 'string')
             ->modifiable()
             ->subscribable()
             ->end()
@@ -243,7 +243,7 @@ describe('ResourceFramework', function (): void {
 
     test('Resource fluent chaining with end()', function (): void {
         $properties = new ResourceProperties();
-        $property = $properties->addProperty('name', 'xsd:string');
+        $property = $properties->addProperty('name', 'string');
 
         $returnedProperties = $property->end();
         expect($returnedProperties)->toBe($properties);
@@ -302,7 +302,7 @@ describe('ResourceFramework', function (): void {
 
     test('ResourceProperties end() without parent returns config', function (): void {
         $properties = new ResourceProperties();
-        $properties->addProperty('test', 'xsd:string');
+        $properties->addProperty('test', 'string');
 
         $result = $properties->end();
 

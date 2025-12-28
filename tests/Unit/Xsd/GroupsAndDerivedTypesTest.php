@@ -34,7 +34,7 @@ describe('ElementGroup', function (): void {
 
             expect($elements)->toHaveCount(1)
                 ->and($elements[0]['name'])->toBe('street')
-                ->and($elements[0]['type'])->toBe('xsd:string')
+                ->and($elements[0]['type'])->toBe('string')
                 ->and($elements[0]['nullable'])->toBeFalse()
                 ->and($elements[0]['minOccurs'])->toBeNull()
                 ->and($elements[0]['maxOccurs'])->toBeNull();
@@ -270,7 +270,7 @@ describe('ListType', function (): void {
             $list = $wsdl->listType('IntegerList')
                 ->itemType(XsdType::Int);
 
-            expect($list->getItemType())->toBe('xsd:int');
+            expect($list->getItemType())->toBe('int');
         });
 
         test('sets item type with string type reference', function (): void {
@@ -285,7 +285,7 @@ describe('ListType', function (): void {
             $wsdl = Wsdl::create('TestService', 'http://test.example.com/');
             $list = $wsdl->listType('StringList');
 
-            expect($list->getItemType())->toBe('xsd:string');
+            expect($list->getItemType())->toBe('string');
         });
 
         test('sets minimum length restriction for list', function (): void {
@@ -358,7 +358,7 @@ describe('ListType', function (): void {
 
             expect($list)
                 ->toBeInstanceOf(ListType::class)
-                ->and($list->getItemType())->toBe('xsd:int')
+                ->and($list->getItemType())->toBe('int')
                 ->and($list->getMinLength())->toBe(2)
                 ->and($list->getMaxLength())->toBe(10)
                 ->and($list->getPattern())->toBe('[0-9]+')
@@ -420,7 +420,7 @@ describe('UnionType', function (): void {
             $union = $wsdl->unionType('IntOrString')
                 ->memberTypes(XsdType::Int, XsdType::String);
 
-            expect($union->getMemberTypes())->toBe(['xsd:int', 'xsd:string']);
+            expect($union->getMemberTypes())->toBe(['int', 'string']);
         });
 
         test('sets member types with string type references', function (): void {
@@ -436,7 +436,7 @@ describe('UnionType', function (): void {
             $union = $wsdl->unionType('MixedUnion')
                 ->memberTypes(XsdType::Int, 'tns:CustomType', XsdType::String);
 
-            expect($union->getMemberTypes())->toBe(['xsd:int', 'tns:CustomType', 'xsd:string']);
+            expect($union->getMemberTypes())->toBe(['int', 'tns:CustomType', 'string']);
         });
 
         test('end returns parent wsdl instance', function (): void {
@@ -465,7 +465,7 @@ describe('UnionType', function (): void {
 
             expect($result)->toBe($wsdl)
                 ->and($wsdl->getUnionTypes()['MultiType']->getMemberTypes())
-                ->toBe(['xsd:int', 'xsd:string', 'xsd:boolean']);
+                ->toBe(['int', 'string', 'boolean']);
         });
 
         test('allows single member type in union', function (): void {
@@ -473,7 +473,7 @@ describe('UnionType', function (): void {
             $union = $wsdl->unionType('SingleType')
                 ->memberTypes(XsdType::Int);
 
-            expect($union->getMemberTypes())->toBe(['xsd:int']);
+            expect($union->getMemberTypes())->toBe(['int']);
         });
     });
 
@@ -518,7 +518,7 @@ describe('UnionType', function (): void {
                 ->memberTypes(XsdType::Int, XsdType::String)
                 ->memberTypes(XsdType::Boolean, XsdType::Float);
 
-            expect($union->getMemberTypes())->toBe(['xsd:boolean', 'xsd:float']);
+            expect($union->getMemberTypes())->toBe(['boolean', 'float']);
         });
     });
 });

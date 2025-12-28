@@ -19,7 +19,7 @@ describe('Attribute', function (): void {
             $attribute = Attribute::create('id', XsdType::Int);
 
             expect($attribute->getName())->toBe('id')
-                ->and($attribute->getType())->toBe('xsd:int');
+                ->and($attribute->getType())->toBe('int');
         });
 
         test('creates attribute with name and string type', function (): void {
@@ -153,7 +153,7 @@ describe('AttributeGroup', function (): void {
 
             expect($attributes)->toHaveCount(1)
                 ->and($attributes[0]->getName())->toBe('id')
-                ->and($attributes[0]->getType())->toBe('xsd:int');
+                ->and($attributes[0]->getType())->toBe('int');
         });
 
         test('adds multiple attributes to group', function (): void {
@@ -403,7 +403,7 @@ describe('ComplexType Attribute Integration', function (): void {
 
             expect($attributes)->toHaveCount(1)
                 ->and($attributes[0]->getName())->toBe('id')
-                ->and($attributes[0]->getType())->toBe('xsd:int');
+                ->and($attributes[0]->getType())->toBe('int');
         });
 
         test('adds multiple attributes to complex type', function (): void {

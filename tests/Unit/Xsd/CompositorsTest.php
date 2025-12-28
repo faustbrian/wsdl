@@ -41,9 +41,9 @@ describe('Choice Compositor', function (): void {
             $elements = $choice->getElements();
             expect($elements)->toHaveCount(2)
                 ->and($elements[0]->name)->toBe('option1')
-                ->and($elements[0]->type)->toBe('xsd:string')
+                ->and($elements[0]->type)->toBe('string')
                 ->and($elements[1]->name)->toBe('option2')
-                ->and($elements[1]->type)->toBe('xsd:int');
+                ->and($elements[1]->type)->toBe('int');
         });
 
         test('adds elements with string type to choice', function (): void {
@@ -235,9 +235,9 @@ describe('All Compositor', function (): void {
             $elements = $all->getElements();
             expect($elements)->toHaveCount(2)
                 ->and($elements[0]->name)->toBe('field1')
-                ->and($elements[0]->type)->toBe('xsd:string')
+                ->and($elements[0]->type)->toBe('string')
                 ->and($elements[1]->name)->toBe('field2')
-                ->and($elements[1]->type)->toBe('xsd:int');
+                ->and($elements[1]->type)->toBe('int');
         });
 
         test('adds elements with string type to all', function (): void {

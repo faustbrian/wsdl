@@ -615,7 +615,7 @@ describe('Element substitutionGroup and block attributes', function (): void {
 
         test('accesses substitutionGroup property from Element instance', function (): void {
             // Arrange
-            $element = new Element('test', 'xsd:string', false, null, null, 'tns:baseElement', null);
+            $element = new Element('test', 'string', false, null, null, 'tns:baseElement', null);
 
             // Act & Assert
             expect($element->substitutionGroup)->toBe('tns:baseElement');
@@ -623,7 +623,7 @@ describe('Element substitutionGroup and block attributes', function (): void {
 
         test('accesses block property from Element instance', function (): void {
             // Arrange
-            $element = new Element('test', 'xsd:string', false, null, null, null, 'extension');
+            $element = new Element('test', 'string', false, null, null, null, 'extension');
 
             // Act & Assert
             expect($element->block)->toBe('extension');
@@ -721,11 +721,11 @@ describe('Element substitutionGroup and block attributes', function (): void {
 
         test('Element instance is readonly and immutable', function (): void {
             // Arrange
-            $element = new Element('test', 'xsd:string', false, null, null, 'tns:base', 'extension');
+            $element = new Element('test', 'string', false, null, null, 'tns:base', 'extension');
 
             // Act & Assert
             expect($element->name)->toBe('test')
-                ->and($element->type)->toBe('xsd:string')
+                ->and($element->type)->toBe('string')
                 ->and($element->substitutionGroup)->toBe('tns:base')
                 ->and($element->block)->toBe('extension');
         });

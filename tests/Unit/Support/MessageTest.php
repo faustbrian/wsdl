@@ -30,7 +30,7 @@ describe('Message', function (): void {
 
             expect($parts)->toHaveCount(1)
                 ->and($parts[0]->name)->toBe('userId')
-                ->and($parts[0]->type)->toBe('xsd:int');
+                ->and($parts[0]->type)->toBe('int');
         });
 
         test('adds part with string type', function (): void {
@@ -82,9 +82,9 @@ describe('Message', function (): void {
 
 describe('MessagePart', function (): void {
     test('creates readonly message part', function (): void {
-        $part = new MessagePart('testPart', 'xsd:string');
+        $part = new MessagePart('testPart', 'string');
 
         expect($part->name)->toBe('testPart')
-            ->and($part->type)->toBe('xsd:string');
+            ->and($part->type)->toBe('string');
     });
 });

@@ -24,7 +24,7 @@ describe('SimpleContent', function (): void {
                 $result = $simpleContent->extension(XsdType::String);
 
                 expect($result)->toBe($simpleContent)
-                    ->and($simpleContent->getBase())->toBe('xsd:string')
+                    ->and($simpleContent->getBase())->toBe('string')
                     ->and($simpleContent->getDerivationType())->toBe('extension');
             });
 
@@ -47,7 +47,7 @@ describe('SimpleContent', function (): void {
 
                 $simpleContent->extension(XsdType::Int);
 
-                expect($simpleContent->getBase())->toBe('xsd:int')
+                expect($simpleContent->getBase())->toBe('int')
                     ->and($simpleContent->getDerivationType())->toBe('extension');
             });
 
@@ -58,7 +58,7 @@ describe('SimpleContent', function (): void {
 
                 $simpleContent->extension(XsdType::DateTime);
 
-                expect($simpleContent->getBase())->toBe('xsd:dateTime')
+                expect($simpleContent->getBase())->toBe('dateTime')
                     ->and($simpleContent->getDerivationType())->toBe('extension');
             });
 
@@ -83,7 +83,7 @@ describe('SimpleContent', function (): void {
                 $result = $simpleContent->restriction(XsdType::String);
 
                 expect($result)->toBe($simpleContent)
-                    ->and($simpleContent->getBase())->toBe('xsd:string')
+                    ->and($simpleContent->getBase())->toBe('string')
                     ->and($simpleContent->getDerivationType())->toBe('restriction');
             });
 
@@ -106,7 +106,7 @@ describe('SimpleContent', function (): void {
 
                 $simpleContent->restriction(XsdType::Decimal);
 
-                expect($simpleContent->getBase())->toBe('xsd:decimal')
+                expect($simpleContent->getBase())->toBe('decimal')
                     ->and($simpleContent->getDerivationType())->toBe('restriction');
             });
 
@@ -137,7 +137,7 @@ describe('SimpleContent', function (): void {
                     ->and($attributes)->toHaveCount(1)
                     ->and($attributes[0])->toBeInstanceOf(Attribute::class)
                     ->and($attributes[0]->getName())->toBe('id')
-                    ->and($attributes[0]->getType())->toBe('xsd:int');
+                    ->and($attributes[0]->getType())->toBe('int');
             });
 
             test('adds single attribute with string type', function (): void {
@@ -171,11 +171,11 @@ describe('SimpleContent', function (): void {
 
                 expect($attributes)->toHaveCount(3)
                     ->and($attributes[0]->getName())->toBe('id')
-                    ->and($attributes[0]->getType())->toBe('xsd:int')
+                    ->and($attributes[0]->getType())->toBe('int')
                     ->and($attributes[1]->getName())->toBe('version')
-                    ->and($attributes[1]->getType())->toBe('xsd:string')
+                    ->and($attributes[1]->getType())->toBe('string')
                     ->and($attributes[2]->getName())->toBe('timestamp')
-                    ->and($attributes[2]->getType())->toBe('xsd:dateTime');
+                    ->and($attributes[2]->getType())->toBe('dateTime');
             });
 
             test('attribute returns self for fluent interface', function (): void {
@@ -245,7 +245,7 @@ describe('SimpleContent', function (): void {
                 $simpleContent = $complexType->simpleContent();
                 $simpleContent->extension(XsdType::String);
 
-                expect($simpleContent->getBase())->toBe('xsd:string');
+                expect($simpleContent->getBase())->toBe('string');
             });
 
             test('getBase returns base value after restriction', function (): void {
@@ -330,7 +330,7 @@ describe('SimpleContent', function (): void {
                 $simpleContent = $complexType->getSimpleContent();
 
                 expect($simpleContent)->toBeInstanceOf(SimpleContent::class)
-                    ->and($simpleContent->getBase())->toBe('xsd:decimal')
+                    ->and($simpleContent->getBase())->toBe('decimal')
                     ->and($simpleContent->getDerivationType())->toBe('extension')
                     ->and($simpleContent->getAttributes())->toHaveCount(2)
                     ->and($simpleContent->getAttributes()[0]->getName())->toBe('currency')
@@ -364,7 +364,7 @@ describe('SimpleContent', function (): void {
             $simpleContent = $complexType->simpleContent();
             $simpleContent->extension(XsdType::String);
 
-            expect($simpleContent->getBase())->toBe('xsd:string')
+            expect($simpleContent->getBase())->toBe('string')
                 ->and($simpleContent->getDerivationType())->toBe('extension')
                 ->and($simpleContent->getAttributes())->toBeEmpty();
         });
@@ -375,7 +375,7 @@ describe('SimpleContent', function (): void {
             $simpleContent = $complexType->simpleContent();
             $simpleContent->restriction(XsdType::Int);
 
-            expect($simpleContent->getBase())->toBe('xsd:int')
+            expect($simpleContent->getBase())->toBe('int')
                 ->and($simpleContent->getDerivationType())->toBe('restriction')
                 ->and($simpleContent->getAttributes())->toBeEmpty();
         });
@@ -388,7 +388,7 @@ describe('SimpleContent', function (): void {
             $simpleContent->restriction(XsdType::Int);
             $simpleContent->extension(XsdType::String);
 
-            expect($simpleContent->getBase())->toBe('xsd:string')
+            expect($simpleContent->getBase())->toBe('string')
                 ->and($simpleContent->getDerivationType())->toBe('extension');
         });
 
@@ -400,7 +400,7 @@ describe('SimpleContent', function (): void {
             $simpleContent->extension(XsdType::String);
             $simpleContent->restriction(XsdType::Int);
 
-            expect($simpleContent->getBase())->toBe('xsd:int')
+            expect($simpleContent->getBase())->toBe('int')
                 ->and($simpleContent->getDerivationType())->toBe('restriction');
         });
 
@@ -416,7 +416,7 @@ describe('SimpleContent', function (): void {
             $attributes = $simpleContent->getAttributes();
 
             expect($attributes)->toHaveCount(2)
-                ->and($simpleContent->getBase())->toBe('xsd:string')
+                ->and($simpleContent->getBase())->toBe('string')
                 ->and($simpleContent->getDerivationType())->toBe('extension')
                 ->and($attributes[0]->getName())->toBe('id')
                 ->and($attributes[1]->getName())->toBe('version');
