@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://example.com/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="TestService" targetNamespace="http://example.com/test">
+  <wsdl:types>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/test">
+      <xsd:simpleType name="NumberOrString">
+        <xsd:union memberTypes="xsd:int xsd:string"/>
+      </xsd:simpleType>
+    </xsd:schema>
+  </wsdl:types>
+</wsdl:definitions>
