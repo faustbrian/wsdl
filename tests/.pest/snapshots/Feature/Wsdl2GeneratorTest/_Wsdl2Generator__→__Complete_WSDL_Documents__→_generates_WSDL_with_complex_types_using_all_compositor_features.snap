@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:description xmlns:wsdl="http://www.w3.org/ns/wsdl" xmlns:tns="http://example.com/compositors" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsoap="http://www.w3.org/ns/wsdl/soap" targetNamespace="http://example.com/compositors">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/compositors">
+      <xs:complexType name="Container">
+        <xs:sequence>
+          <xs:element name="header" type="xs:string"/>
+        </xs:sequence>
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+          <xs:element name="option1" type="xs:string"/>
+          <xs:element name="option2" type="xs:int"/>
+        </xs:choice>
+        <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:attribute name="id" type="xs:int" use="required"/>
+        <xs:anyAttribute namespace="##any" processContents="skip"/>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+</wsdl:description>
